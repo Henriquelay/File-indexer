@@ -8,10 +8,10 @@
 #-lm obrigatorio caso utilize a biblioteca math.h
 
 CC=gcc
-CFLAGS=-I. -Wall -g
+CFLAGS=-Wall -g
 DEPS= .h
 OBJ= .o 
-EXEC= programa
+EXEC=LEIA_O_MAKEFILE
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
@@ -39,7 +39,7 @@ valzao:
 clean:
 	rm -f *.o
 	rm -f ${EXEC}
-	rm -f main
+	#rm -f main
 
 push:
-	./autopush ${msg}
+	gitPusher ${msg}
