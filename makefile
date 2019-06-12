@@ -9,15 +9,15 @@
 
 CC=gcc
 CFLAGS=-Wall -g
-DEPS= .h
-OBJ= .o 
+DEPS= lista.h palavra.h
+OBJ= lista.o palavra.o init.o
 EXEC=LEIA_O_MAKEFILE
 
-%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+%.o: src/%.c headers/%.h
+	${CC} -c -o $@ $< ${CFLAGS}
 
-main: $(OBJ)
-	$(CC) -o ${EXEC} $^ $(CFLAGS)
+main: ${OBJ}
+	${CC} -o ${EXEC} $^ ${CFLAGS}
 	rm -f *.o
 
 run: 

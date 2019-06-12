@@ -1,4 +1,4 @@
-#include "palavra.h"
+#include "../headers/palavra.h"
 
 tPalavra *cria_Palavra(char *pal){
     if(pal == NULL) return NULL;
@@ -10,7 +10,7 @@ tPalavra *cria_Palavra(char *pal){
     return novaPalavra;
 }
 
-char libera_Palavra(tPalavra *pal){
+char destroi_Palavra(tPalavra *pal){
     if(pal == NULL) return 1;
 
     free(pal->pal);
@@ -28,10 +28,12 @@ char compara_Palavra(tPalavra *pal1, tPalavra *pal2){
     return strncmp(pal1->pal, pal2->pal, menor);
 }
 
-char igual_Palavra(tPalavra *pal1, tPalavra *pal2){
-    if(pal1 == NULL || pal2 == NULL) return -1;
-    if(pal1->tamPal != pal2->tamPal) return 0;
+char igual_Palavra(tPalavra *pal1, char *str){
+    if(pal1 == NULL || str == NULL) return -1;
+    if(pal1->tamPal != strlen(str)) return 0;
+    tPalavra *pal2 = cria_Palavra(str);
     if(compara_Palavra(pal1, pal2) != 0) return 0;
+    destroi_Palavra(pal1);
     return 1;
 }
 

@@ -1,4 +1,4 @@
-#include "lista.h"
+#include "../headers/lista.h"
 
 tListaSent *inicia_ListaSent(void){
     tListaSent *novo = (tListaSent*) malloc(sizeof(tListaSent));
@@ -9,11 +9,12 @@ tListaSent *inicia_ListaSent(void){
     return novo;
 }
 
-tLista *novo_no_Lista(tPalavra *pal){
+tLista *novo_no_Lista(char *str){
     if(pal == NULL) return NULL;
 
     tLista *novo = (tLista*) malloc(sizeof(tLista));
     if(novo == NULL) return NULL;
+    tPalavra *pal = nova_Palavra(str);
 
     novo->palavra = pal;
     novo->ocorrencias = 1;
@@ -27,8 +28,7 @@ char insere_Lista(tListaSent *l, char *str){
     if(tListaSent == NULL) l = inicia_ListaSent();
 
     tPalavra pal = cria_Palavra(str);
-    for(Lista *aux = l->ini; aux != NULL; aux = aux->prox)
-        if(igual_Palavra(aux->palavra, str)){
+    for(Lista *aux = l->ini; !igual_Palavra(aux->palavra, pal) || aux == NULL; aux = aux->prox)
             aux->ocorrencias++;
             /*
              * ANOTAR TAMBEM A 
@@ -41,5 +41,22 @@ char insere_Lista(tListaSent *l, char *str){
     }
     
      
+}
+
+char destroi_No(tLista *no){
+    if(no == NULL) return 1;
+    destroi_Palavra(no->palavra);
+    free(no);
+    return 1;
+}
+
+char destroi_Lista(tListaSetn *l){
+    if(l == NULL) return 1;
+
+    for(tLista *no = l->ini; no != NULL; no = no->prox)
+        destroi_No(no);
+
+    free(l);
+    return 1;
 }
 

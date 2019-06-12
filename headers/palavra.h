@@ -12,7 +12,7 @@ typedef struct Palavra{
 
 tPalavra *cria_Palavra(char *pal);
 
-char libera_Palavra(tPalavra *pal);
+char destroi_Palavra(tPalavra *pal);
 
 char compara_Palavra(tPalavra *pal1, tPalavra *pal2);
 
