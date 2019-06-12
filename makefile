@@ -10,13 +10,13 @@
 CC=gcc
 CFLAGS=-Wall -g
 DEPS= lista.h palavra.h
-OBJ= lista.o palavra.o init.o
+OBJ= lista.o palavra.o
 EXEC=LEIA_O_MAKEFILE
 
 %.o: src/%.c headers/%.h
 	${CC} -c -o $@ $< ${CFLAGS}
 
-main: ${OBJ}
+all: ${OBJ}
 	${CC} -o ${EXEC} $^ ${CFLAGS}
 	rm -f *.o
 
@@ -36,10 +36,11 @@ valzao:
 	make main
 	valgrind --leak-check=full --show-leak-kinds=all ./${EXEC}
 
-clean:
+clear:
 	rm -f *.o
 	rm -f ${EXEC}
 	#rm -f main
+	clear
 
 push:
 	gitPusher ${msg}

@@ -16,7 +16,7 @@ char destroi_Palavra(tPalavra *pal);
 
 char compara_Palavra(tPalavra *pal1, tPalavra *pal2);
 
-char igual_Palavra(tPalavra *pal1, tPalavra *pal2);
+char igual_Palavra(tPalavra *pal1, char *str);
 
 char print_Palavra(tPalavra *pal);
 

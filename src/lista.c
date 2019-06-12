@@ -9,38 +9,43 @@ tListaSent *inicia_ListaSent(void){
     return novo;
 }
 
-tLista *novo_no_Lista(char *str){
+tLista *novo_no_Lista(tPalavra *pal){
     if(pal == NULL) return NULL;
 
     tLista *novo = (tLista*) malloc(sizeof(tLista));
     if(novo == NULL) return NULL;
-    tPalavra *pal = nova_Palavra(str);
-
-    novo->palavra = pal;
-    novo->ocorrencias = 1;
-    novo->coluna = novo->linha = NULL;
     novo->prox = NULL;
+    novo->ocorrencias = 1;
+    novo->palavra = pal;
+    novo->coluna = novo->linha = NULL;
+    /*TODO
+     * ADICIONAR TAMBEM A
+     * COLUNA E LINHA
+     * DA OCORRENCIA
+     */
     return novo;
 } 
 
 char insere_Lista(tListaSent *l, char *str){
     if(str == NULL) return 0;
-    if(tListaSent == NULL) l = inicia_ListaSent();
+    if(l == NULL) l = inicia_ListaSent();
 
-    tPalavra pal = cria_Palavra(str);
-    for(Lista *aux = l->ini; !igual_Palavra(aux->palavra, pal) || aux == NULL; aux = aux->prox)
+    for(tLista *aux = l->ini; !igual_Palavra(aux->palavra, str) || aux == NULL; aux = aux->prox){
             aux->ocorrencias++;
-            /*
-             * ANOTAR TAMBEM A 
+            /* TODO
+            :wa
+            :wa
+             * ADICIONAR TAMBEM A 
              * COLUNA E LINHA 
              * DA OCORRENCIA
              */
             return 1;
-        }
-    tLista *no = novo_no_Lista(pal){
     }
-    
-     
+    tPalavra *pal = cria_Palavra(str);
+    tLista *no = novo_no_Lista(pal);
+    no->prox = l->ini;
+    l->ini = no;
+    return 1;     
 }
 
 char destroi_No(tLista *no){
@@ -50,7 +55,7 @@ char destroi_No(tLista *no){
     return 1;
 }
 
-char destroi_Lista(tListaSetn *l){
+char destroi_Lista(tListaSent *l){
     if(l == NULL) return 1;
 
     for(tLista *no = l->ini; no != NULL; no = no->prox)

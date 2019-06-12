@@ -15,7 +15,7 @@ typedef struct ListaInt{
 //Lista de ocorrências das palavras
 typedef struct Lista tLista;
 typedef struct Lista {
-    tPalavra palavra;
+    tPalavra *palavra;
     int ocorrencias;
     tListaInt *coluna, *linha;
     tLista *prox;
@@ -30,4 +30,6 @@ typedef struct ListaSent{
 tListaSent *inicia_ListaSent(void);
 tLista *novo_no_Lista(tPalavra *pal);
 char insere_Lista(tListaSent *l, char *str);
+char destroi_No(tLista *no);
+char destroi_Lista(tListaSent *l);
 #endif

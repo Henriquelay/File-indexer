@@ -20,10 +20,11 @@ char destroi_Palavra(tPalavra *pal){
 
 char compara_Palavra(tPalavra *pal1, tPalavra *pal2){
     if(pal1 == NULL || pal2 == NULL) return -1;
+    char menor = 0;
     if(pal1->tamPal > pal2->tamPal)
-        char menor = pal2->tamPal;
+        menor = pal2->tamPal;
     else
-        char menor = pal1->tamPal;
+        menor = pal1->tamPal;
 
     return strncmp(pal1->pal, pal2->pal, menor);
 }
