@@ -9,35 +9,40 @@
 
 CC=gcc
 CFLAGS=-Wall -g
-DEPS= lista.h palavra.h
-OBJ= lista.o palavra.o
+DEPS=lista.h palavra.hi
+DEPSDIR= headers
+_DEPS=$(patsubst %,${DEPSDIR}/%,${DEPS})
+OBJ=lista.o palavra.o main.o
+OBJDIR=src
+_OBJ=$(patsubst %,${OBJDIR}/%,${OBJ})
 EXEC=LEIA_O_MAKEFILE
 
-%.o: src/%.c headers/%.h
+${OBJDIR}/%.o: %.c ${_DEPS}
 	${CC} -c -o $@ $< ${CFLAGS}
 
-all: ${OBJ}
+all: ${_OBJ}
 	${CC} -o ${EXEC} $^ ${CFLAGS}
-	rm -f *.o
+	rm -f ${OBJDIR}/*.o
 
 run: 
-	make main
+	make all
 	./${EXEC}
 
 valzin: 
-	make main
+	make all
 	valgrind ./${EXEC}
 
 val:
-	make main
+	make all
 	valgrind --leak-check=full ./${EXEC}
 
 valzao:
-	make main
+	make all
 	valgrind --leak-check=full --show-leak-kinds=all ./${EXEC}
 
 clear:
 	rm -f *.o
+	rm -f ${OBJDIR}/*.o
 	rm -f ${EXEC}
 	#rm -f main
 	clear

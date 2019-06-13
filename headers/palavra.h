@@ -5,10 +5,14 @@
 #include <string.h>
 #include <stdio.h>
 
+
+// ---- Struct -------
 typedef struct Palavra{
     char* pal;
     char tamPal;
 } tPalavra;
+
+// ------ Funcao ------
 
 tPalavra *cria_Palavra(char *pal);
 

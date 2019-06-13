@@ -15,14 +15,10 @@ tLista *novo_no_Lista(tPalavra *pal){
     tLista *novo = (tLista*) malloc(sizeof(tLista));
     if(novo == NULL) return NULL;
     novo->prox = NULL;
-    novo->ocorrencias = 1;
     novo->palavra = pal;
+    novo->ocorrencias = 1;
     novo->coluna = novo->linha = NULL;
-    /*TODO
-     * ADICIONAR TAMBEM A
-     * COLUNA E LINHA
-     * DA OCORRENCIA
-     */
+            /* TODO ADICIONAR TAMBEM QUAL O BYTE NO ARQUIVO ONDE HA AS OCORRENCIAS */
     return novo;
 } 
 
@@ -30,15 +26,10 @@ char insere_Lista(tListaSent *l, char *str){
     if(str == NULL) return 0;
     if(l == NULL) l = inicia_ListaSent();
 
-    for(tLista *aux = l->ini; !igual_Palavra(aux->palavra, str) || aux == NULL; aux = aux->prox){
-            aux->ocorrencias++;
-            /* TODO
-            :wa
-            :wa
-             * ADICIONAR TAMBEM A 
-             * COLUNA E LINHA 
-             * DA OCORRENCIA
-             */
+    for(tLista *aux = l->ini; aux != NULL; aux = aux->prox){
+            if(igual_Palavra(aux->palavra, str))
+                aux->ocorrencias++;
+            /* TODO ADICIONAR TAMBEM QUAL O BYTE NO ARQUIVO ONDE HA AS OCORRENCIAS */
             return 1;
     }
     tPalavra *pal = cria_Palavra(str);
@@ -48,8 +39,17 @@ char insere_Lista(tListaSent *l, char *str){
     return 1;     
 }
 
+char print_Lista(tListaSent *l){
+    if(l == NULL) return 0;
+    for(tLista *aux = l->ini; aux != NULL; aux = aux->prox)
+        print_Palavra(aux->palavra);
+    return 1;
+}
+
 char destroi_No(tLista *no){
     if(no == NULL) return 1;
+
+    /*TODO Adicionar o free da lista de ocorrenciar ao ser implementada*/
     destroi_Palavra(no->palavra);
     free(no);
     return 1;
