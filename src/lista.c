@@ -26,16 +26,25 @@ char insere_Lista(tListaSent *l, char *str){
     if(str == NULL) return 0;
     if(l == NULL) l = inicia_ListaSent();
 
+    //deixa a string de entrada toda minúscula
+    for(int i = 0; i < strlen(str); i++)
+        str[i] = tolower(str[i]);
+
+
     for(tLista *aux = l->ini; aux != NULL; aux = aux->prox){
-            if(igual_Palavra(aux->palavra, str))
+            if(igual_Palavra(aux->palavra, str)){
                 aux->ocorrencias++;
+                puts("Encotrei a palavra e aumentei a ocorrencia");
             /* TODO ADICIONAR TAMBEM QUAL O BYTE NO ARQUIVO ONDE HA AS OCORRENCIAS */
-            return 1;
+                return 1;
+            }
     }
     tPalavra *pal = cria_Palavra(str);
     tLista *no = novo_no_Lista(pal);
     no->prox = l->ini;
     l->ini = no;
+    l->qtd++;
+    puts("Criei novo no e adicionei na lista");
     return 1;     
 }
 
@@ -58,8 +67,10 @@ char destroi_No(tLista *no){
 char destroi_Lista(tListaSent *l){
     if(l == NULL) return 1;
 
-    for(tLista *no = l->ini; no != NULL; no = no->prox)
+    for(tLista *no = l->ini; no != NULL; no = no->prox){
         destroi_No(no);
+        l->qtd--;
+    }
 
     free(l);
     return 1;
