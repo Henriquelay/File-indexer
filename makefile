@@ -9,10 +9,10 @@
 
 CC=gcc
 CFLAGS=-Wall -g
-DEPS=lista.h palavra.hi
+DEPS=lista.h
 DEPSDIR= headers
 _DEPS=$(patsubst %,${DEPSDIR}/%,${DEPS})
-OBJ=lista.o palavra.o main.o
+OBJ=lista.o main.o
 OBJDIR=src
 _OBJ=$(patsubst %,${OBJDIR}/%,${OBJ})
 EXEC=LEIA_O_MAKEFILE

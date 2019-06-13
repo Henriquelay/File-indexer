@@ -1,8 +1,9 @@
 #ifndef _LISTA_H_
 #define _LISTA_H_
 
-#include "palavra.h"
-
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 //------ Structs --------
 // Para não ter que ficar realocando vetor de posições das palavras
@@ -15,9 +16,9 @@ typedef struct ListaInt{
 //Lista de ocorrências das palavras
 typedef struct Lista tLista;
 typedef struct Lista {
-    tPalavra *palavra;
+    char *palavra;
     int ocorrencias;
-    tListaInt *coluna, *linha;
+    tListaInt *indices;
     tLista *prox;
 } tLista;
 
@@ -28,7 +29,7 @@ typedef struct ListaSent{
 
 //------- Funções --------
 tListaSent *inicia_ListaSent(void);
-tLista *novo_no_Lista(tPalavra *pal);
+tLista *novo_no_Lista(char *str);
 char insere_Lista(tListaSent *l, char *str);
 char print_Lista(tListaSent *l);
 char destroi_No(tLista *no);

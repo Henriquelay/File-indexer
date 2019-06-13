@@ -10,6 +10,7 @@ int main(void){
     insere_Lista(l, "thomasaralho");
     insere_Lista(l, "thomanocu");
 
+
     if(!print_Lista(l)) puts("Nao consegui printar a lista");
 
 
