@@ -8,6 +8,7 @@
 
 
 // ---- Struct -------
+
 typedef struct Palavra{
     char* pal;
     char tamPal;

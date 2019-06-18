@@ -15,7 +15,8 @@ tLista *novo_no_Lista(char *str){
     tLista *novo = (tLista*) malloc(sizeof(tLista));
     if(novo == NULL) return NULL;
     novo->prox = NULL;
-    novo->palavra = str;
+    novo->palavra = (char*) malloc(sizeof(char) * (strlen(str) + 1));
+    strcpy(novo->palavra, str);
     novo->ocorrencias = 1;
     novo->indices = NULL;
             /* TODO: ADICIONAR TAMBEM QUAL O BYTE NO ARQUIVO ONDE HA AS OCORRENCIAS */
@@ -62,7 +63,7 @@ char destroi_No(tLista *no){
     if(no == NULL) return 1;
 
     /*TODO Adicionar o free da lista de indices ao ser implementada*/
-//    free(no->palavra);
+    free(no->palavra);
     free(no);
     return 1;
 }

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 //------ Structs --------
 // Para não ter que ficar realocando vetor de posições das palavras
