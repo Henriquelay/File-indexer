@@ -16,22 +16,23 @@ char fecha_Arquivo(FILE *arquivo){
 //Retirado de: Prova1 ED1 2019 - Vinícius Mota
 //E alterado
 char pega_Palavra(FILE *fp, char *s, int *byte){
-    if(fp == NULL){ printf("O pontero eh nulo!\n"); return 0;}
+    if(fp == NULL) return 0;
     int i = 0;
     int c;
-    while ((c = fgetc(fp)) != EOF){
-        *byte++;
+    while((c = fgetc(fp)) != EOF){
+        (*byte)++;
         if (isalnum(c))
             break;
     }
-    if (c == EOF)
+    if(c == EOF)
         return 0;
     else
         s[i++] = tolower(c);
-    while (i < NPAL - 1 && (c = fgetc(fp)) != EOF && (isalnum(c))){
+    while(i < NPAL - 1 && (c = fgetc(fp)) != EOF && (isalnum(c))){
+        (*byte)++;
         s[i++] = tolower(c);
-        byte++;
     }
+    
     s[i] = '\0';
     return 1;
 }

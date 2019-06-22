@@ -22,8 +22,8 @@ int main(int argc, char *argv[]){
         }
 
         while(pega_Palavra(arquivo, pal, &byte)){
-            printf("Palavra: %s\nByte: %d\n", pal, byte);
-            insere_Lista(l[i-2], pal);
+            printf("BYTE: %d\n", byte);
+            insere_Lista(l[i-2], pal, byte);
         }
 
         fecha_Arquivo(arquivo);

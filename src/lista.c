@@ -9,7 +9,15 @@ tListaSent *inicia_ListaSent(void){
     return novo;
 }
 
-tLista *novo_no_Lista(char *str){
+tIndiceLista *novo_Indice(int byte){
+    tIndiceLista *novo_Ind = (tIndiceLista*) malloc(sizeof(tIndiceLista));
+    if(novo_Ind == NULL) return NULL;
+    novo_Ind->ind = byte;
+    novo_Ind->prox = NULL;
+    return novo_Ind;
+}
+
+tLista *novo_no_Lista(char *str, int byte){
     if(str == NULL) return NULL;
 
     tLista *novo = (tLista*) malloc(sizeof(tLista));
@@ -18,43 +26,57 @@ tLista *novo_no_Lista(char *str){
     novo->palavra = (char*) malloc(sizeof(char) * (strlen(str) + 1));
     strcpy(novo->palavra, str);
     novo->ocorrencias = 1;
-    novo->indices = NULL;
-            /* TODO: ADICIONAR TAMBEM QUAL O BYTE NO ARQUIVO ONDE HA AS OCORRENCIAS */
+    novo->indices = novo_Indice(byte);
     return novo;
 } 
 
-char insere_Lista(tListaSent *l, char *str){
+char insere_Indice(tLista *no, int byte){
+    if(no == NULL) return 0;
+    if(no->indices == NULL) return 0;
+    tIndiceLista *novo = (tIndiceLista*) malloc(sizeof(tIndiceLista));
+    if(novo == NULL) return 0;
+    novo->ind = byte;
+    novo->prox = no->indices;
+    no->indices = novo;
+    return 1;
+}
+
+void imprime_Indices(tLista *no){
+    if(no == NULL) return;
+    for(tLista *aux = no; aux != NULL; aux = aux->prox)
+        printf("%d ", no->indices->ind);
+    return;
+}
+
+char insere_Lista(tListaSent *l, char *str, int byte){
     if(str == NULL) return 0;
     if(l == NULL) return 0;
 
     //Procura a palavra na lista
     for(tLista *aux = l->ini; aux != NULL; aux = aux->prox){
         if(strlen(aux->palavra) == strlen(str))
-            if(strcasecmp(aux->palavra, str) == 0){
+            if(strcasecmp(aux->palavra, str) == 0){ //encontra a palavra na lista
                 aux->ocorrencias++;
-                printf("%s eh igual a %s.\n", aux->palavra, str);
-                /* TODO: ADICIONAR TAMBEM QUAL O BYTE NO ARQUIVO ONDE HA AS OCORRENCIAS */
+                insere_Indice(aux, byte);
                 return 1;
             }
     }
-    //deixa a string de entrada toda minúscula
-    //TODO
-
     //Não foi encontrado a palavra na lista
-    tLista *no = novo_no_Lista(str);
+    tLista *no = novo_no_Lista(str, byte);
     no->prox = l->ini;
     l->ini = no;
     if(l->fim == NULL)
         l->fim = no;
     l->qtd++;
-    puts("Criei novo no e adicionei na lista");
     return 1;     
 }
 
 char print_Lista(tListaSent *l){
     if(l == NULL) return 0;
     for(tLista *aux = l->ini; aux != NULL; aux = aux->prox){
-        printf("Palavra:\t%s\n\tOcorrencias: %d\n", aux->palavra, aux->ocorrencias);
+        printf("Palavra:\t%s\n\tOcorrencias: %d\n\tBytes: ", aux->palavra, aux->ocorrencias);
+        imprime_Indices(aux);
+        printf("\n");
     }
     return 1;
 }
@@ -62,8 +84,12 @@ char print_Lista(tListaSent *l){
 char destroi_No(tLista *no){
     if(no == NULL) return 1;
 
-    /*TODO Adicionar o free da lista de indices ao ser implementada*/
     free(no->palavra);
+    tIndiceLista *next = NULL;
+    for(tIndiceLista *aux = no->indices; aux != NULL; aux = next){
+        next = aux->prox;
+        free(aux);
+    }
     free(no);
     return 1;
 }
