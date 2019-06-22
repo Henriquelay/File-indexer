@@ -9,10 +9,24 @@ char abre_Arquivo(char *path, FILE *arquivo){
 }
 
 char fecha_Arquivo(FILE *arquivo){
-    return fclose(arquivo);
+    return !fclose(arquivo);
 }
 
-char *pega_Palavra(FILE *arquivo){
-    char *palavra;
-
+//Retirado de: Prova1 ED1 2019 - Vinícius Mota
+//E alterado
+char pega_Palavra( FILE *fp, char *s){
+    int i = 0;
+    int c;
+    while ((c = fgetc(fp)) != EOF){
+        if (isalpha(c)||isdigit(c))
+            break;
+    }
+    if (c == EOF)
+        return 0;
+    else
+        s[i++] = c;
+    while (i < NPAL - 1 && (c = fgetc(fp)) != EOF && (isalpha(c)||isdigit(c)))
+        s[i++] = c;
+    s[i] = '\0';
+    return 1;
 }

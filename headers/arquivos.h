@@ -10,6 +10,6 @@ char abre_Arquivo(char *path, FILE *arquivo);
 
 char fecha_Arquivo(FILE *arquivo);
 
-char *pega_Palavra(FILE *arquivo);
+char pega_Palavra(FILE *arquivo, char *str);
 
 #endif
