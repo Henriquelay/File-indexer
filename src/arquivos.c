@@ -1,32 +1,37 @@
 #include "../headers/arquivos.h"
 
-char abre_Arquivo(char *path, FILE *arquivo){
-    arquivo = NULL;
-    arquivo = fopen(path);
-    if(arquivo == NULL)
+char abre_Arquivo(char *path, FILE **arquivo){
+    *arquivo = NULL;
+    *arquivo = fopen(path, "r");
+    if(*arquivo == NULL)
         return 0;
     return 1;
 }
 
 char fecha_Arquivo(FILE *arquivo){
+    if(arquivo == NULL) return 1;
     return !fclose(arquivo);
 }
 
 //Retirado de: Prova1 ED1 2019 - Vinícius Mota
 //E alterado
-char pega_Palavra( FILE *fp, char *s){
+char pega_Palavra(FILE *fp, char *s, int *byte){
+    if(fp == NULL){ printf("O pontero eh nulo!\n"); return 0;}
     int i = 0;
     int c;
     while ((c = fgetc(fp)) != EOF){
-        if (isalpha(c)||isdigit(c))
+        *byte++;
+        if (isalnum(c))
             break;
     }
     if (c == EOF)
         return 0;
     else
-        s[i++] = c;
-    while (i < NPAL - 1 && (c = fgetc(fp)) != EOF && (isalpha(c)||isdigit(c)))
-        s[i++] = c;
+        s[i++] = tolower(c);
+    while (i < NPAL - 1 && (c = fgetc(fp)) != EOF && (isalnum(c))){
+        s[i++] = tolower(c);
+        byte++;
+    }
     s[i] = '\0';
     return 1;
 }

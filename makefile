@@ -9,10 +9,10 @@
 
 CC=gcc
 CFLAGS=-Wall -g
-DEPS=lista.h
+DEPS=lista.h arquivos.h
 DEPSDIR= headers
 _DEPS=$(patsubst %,${DEPSDIR}/%,${DEPS})
-OBJ=lista.o main.o
+OBJ=lista.o arquivos.o main.o
 OBJDIR=src
 _OBJ=$(patsubst %,${OBJDIR}/%,${OBJ})
 EXEC=LEIA_O_MAKEFILE
@@ -26,19 +26,19 @@ all: ${_OBJ}
 
 run: 
 	make all
-	./${EXEC}
+	./${EXEC} 1 data/Teste-SA.txt
 
 valzin: 
 	make all
-	valgrind ./${EXEC}
+	valgrind ./${EXEC} 1 data/Teste-SA.txt
 
 val:
 	make all
-	valgrind --leak-check=full ./${EXEC}
+	valgrind --leak-check=full ./${EXEC} 1 data/Teste-SA.txt
 
 valzao:
 	make all
-	valgrind --leak-check=full --show-leak-kinds=all ./${EXEC}
+	valgrind --leak-check=full --show-leak-kinds=all ./${EXEC} 1 data/Teste-SA.txt
 
 clear:
 	rm -f *.o
