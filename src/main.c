@@ -21,14 +21,12 @@ int main(int argc, char *argv[]){
             return 0;
         }
 
-        while(pega_Palavra(arquivo, pal, &byte)){
-            printf("BYTE: %d\n", byte);
+        while(pega_Palavra(arquivo, pal, &byte))
             insere_Lista(l[i-2], pal, byte);
-        }
 
         fecha_Arquivo(arquivo);
 
-        puts("LISTA TODA:");
+        printf("========LISTA %d:========\n", i - 1);
         print_Lista(l[i-2]);
     }
 

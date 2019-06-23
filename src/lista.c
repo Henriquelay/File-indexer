@@ -43,8 +43,13 @@ char insere_Indice(tLista *no, int byte){
 
 void imprime_Indices(tLista *no){
     if(no == NULL) return;
-    for(tLista *aux = no; aux != NULL; aux = aux->prox)
-        printf("%d ", no->indices->ind);
+        tIndiceLista *aux = no->indices;
+    do{
+        printf("%d", aux->ind);
+        aux = aux->prox;
+        if(aux != NULL)
+            printf(", ");
+    } while(aux != NULL);
     return;
 }
 
@@ -74,7 +79,7 @@ char insere_Lista(tListaSent *l, char *str, int byte){
 char print_Lista(tListaSent *l){
     if(l == NULL) return 0;
     for(tLista *aux = l->ini; aux != NULL; aux = aux->prox){
-        printf("Palavra:\t%s\n\tOcorrencias: %d\n\tBytes: ", aux->palavra, aux->ocorrencias);
+        printf("%s %d: ", aux->palavra, aux->ocorrencias);
         imprime_Indices(aux);
         printf("\n");
     }

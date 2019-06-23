@@ -13,6 +13,24 @@ char fecha_Arquivo(FILE *arquivo){
     return !fclose(arquivo);
 }
 
+char eValido(char c){
+    switch(c){
+        case '(':
+        case ')':
+        case '.':
+        case ',':
+        case '"':
+        case '\'':
+        case ' ':
+        case '\n':
+        case '?':
+        case '!':
+            return 0;
+        default:
+            return 1;
+    }
+}
+
 //Retirado de: Prova1 ED1 2019 - Vinícius Mota
 //E alterado
 char pega_Palavra(FILE *fp, char *s, int *byte){
@@ -20,16 +38,16 @@ char pega_Palavra(FILE *fp, char *s, int *byte){
     int i = 0;
     int c;
     while((c = fgetc(fp)) != EOF){
-        (*byte)++;
-        if (isalnum(c))
+            if (eValido(c))
             break;
     }
     if(c == EOF)
         return 0;
-    else
-        s[i++] = tolower(c);
-    while(i < NPAL - 1 && (c = fgetc(fp)) != EOF && (isalnum(c))){
-        (*byte)++;
+
+    s[i++] = tolower(c);
+    *byte = ftell(fp);
+        
+    while(i < NPAL - 1 && (c = fgetc(fp)) != EOF && (eValido(c))){
         s[i++] = tolower(c);
     }
     
