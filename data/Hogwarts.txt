@@ -1,0 +1,6 @@
+A escola de magia Hogwarts foi reforçada com um professor de Ciência da Computação.
+Ao voltar das férias, os alunos aprenderiam Lógica e Álgebra de Boole para aperfeiçoar sua capacidade de raciocínio. Na primeira aula, o novo professor explicou formalização de proposições em linguagem natural para álgebra de Boole, simplificação de expressões booleanas e projeto de circuitos lógicos.
+Para verificar se os alunos aprenderam, ele aplicou um feitiço que congelou Ronie. O professor então passou o seguinte desafio:
+Ronie será descongelado se Dumbledore estiver em Hogwarts ou o professor Severo der aula de feitiços aquáticos nesse semestre e Hermione não tirar uma nota abaixo de sete no exercício de álgebra de Boole; ou o time de Harry vencer o jogo de quadribol e o professo Severo der aula de feitiços aquáticos nesse semestre; ou não for verdade que Dumbledore não estiver em Hogwarts e o professor Severo não der aula de feitiços aquáticos nesse semestre; ou o time de Harry vencer o próximo jogo de quadribol e Hermione não tirar uma nota abaixo de sete no exercício de álgebra de Boole.
+Para a verificação seria preciso implementar um circuito lógico que calculasse quando Ronie seria descongelado. Para isso os alunos irão dispor de uma porta OR e uma AND (inversores à vontade).
+Pergunta-se: como Harry Potter conseguiria descongelar Ronie usando a álgebra de Boole?
