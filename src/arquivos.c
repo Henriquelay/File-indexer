@@ -25,6 +25,7 @@ char eValido(char c){
         case '\n':
         case '?':
         case '!':
+        case ';':
             return 0;
         default:
             return 1;
