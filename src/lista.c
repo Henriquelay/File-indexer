@@ -76,6 +76,20 @@ char insere_Lista(tListaSent *l, char *str, int byte){
     return 1;     
 }
 
+char busca_Lista(char* pal, tListaSent *l){
+    if(pal == NULL || l == NULL) return 0;
+    
+    //Procura a palavra na lista
+    for(tLista *aux = l->ini; aux != NULL; aux = aux->prox){
+        if(strlen(aux->palavra) == strlen(pal))
+            if(strcasecmp(aux->palavra, pal) == 0){ //encontra a palavra na lista
+                return 1;
+            }
+    }
+    return 0;
+
+}
+
 char print_Lista(tListaSent *l){
     if(l == NULL) return 0;
     for(tLista *aux = l->ini; aux != NULL; aux = aux->prox){

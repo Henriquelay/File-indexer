@@ -12,8 +12,14 @@ int main(int argc, char *argv[]){
     char pal[NPAL]; //tamanho arbitrariamente grande
     int byte = 0;
     FILE *arquivo;
+
     for(int i = 0; i < argc - 2; i++)
         l[i] = inicia_ListaSent();
+
+    clock_t t; 
+    t = clock(); 
+
+
     for(int i = 2; i < argc; i++){
         arquivo = NULL;
         if(abre_Arquivo(argv[i], &arquivo) != 1){
@@ -30,6 +36,11 @@ int main(int argc, char *argv[]){
         //print_Lista(l[i-2]);
     }
 
+    t = clock() - t; 
+    double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds 
+
+    printf("%lf ", time_taken);
+
     //sorteia as palavras a serem pesquisadas.
     //escolhe primeiro a lista, e aí acessa um número aleatório na lista e trás somente a palavra
     srand(time(NULL));
@@ -42,7 +53,7 @@ int main(int argc, char *argv[]){
         for(int y = 0; y < indSelec; y++)
             noSelec = noSelec->prox;
 
-        printf("Palavra selecionada: %s\n", noSelec->palavra);
+        printf("%s: \n", noSelec->palavra);
     }
 
     for(int i = 0; i < argc - 2; i++)

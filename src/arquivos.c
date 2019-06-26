@@ -21,6 +21,7 @@ char eValido(char c){
         case ',':
         case '"':
         case '\'':
+        case '/':
         case ' ':
         case '\n':
         case '?':

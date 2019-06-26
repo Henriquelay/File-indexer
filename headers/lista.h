@@ -33,6 +33,7 @@ typedef struct ListaSent{
 tListaSent *inicia_ListaSent(void);
 tLista *novo_no_Lista(char *str, int byte);
 char insere_Lista(tListaSent *l, char *str, int byte);
+char busca_Lista(char *pal, tListaSent *l);
 char print_Lista(tListaSent *l);
 char destroi_No(tLista *no);
 char destroi_Lista(tListaSent *l);
