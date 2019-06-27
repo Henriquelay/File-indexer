@@ -15,7 +15,7 @@ _DEPS=$(patsubst %,${DEPSDIR}/%,${DEPS})
 OBJ=lista.o arquivos.o main.o
 OBJDIR=src
 _OBJ=$(patsubst %,${OBJDIR}/%,${OBJ})
-EXEC=LEIA_O_MAKEFILE
+EXEC=LEIA_O_README
 
 ${OBJDIR}/%.o: %.c ${_DEPS}
 	${CC} -c -o $@ $< ${CFLAGS}
