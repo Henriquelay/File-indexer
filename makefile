@@ -10,19 +10,19 @@
 CC=gcc
 CFLAGS=-Wall -g
 DEPS=lista.h arquivos.h ArvoreBinaria.h
-DEPSDIR= headers
+DEPSDIR=headers
 _DEPS=$(patsubst %,${DEPSDIR}/%,${DEPS})
-OBJLISTA=lista.o arquivos.o testLista.o
-OBJARVBIN=ArvoreBinaria.o arquivos.o testArvoreBinaria.o
-OBJDIR=src
-_OBJLISTA=$(patsubst %,${OBJDIR}/%,${OBJLISTA})
-_OBJARVBIN=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
-EXEC=LEIA_O_README
-
-
 ARQUIVO=data/Hogwarts.txt
 BUSCAS=5
+OBJDIR=src
 
+OBJLISTA=lista.o arquivos.o testLista.o
+_OBJLISTA=$(patsubst %,${OBJDIR}/%,${OBJLISTA})
+
+OBJARVBIN=ArvoreBinaria.o arquivos.o testArvoreBinaria.o
+_OBJARVBIN=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
+
+EXEC=Lista
 
 
 ${OBJDIR}/%.o: %.c ${_DEPS}
