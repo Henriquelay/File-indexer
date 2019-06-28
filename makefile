@@ -9,42 +9,50 @@
 
 CC=gcc
 CFLAGS=-Wall -g
-DEPS=lista.h arquivos.h
+DEPS=lista.h arquivos.h ArvoreBinaria.h
 DEPSDIR= headers
 _DEPS=$(patsubst %,${DEPSDIR}/%,${DEPS})
-OBJ=lista.o arquivos.o main.o
+OBJLISTA=lista.o arquivos.o testLista.o
+OBJARVBIN=ArvoreBinaria.o arquivos.o testArvoreBinaria.o
 OBJDIR=src
-_OBJ=$(patsubst %,${OBJDIR}/%,${OBJ})
+_OBJLISTA=$(patsubst %,${OBJDIR}/%,${OBJLISTA})
+_OBJARVBIN=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
 EXEC=LEIA_O_README
+
+
+ARQUIVO=data/Hogwarts.txt
+BUSCAS=5
+
+
 
 ${OBJDIR}/%.o: %.c ${_DEPS}
 	${CC} -c -o $@ $< ${CFLAGS}
 
-all: ${_OBJ}
-	${CC} -o ${EXEC} $^ ${CFLAGS}
-	rm -f ${OBJDIR}/*.o
+all: lista arvbin
+	rm src/*.o
 
-run: 
-	make all
-	./${EXEC} 1 data/Teste-SA.txt
+lista: ${_OBJLISTA} 
+	${CC} -o Lista $^ ${CFLAGS}
+
+arvbin: ${_OBJARVBIN} 
+	${CC} -o ArvBin $^ ${CFLAGS}
 
 valzin: 
 	make all
-	valgrind ./${EXEC} 1 data/Teste-SA.txt
+	valgrind ./${EXEC} ${BUSCAS} ${ARQUIVO}
 
 val:
 	make all
-	valgrind --leak-check=full ./${EXEC} 1 data/Teste-SA.txt
+	valgrind --leak-check=full ./${EXEC} ${BUSCAS} ${ARQUIVO} 
 
 valzao:
 	make all
-	valgrind --leak-check=full --show-leak-kinds=all ./${EXEC} 1 data/Teste-SA.txt
+	valgrind --leak-check=full --show-leak-kinds=all ./${EXEC} ${BUSCAS} ${ARQUIVO}
 
 clear:
 	rm -f *.o
 	rm -f ${OBJDIR}/*.o
 	rm -f ${EXEC}
-	#rm -f main
 	clear
 
 push:

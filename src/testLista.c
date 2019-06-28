@@ -44,6 +44,7 @@ int main(int argc, char *argv[]){
     //sorteia as palavras a serem pesquisadas.
     //escolhe primeiro a lista, e aí acessa um número aleatório na lista e trás somente a palavra
     srand(time(NULL));
+    t = clock();
     for(int i = 0; i < atoi(argv[1]); i++){
         srand(rand());
         tListaSent *ListaSelec = l[rand() % (argc - 2)];
@@ -52,9 +53,11 @@ int main(int argc, char *argv[]){
         tLista *noSelec = ListaSelec->ini;
         for(int y = 0; y < indSelec; y++)
             noSelec = noSelec->prox;
-
-        printf("%s: \n", noSelec->palavra);
     }
+    t = clock() - t;
+    time_taken = ((double)t)/CLOCKS_PER_SEC;
+
+    printf("%lf\n", time_taken);
 
     for(int i = 0; i < argc - 2; i++)
         destroi_Lista(l[i]);
