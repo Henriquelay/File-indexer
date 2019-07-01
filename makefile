@@ -9,7 +9,7 @@
 
 CC=gcc
 CFLAGS=-Wall -g
-DEPS=lista.h arquivos.h ArvoreBinaria.h
+DEPS=lista.h arquivos.h ArvoreBinaria.h ArvoreAVL.h
 DEPSDIR=headers
 _DEPS=$(patsubst %,${DEPSDIR}/%,${DEPS})
 ARQUIVO=data/Hogwarts.txt
@@ -22,13 +22,16 @@ _OBJLISTA=$(patsubst %,${OBJDIR}/%,${OBJLISTA})
 OBJARVBIN=ArvoreBinaria.o arquivos.o testArvoreBinaria.o
 _OBJARVBIN=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
 
+OBJARVAVL=ArvoreAVL.o arquivos.o testArvoreAVL.o
+_OBJARVAVL=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
+
 EXEC=Lista
 
 
 ${OBJDIR}/%.o: %.c ${_DEPS}
 	${CC} -c -o $@ $< ${CFLAGS}
 
-all: lista arvbin
+all: lista arvbin arvavl
 	rm src/*.o
 
 lista: ${_OBJLISTA} 
@@ -36,6 +39,9 @@ lista: ${_OBJLISTA}
 
 arvbin: ${_OBJARVBIN} 
 	${CC} -o ArvBin $^ ${CFLAGS}
+
+arvavl: ${_OBJARVAVL} 
+	${CC} -o ArvAVL $^ ${CFLAGS}
 
 valzin: 
 	make all
