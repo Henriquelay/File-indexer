@@ -19,5 +19,6 @@ ArvBin* cria_ArvBin();
 char insere_ArvBin(ArvBin* raiz, char* valor);
 void destroi_ArvBin(ArvBin *raiz);
 char consulta_ArvBin(ArvBin *raiz, char* valor);
+void emOrdem(ArvBin *raiz);
 
 #endif

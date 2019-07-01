@@ -70,3 +70,10 @@ char consulta_ArvBin(ArvBin *raiz, char* valor){
     return 0;
 }
 
+void emOrdem(ArvBin *raiz){
+    if(raiz == NULL) return;
+    if(*raiz == NULL) return;
+    emOrdem(&(*raiz)->esq);
+    printf("%s ", (*raiz)->info);
+    emOrdem(&(*raiz)->dir);
+}

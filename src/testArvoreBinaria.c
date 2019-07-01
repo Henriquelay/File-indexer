@@ -41,6 +41,7 @@ int main(int argc, char *argv[]){
 
     printf("%lf ", time_taken);
 
+
 /*
     //sorteia as palavras a serem pesquisadas.
     //escolhe primeiro a lista, e aí acessa um número aleatório na lista e trás somente a palavra
@@ -60,8 +61,11 @@ int main(int argc, char *argv[]){
 
     printf("%lf\n", time_taken);
 */
-    for(int i = 0; i < argc - 2; i++)
+    for(int i = 0; i < argc - 2; i++){
+        printf("\nArv%d:", i);
+        emOrdem(a[i]);
         destroi_ArvBin(a[i]);
+    }
 
     return 0;
 }
