@@ -74,6 +74,41 @@ void destroi_Indices(tIndiceLista *l){
     }
 }
 
+tListaNaoTratada *novo_NaoTratada(char *str){
+    tListaNaoTratada *no = (tListaNaoTratada*) malloc(sizeof(tListaNaoTratada));
+    if(no == NULL) return NULL;
+
+    no->palavra = (char*) malloc(sizeof(char) * (strlen(str) + 1));
+    if(no->palavra == NULL) return NULL;
+
+    strcpy(no->palavra, str);
+    no->prox = no->ultimo = NULL;
+    no->qtd = 0;
+    return no;
+}
+
+char insere_ListaNaoTratada(tListaNaoTratada *l, char *str){
+    if(l == NULL){
+        l = novo_NaoTratada(str);
+        if(l == NULL) return 0;
+        l->ultimo = l;
+        l->qtd++;
+        return 1;
+    }
+    l->ultimo->prox = novo_NaoTratada(str);
+    l->ultimo = l->ultimo->prox;
+    if(l->ultimo == NULL) return 0;
+    l->qtd++;
+    return 1;
+}
+
+void destroi_ListaNaoTratada(tListaNaoTratada *l){
+    for(tListaNaoTratada *aux = l; aux != NULL; aux = l){
+        l = l->prox;
+        free(aux);
+    }
+}
+
 //Retirado de: Prova1 ED1 2019 - Vinícius Mota
 //E alterado
 char pega_Palavra(FILE *fp, char *s, int *byte){

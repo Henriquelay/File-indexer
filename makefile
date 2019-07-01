@@ -7,25 +7,25 @@
 #-g necessário para avaliar o código do valgrind (permite o valgrind dizer em que linha dá merda)
 #-lm obrigatorio caso utilize a biblioteca math.h
 
-CC=gcc
-CFLAGS=-Wall -g
-DEPS=lista.h arquivos.h ArvoreBinaria.h ArvoreAVL.h
-DEPSDIR=headers
-_DEPS=$(patsubst %,${DEPSDIR}/%,${DEPS})
-ARQUIVO=data/Hogwarts.txt
-BUSCAS=5
-OBJDIR=src
+CC			=gcc
+CFLAGS		=-Wall -g
+DEPS		=lista.h arquivos.h ArvoreBinaria.h ArvoreAVL.h
+DEPSDIR		=headers
+_DEPS		=$(patsubst %,${DEPSDIR}/%,${DEPS})
+ARQUIVO		=data/Hogwarts.txt
+BUSCAS		=5
+OBJDIR		=src
 
-OBJLISTA=lista.o arquivos.o testLista.o
-_OBJLISTA=$(patsubst %,${OBJDIR}/%,${OBJLISTA})
+OBJLISTA	=lista.o arquivos.o testLista.o
+_OBJLISTA	=$(patsubst %,${OBJDIR}/%,${OBJLISTA})
 
-OBJARVBIN=ArvoreBinaria.o arquivos.o testArvoreBinaria.o
-_OBJARVBIN=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
+OBJARVBIN	=ArvoreBinaria.o arquivos.o testArvoreBinaria.o
+_OBJARVBIN	=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
 
-OBJARVAVL=ArvoreAVL.o arquivos.o testArvoreAVL.o
-_OBJARVAVL=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
+OBJARVAVL	=ArvoreAVL.o arquivos.o testArvoreAVL.o
+_OBJARVAVL	=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
 
-EXEC=Lista
+EXEC		=Lista
 
 
 ${OBJDIR}/%.o: %.c ${_DEPS}

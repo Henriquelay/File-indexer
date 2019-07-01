@@ -7,7 +7,7 @@ int main(int argc, char *argv[]){
         printf("#Usagem do programa:\n#./LEIA_O_MAKEFILE [nPalavras] [arquivos..]\n#\tOnde:\n#nPalavras = numeros de palavras a aleatorias a ser pesquisada em cada estrutura\n#arquivos = Os arquivo que serao passados para o programa indexar, separados por espaço.\n");
         return 0;
     }
-
+    int nBuscas = atoi(argv[1]);
     tListaSent *l[argc - 2];    //os 2 primeiros são o nome do executável e o n de palavras
     char pal[NPAL]; //tamanho arbitrariamente grande
     int byte = 0;
@@ -15,10 +15,9 @@ int main(int argc, char *argv[]){
 
     for(int i = 0; i < argc - 2; i++)
         l[i] = inicia_ListaSent();
-
+    tListaNaoTratada *holder = NULL;
     clock_t t; 
-    t = clock(); 
-
+    t = clock();
 
     for(int i = 2; i < argc; i++){
         arquivo = NULL;
@@ -26,34 +25,40 @@ int main(int argc, char *argv[]){
             printf("Erro ao abrir o arquivo %s!\n", argv[i]);
             return 0;
         }
-
-        while(pega_Palavra(arquivo, pal, &byte))
+        while(pega_Palavra(arquivo, pal, &byte)){
             insere_Lista(l[i-2], pal, byte);
-
+            insere_ListaNaoTratada(holder, pal);
+        }
         fecha_Arquivo(arquivo);
+    }
 
-        //printf("========LISTA %d:========\n", i - 1);
-        //print_Lista(l[i-2]);
+
+    //copia nBuscas palavras aleatórias da estrutura de lista não tratada para um vetor estático (para ter acesso O(1))
+    srand(time(NULL));
+    int ind = 0;
+    tListaNaoTratada *palselec = holder;
+    char *seletor[nBuscas];
+    for(int i = 0; i < nBuscas; i++){
+        ind = rand() % holder->qtd;
+        for(int y = 0; y < ind; i++)
+            palselec = palselec->prox;
+        
+        seletor[i] = palselec->palavra;
     }
 
     t = clock() - t; 
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds 
-
     printf("%lf ", time_taken);
 
     //sorteia as palavras a serem pesquisadas.
-    //escolhe primeiro a lista, e aí acessa um número aleatório na lista e trás somente a palavra
+    //Coloca tudo em um vetor estático, sorteia um valor dentro dele e lê a palavra. Então, tenta buscar ela na estrutura.
+
     srand(time(NULL));
     t = clock();
-    for(int i = 0; i < atoi(argv[1]); i++){
-        srand(rand());
-        tListaSent *ListaSelec = l[rand() % (argc - 2)];
-        srand(rand());
-        int indSelec = rand() % ListaSelec->qtd;
-        tLista *noSelec = ListaSelec->ini;
-        for(int y = 0; y < indSelec; y++)
-            noSelec = noSelec->prox;
-    }
+    for(int i = 0; i < nBuscas; i++)
+        for(int y = 0; y < argc - 2; y++)
+            busca_Lista(seletor[i], l[i]);
+
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC;
 
@@ -65,6 +70,7 @@ int main(int argc, char *argv[]){
         //print_Lista(l[i]);
         destroi_Lista(l[i]);
     }
+    destroi_ListaNaoTratada(holder);
 
     return 0;
 }
