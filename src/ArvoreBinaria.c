@@ -46,9 +46,9 @@ char insere_ArvBin(ArvBin* raiz, char* valor){
                 return 0;
         }
         else if( strcasecmp((*raiz)->info, valor) > 0)
-            return insere_ArvBin(&(*raiz)->dir, valor);
-        else
             return insere_ArvBin(&(*raiz)->esq, valor);
+        else
+            return insere_ArvBin(&(*raiz)->dir, valor);
 
     }
     return 1;

@@ -28,6 +28,7 @@ char eValido(char c){
         case '!':
         case ';':
         case ':':
+        case '-':
             return 0;
         default:
             return 1;
