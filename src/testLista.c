@@ -59,8 +59,12 @@ int main(int argc, char *argv[]){
 
     printf("%lf\n", time_taken);
 
-    for(int i = 0; i < argc - 2; i++)
+
+    for(int i = 0; i < argc - 2; i++){
+        //printf("%s:\n", argv[i + 2]);
+        //print_Lista(l[i]);
         destroi_Lista(l[i]);
+    }
 
     return 0;
 }

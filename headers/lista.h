@@ -5,15 +5,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include "../headers/arquivos.h"
 
-//------ Structs --------
-// Para não ter que ficar realocando vetor de posições das palavra
-typedef struct Indice tIndiceLista;
-typedef struct Indice {
-    int ind;
-    tIndiceLista *prox;
-} tIndiceLista;
-
+//---- Structs -----
 //Lista de ocorrências das palavras
 typedef struct Lista tLista;
 typedef struct Lista {
@@ -37,4 +31,5 @@ char busca_Lista(char *pal, tListaSent *l);
 char print_Lista(tListaSent *l);
 char destroi_No(tLista *no);
 char destroi_Lista(tListaSent *l);
+
 #endif

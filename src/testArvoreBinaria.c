@@ -62,10 +62,12 @@ int main(int argc, char *argv[]){
     printf("%lf\n", time_taken);
 */
     for(int i = 0; i < argc - 2; i++){
-        printf("\nArv%d:", i);
+        printf("\n%s:\n", argv[i+2]);
         emOrdem(a[i]);
         destroi_ArvBin(a[i]);
+        puts("");
     }
+
 
     return 0;
 }
