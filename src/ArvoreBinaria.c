@@ -20,7 +20,7 @@ void libera_NO(ArvBin no){
 void destroi_ArvBin(ArvBin* raiz){
     if(raiz == NULL)
         return;
-    libera_NO(*raiz);//libera cada nó
+    libera_NO(*raiz);//libera cada nï¿½
     free(raiz);//libera a raiz
 }
 
@@ -31,6 +31,7 @@ char insere_ArvBin(ArvBin* raiz, char* valor){
         novo = (ArvBin) malloc(sizeof(struct NO));
         if(novo == NULL)
             return 0;
+        
         novo->info = malloc(sizeof(char) * (strlen(valor) + 1));
         strcpy(novo->info, valor);
         novo->dir = NULL;
