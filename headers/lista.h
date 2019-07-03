@@ -1,14 +1,9 @@
 #ifndef _LISTA_H_
 #define _LISTA_H_
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
 #include "../headers/arquivos.h"
 
 //---- Structs -----
-//Lista de ocorrências das palavras
 typedef struct Lista tLista;
 typedef struct Lista {
     char *palavra;

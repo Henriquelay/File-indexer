@@ -9,7 +9,7 @@
 
 CC			=gcc
 CFLAGS		=-Wall -g
-DEPS		=lista.h arquivos.h ArvoreBinaria.h ArvoreAVL.h
+DEPS		=lista.h arquivos.h ArvoreBinaria.h ArvoreAVL.h hash.h
 DEPSDIR		=headers
 _DEPS		=$(patsubst %,${DEPSDIR}/%,${DEPS})
 OBJDIR		=src
@@ -25,14 +25,18 @@ OBJARVBIN	=ArvoreBinaria.o arquivos.o testArvoreBinaria.o
 _OBJARVBIN	=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
 
 OBJARVAVL	=ArvoreAVL.o arquivos.o testArvoreAVL.o
-_OBJARVAVL	=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
+_OBJARVAVL	=$(patsubst %,${OBJDIR}/%,${OBJARVAVL})
+
+OBJHASH	=hash.o arquivos.o testHash.o
+_OBJHASH	=$(patsubst %,${OBJDIR}/%,${OBJHASH})
+
 
 
 
 ${OBJDIR}/%.o: %.c ${_DEPS}
 	${CC} -c -o $@ $< ${CFLAGS}
 
-all: lista arvbin arvavl
+all: lista arvbin arvavl hash
 	rm src/*.o
 
 lista: ${_OBJLISTA} 
@@ -43,6 +47,9 @@ arvbin: ${_OBJARVBIN}
 
 arvavl: ${_OBJARVAVL} 
 	${CC} -o ArvAVL $^ ${CFLAGS}
+
+hash: ${_OBJHASH} 
+	${CC} -o Hash $^ ${CFLAGS}
 
 valzin: 
 	make all
