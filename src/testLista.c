@@ -39,37 +39,28 @@ int main(int argc, char *argv[]){
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds 
     printf("%lf ", time_taken);
 
-    //copia nBuscas palavras aleatórias da estrutura de lista não tratada para um vetor estático (para ter acesso O(1))
+    //copia nBuscas palavras aleatórias da estrutura de lista não tratada para um vetor estático (para ter acesso O(1)) e não impactar tanto na medida busca.
     srand(time(NULL));
     int ind = 0;
     tListaNaoTratada *palselec = NULL;
     char *seletor[nBuscas];
     for(int i = 0; i < nBuscas; i++){
         palselec = holder->ini;
-        // printf("Quantidade de palavras = %d\n", holder->qtd);
         ind = rand() % holder->qtd;
         for(int y = 0; y < ind; y++){
-            // printf("Y = %d, \t\tind = %d\n", y, ind);
             palselec = palselec->prox;
         }
         
         seletor[i] = palselec->palavra;
     }
 
-    // printf("Vetor de palavras aleatórias:\n");
-    // for(int i = 0; i < nBuscas; i++)
-    //     printf("%s\n", seletor[i]);
-
     //sorteia as palavras a serem pesquisadas.
     //Coloca tudo em um vetor estático, sorteia um valor dentro dele e lê a palavra. Então, tenta buscar ela na estrutura.
-
     srand(time(NULL));
     t = clock();
     for(int i = 0; i < nBuscas; i++)
         for(int y = 0; y < argc - 2; y++)
-            if(busca_Lista(seletor[i], l[y])){
-                printf("Encontrei %s na lista do arquivo %s.\n", seletor[i], argv[y+2]);
-            }
+            busca_Lista(seletor[i], l[y]);
 
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC;
@@ -78,8 +69,6 @@ int main(int argc, char *argv[]){
 
 
     for(int i = 0; i < argc - 2; i++){
-        //printf("%s:\n", argv[i + 2]);
-        //print_Lista(l[i]);
         destroi_Lista(l[i]);
     }
     destroi_ListaNaoTratadaSent(holder);
