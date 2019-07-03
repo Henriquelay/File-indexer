@@ -35,6 +35,10 @@ int main(int argc, char *argv[]){
         fecha_Arquivo(arquivo);
     }
 
+    t = clock() - t; 
+    double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds 
+    printf("%lf ", time_taken);
+
     //copia nBuscas palavras aleatórias da estrutura de lista não tratada para um vetor estático (para ter acesso O(1))
     srand(time(NULL));
     int ind = 0;
@@ -52,13 +56,9 @@ int main(int argc, char *argv[]){
         seletor[i] = palselec->palavra;
     }
 
-    printf("Vetor de palavras aleatórias:\n");
-    for(int i = 0; i < nBuscas; i++)
-        printf("%s\n", seletor[i]);
-
-    t = clock() - t; 
-    double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds 
-    printf("%lf ", time_taken);
+    // printf("Vetor de palavras aleatórias:\n");
+    // for(int i = 0; i < nBuscas; i++)
+    //     printf("%s\n", seletor[i]);
 
     //sorteia as palavras a serem pesquisadas.
     //Coloca tudo em um vetor estático, sorteia um valor dentro dele e lê a palavra. Então, tenta buscar ela na estrutura.
@@ -67,7 +67,9 @@ int main(int argc, char *argv[]){
     t = clock();
     for(int i = 0; i < nBuscas; i++)
         for(int y = 0; y < argc - 2; y++)
-            busca_Lista(seletor[y], l[i]);
+            if(busca_Lista(seletor[i], l[y])){
+                printf("Encontrei %s na lista do arquivo %s.\n", seletor[i], argv[y+2]);
+            }
 
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC;

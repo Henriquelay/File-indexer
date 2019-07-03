@@ -109,8 +109,10 @@ char insere_ListaNaoTratadaSent(tListaNaoTratadaSent *l, char *str){
 }
 
 void destroi_ListaNaoTratadaSent(tListaNaoTratadaSent *l){
+    if(l == NULL) return;
     for(tListaNaoTratada *aux = l->ini; aux != NULL; aux = l->ini){
         l->ini = l->ini->prox;
+        free(aux->palavra);
         free(aux);
     }
     free(l);
