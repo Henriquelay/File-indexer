@@ -7,18 +7,17 @@ int main(int argc, char *argv[]){
         printf("#Usagem do programa:\n#./LEIA_O_MAKEFILE [nPalavras] [arquivos..]\n#\tOnde:\n#nPalavras = numeros de palavras a aleatorias a ser pesquisada em cada estrutura\n#arquivos = Os arquivo que serao passados para o programa indexar, separados por espaço.\n");
         return 0;
     }
-
-    ArvBin *a[argc - 2];    //os 2 primeiros são o nome do executável e o n de palavras
-    char pal[NPAL]; //tamanho arbitrariamente grande
+    int nBuscas = atoi(argv[1]);
+    ArvBin *l[argc - 2];                //os 2 primeiros são o nome do executável e o n de palavras
+    char pal[NPAL];                     //tamanho arbitrariamente grande
     int byte = 0;
     FILE *arquivo;
 
     for(int i = 0; i < argc - 2; i++)
-        a[i] = cria_ArvBin();
-
+        l[i] = cria_ArvBin();
+    tListaNaoTratadaSent *holder = inicia_ListaNaoTratadaSent();
     clock_t t; 
-    t = clock(); 
-
+    t = clock();
 
     for(int i = 2; i < argc; i++){
         arquivo = NULL;
@@ -26,48 +25,53 @@ int main(int argc, char *argv[]){
             printf("Erro ao abrir o arquivo %s!\n", argv[i]);
             return 0;
         }
-
-        while(pega_Palavra(arquivo, pal, &byte))
-            insere_ArvBin(a[i-2], pal);
-
+        while(pega_Palavra(arquivo, pal, &byte)){
+            insere_ArvBin(l[i-2], pal);
+            if(!insere_ListaNaoTratadaSent(holder, pal)){
+                puts("##CARALHO CAGUEI ALGUMA COISA, VOU QUITAR");
+                return 0;
+            }
+        }
         fecha_Arquivo(arquivo);
-
-        //printf("========LISTA %d:========\n", i - 1);
-        //print_Lista(l[i-2]);
     }
 
     t = clock() - t; 
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds 
-
     printf("%lf ", time_taken);
 
+    //copia nBuscas palavras aleatórias da estrutura de lista não tratada para um vetor estático (para ter acesso O(1)) e não impactar tanto na medida busca.
+    srand(time(NULL));
+    int ind = 0;
+    tListaNaoTratada *palselec = NULL;
+    char *seletor[nBuscas];
+    for(int i = 0; i < nBuscas; i++){
+        palselec = holder->ini;
+        ind = rand() % holder->qtd;
+        for(int y = 0; y < ind; y++){
+            palselec = palselec->prox;
+        }
+        
+        seletor[i] = palselec->palavra;
+    }
 
-/*
     //sorteia as palavras a serem pesquisadas.
-    //escolhe primeiro a lista, e aí acessa um número aleatório na lista e trás somente a palavra
+    //Coloca tudo em um vetor estático, sorteia um valor dentro dele e lê a palavra. Então, tenta buscar ela na estrutura.
     srand(time(NULL));
     t = clock();
-    for(int i = 0; i < atoi(argv[1]); i++){
-        srand(rand());
-        ArvBin ArvSelec = a[rand() % (argc - 2)];
-        srand(rand());
-        int indSelec = rand() % ListaSelec->qtd;
-        tLista *noSelec = ListaSelec->ini;
-        for(int y = 0; y < indSelec; y++)
-            noSelec = noSelec->prox;
-    }
+    for(int i = 0; i < nBuscas; i++)
+        for(int y = 0; y < argc - 2; y++)
+            consulta_ArvBin(l[y], seletor[i]);
+
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC;
 
     printf("%lf\n", time_taken);
-*/
-    for(int i = 0; i < argc - 2; i++){
-        printf("\n%s:\n", argv[i+2]);
-        emOrdem(a[i]);
-        destroi_ArvBin(a[i]);
-        puts("");
-    }
 
+
+    for(int i = 0; i < argc - 2; i++){
+        destroi_ArvBin(l[i]);
+    }
+    destroi_ListaNaoTratadaSent(holder);
 
     return 0;
 }

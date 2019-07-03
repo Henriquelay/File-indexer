@@ -46,7 +46,7 @@ char insere_Lista(tListaSent *l, char *str, int byte){
     return 1;     
 }
 
-char busca_Lista(char* pal, tListaSent *l){
+char consulta_Lista(tListaSent *l, char* pal){
     if(pal == NULL || l == NULL) return 0;
     
     //Procura a palavra na lista

@@ -8,8 +8,8 @@ int main(int argc, char *argv[]){
         return 0;
     }
     int nBuscas = atoi(argv[1]);
-    tListaSent *l[argc - 2];    //os 2 primeiros são o nome do executável e o n de palavras
-    char pal[NPAL]; //tamanho arbitrariamente grande
+    tListaSent *l[argc - 2];            //os 2 primeiros são o nome do executável e o n de palavras
+    char pal[NPAL];                     //tamanho arbitrariamente grande
     int byte = 0;
     FILE *arquivo;
 
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]){
             insere_Lista(l[i-2], pal, byte);
             if(!insere_ListaNaoTratadaSent(holder, pal)){
                 puts("##CARALHO CAGUEI ALGUMA COISA, VOU QUITAR");
-                exit(1);
+                return 0;
             }
         }
         fecha_Arquivo(arquivo);
@@ -60,7 +60,7 @@ int main(int argc, char *argv[]){
     t = clock();
     for(int i = 0; i < nBuscas; i++)
         for(int y = 0; y < argc - 2; y++)
-            busca_Lista(seletor[i], l[y]);
+            consulta_Lista(l[y], seletor[i]);
 
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC;

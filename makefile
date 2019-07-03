@@ -16,7 +16,7 @@ OBJDIR		=src
 
 ARQUIVO		=data/APRENDE.txt
 BUSCAS		=10
-EXEC		=Lista
+EXEC		=ArvBin
 
 OBJLISTA	=lista.o arquivos.o testLista.o
 _OBJLISTA	=$(patsubst %,${OBJDIR}/%,${OBJLISTA})
