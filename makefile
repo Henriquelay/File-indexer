@@ -12,9 +12,11 @@ CFLAGS		=-Wall -g
 DEPS		=lista.h arquivos.h ArvoreBinaria.h ArvoreAVL.h
 DEPSDIR		=headers
 _DEPS		=$(patsubst %,${DEPSDIR}/%,${DEPS})
-ARQUIVO		=data/Hogwarts.txt
-BUSCAS		=5
 OBJDIR		=src
+
+ARQUIVO		=data/APRENDE.txt
+BUSCAS		=10
+EXEC		=Lista
 
 OBJLISTA	=lista.o arquivos.o testLista.o
 _OBJLISTA	=$(patsubst %,${OBJDIR}/%,${OBJLISTA})
@@ -25,7 +27,6 @@ _OBJARVBIN	=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
 OBJARVAVL	=ArvoreAVL.o arquivos.o testArvoreAVL.o
 _OBJARVAVL	=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
 
-EXEC		=Lista
 
 
 ${OBJDIR}/%.o: %.c ${_DEPS}

@@ -74,6 +74,14 @@ void destroi_Indices(tIndiceLista *l){
     }
 }
 
+tListaNaoTratadaSent *inicia_ListaNaoTratadaSent(void){
+    tListaNaoTratadaSent *nova = (tListaNaoTratadaSent*) malloc(sizeof(tListaNaoTratadaSent));
+    if(nova == NULL) return NULL;
+    nova->ini = nova->fim = NULL;
+    nova->qtd = 0;
+    return nova;
+}
+
 tListaNaoTratada *novo_NaoTratada(char *str){
     tListaNaoTratada *no = (tListaNaoTratada*) malloc(sizeof(tListaNaoTratada));
     if(no == NULL) return NULL;
@@ -82,31 +90,30 @@ tListaNaoTratada *novo_NaoTratada(char *str){
     if(no->palavra == NULL) return NULL;
 
     strcpy(no->palavra, str);
-    no->prox = no->ultimo = NULL;
-    no->qtd = 0;
+    no->prox = NULL;
     return no;
 }
 
-char insere_ListaNaoTratada(tListaNaoTratada *l, char *str){
-    if(l == NULL){
-        l = novo_NaoTratada(str);
-        if(l == NULL) return 0;
-        l->ultimo = l;
+char insere_ListaNaoTratadaSent(tListaNaoTratadaSent *l, char *str){
+    if(l == NULL) return 0;
+    if(l->fim == NULL){
+        l->ini = l->fim = novo_NaoTratada(str);
         l->qtd++;
         return 1;
     }
-    l->ultimo->prox = novo_NaoTratada(str);
-    l->ultimo = l->ultimo->prox;
-    if(l->ultimo == NULL) return 0;
+    l->fim->prox = novo_NaoTratada(str);
+    if(l->fim->prox == NULL) return 0;
+    l->fim = l->fim->prox;
     l->qtd++;
     return 1;
 }
 
-void destroi_ListaNaoTratada(tListaNaoTratada *l){
-    for(tListaNaoTratada *aux = l; aux != NULL; aux = l){
-        l = l->prox;
+void destroi_ListaNaoTratadaSent(tListaNaoTratadaSent *l){
+    for(tListaNaoTratada *aux = l->ini; aux != NULL; aux = l->ini){
+        l->ini = l->ini->prox;
         free(aux);
     }
+    free(l);
 }
 
 //Retirado de: Prova1 ED1 2019 - Vinícius Mota

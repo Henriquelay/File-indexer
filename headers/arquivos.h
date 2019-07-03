@@ -16,13 +16,17 @@ typedef struct Indice {
     tIndiceLista *prox, *ultimo;
 } tIndiceLista;
 
-// Para percorrer e 
+// Para percorrer e selecionar palavras aleatorias
 typedef struct ListaNaoTratada tListaNaoTratada;
 typedef struct ListaNaoTratada{
     char *palavra;
-    tListaNaoTratada *prox, *ultimo;
-    int qtd;
+    tListaNaoTratada *prox;
 } tListaNaoTratada;
+
+typedef struct ListaNaoTratadaSent{
+    tListaNaoTratada *ini, *fim;
+    int qtd;
+} tListaNaoTratadaSent;
 
 // ------ Funçoes -------
 char abre_Arquivo(char *path, FILE **arquivo);
@@ -35,7 +39,8 @@ void imprime_Indices(tIndiceLista *l);
 void destroi_Indices(tIndiceLista *l);
 
 // ------ Lista não tratada de palavras (para o programa testador) ------
-char insere_ListaNaoTratada(tListaNaoTratada *l, char *str);
-void destroi_ListaNaoTratada(tListaNaoTratada *l);
+char insere_ListaNaoTratadaSent(tListaNaoTratadaSent *l, char *str);
+void destroi_ListaNaoTratadaSent(tListaNaoTratadaSent *l);
+tListaNaoTratadaSent *inicia_ListaNaoTratadaSent(void);
 
 #endif

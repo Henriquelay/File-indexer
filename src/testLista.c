@@ -15,7 +15,7 @@ int main(int argc, char *argv[]){
 
     for(int i = 0; i < argc - 2; i++)
         l[i] = inicia_ListaSent();
-    tListaNaoTratada *holder = NULL;
+    tListaNaoTratadaSent *holder = inicia_ListaNaoTratadaSent();
     clock_t t; 
     t = clock();
 
@@ -27,24 +27,34 @@ int main(int argc, char *argv[]){
         }
         while(pega_Palavra(arquivo, pal, &byte)){
             insere_Lista(l[i-2], pal, byte);
-            insere_ListaNaoTratada(holder, pal);
+            if(!insere_ListaNaoTratadaSent(holder, pal)){
+                puts("##CARALHO CAGUEI ALGUMA COISA, VOU QUITAR");
+                exit(1);
+            }
         }
         fecha_Arquivo(arquivo);
     }
 
-
     //copia nBuscas palavras aleatórias da estrutura de lista não tratada para um vetor estático (para ter acesso O(1))
     srand(time(NULL));
     int ind = 0;
-    tListaNaoTratada *palselec = holder;
+    tListaNaoTratada *palselec = NULL;
     char *seletor[nBuscas];
     for(int i = 0; i < nBuscas; i++){
+        palselec = holder->ini;
+        // printf("Quantidade de palavras = %d\n", holder->qtd);
         ind = rand() % holder->qtd;
-        for(int y = 0; y < ind; i++)
+        for(int y = 0; y < ind; y++){
+            // printf("Y = %d, \t\tind = %d\n", y, ind);
             palselec = palselec->prox;
+        }
         
         seletor[i] = palselec->palavra;
     }
+
+    printf("Vetor de palavras aleatórias:\n");
+    for(int i = 0; i < nBuscas; i++)
+        printf("%s\n", seletor[i]);
 
     t = clock() - t; 
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds 
@@ -57,7 +67,7 @@ int main(int argc, char *argv[]){
     t = clock();
     for(int i = 0; i < nBuscas; i++)
         for(int y = 0; y < argc - 2; y++)
-            busca_Lista(seletor[i], l[i]);
+            busca_Lista(seletor[y], l[i]);
 
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC;
@@ -70,7 +80,7 @@ int main(int argc, char *argv[]){
         //print_Lista(l[i]);
         destroi_Lista(l[i]);
     }
-    destroi_ListaNaoTratada(holder);
+    destroi_ListaNaoTratadaSent(holder);
 
     return 0;
 }
