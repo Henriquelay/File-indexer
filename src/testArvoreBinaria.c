@@ -8,13 +8,13 @@ int main(int argc, char *argv[]){
         return 0;
     }
     int nBuscas = atoi(argv[1]);
-    ArvBin *l[argc - 2];                //os 2 primeiros são o nome do executável e o n de palavras
+    ArvBin *arvore[argc - 2];                //os 2 primeiros são o nome do executável e o n de palavras
     char pal[NPAL];                     //tamanho arbitrariamente grande
     int byte = 0;
     FILE *arquivo;
 
     for(int i = 0; i < argc - 2; i++)
-        l[i] = cria_ArvBin();
+        arvore[i] = cria_ArvBin();
     tListaNaoTratadaSent *holder = inicia_ListaNaoTratadaSent();
     clock_t t; 
     t = clock();
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
             return 0;
         }
         while(pega_Palavra(arquivo, pal, &byte)){
-            insere_ArvBin(l[i-2], pal);
+            insere_ArvBin(arvore[i-2], pal, byte);
             if(!insere_ListaNaoTratadaSent(holder, pal)){
                 puts("##CARALHO CAGUEI ALGUMA COISA, VOU QUITAR");
                 return 0;
@@ -60,16 +60,22 @@ int main(int argc, char *argv[]){
     t = clock();
     for(int i = 0; i < nBuscas; i++)
         for(int y = 0; y < argc - 2; y++)
-            consulta_ArvBin(l[y], seletor[i]);
+            consulta_ArvBin(arvore[y], seletor[i]);
 
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC;
 
     printf("%lf\n", time_taken);
-
+    
+/* 
+    for(int i = 2; i < argc; i++){
+        printf("--------%s----------------\n", argv[i]);
+        emOrdem(arvore[i - 2]);
+    }
+ */
 
     for(int i = 0; i < argc - 2; i++){
-        destroi_ArvBin(l[i]);
+        destroi_ArvBin(arvore[i]);
     }
     destroi_ListaNaoTratadaSent(holder);
 

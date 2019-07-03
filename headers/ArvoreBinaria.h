@@ -5,18 +5,21 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include "arquivos.h"
 
 //----STRUCTS--------
-typedef struct NO* ArvBin;
+typedef struct NO tNo;
+typedef tNo* ArvBin;
 typedef struct NO{ 
     char* info; 
-    struct NO *esq; 
-    struct NO *dir; 
+    ArvBin esq, dir;
+    int ocorrencias;
+    tIndiceLista *indices;
 } tNo;
 
 //----FUNCOES-------
 ArvBin* cria_ArvBin();
-char insere_ArvBin(ArvBin* raiz, char* valor);
+char insere_ArvBin(ArvBin* raiz, char* valor, int byte);
 void destroi_ArvBin(ArvBin *raiz);
 char consulta_ArvBin(ArvBin *raiz, char* valor);
 void emOrdem(ArvBin *raiz);

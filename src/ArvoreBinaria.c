@@ -13,6 +13,7 @@ void libera_NO(ArvBin no){
     libera_NO(no->esq);
     libera_NO(no->dir);
     free(no->info);
+    destroi_Indices(no->indices);
     free(no);
     no = NULL;
 }
@@ -24,32 +25,47 @@ void destroi_ArvBin(ArvBin* raiz){
     free(raiz);//libera a raiz
 }
 
-char insere_ArvBin(ArvBin* raiz, char* valor){
+char strings_Iguais(char *str1, char *str2){
+    if(str1 == NULL || str2 == NULL) return 0;
+    if(strlen(str1) == strlen(str2))
+        if(strcasecmp(str1, str2) == 0)
+            return 1;
+    return 0;
+}
+
+char insere_ArvBin(ArvBin* raiz, char* valor, int byte){
     if(raiz == NULL || valor == NULL) return 0;
-    if(*raiz == NULL){
-        ArvBin novo;
-        novo = (ArvBin) malloc(sizeof(struct NO));
-        if(novo == NULL)
-            return 0;
-        
-        novo->info = malloc(sizeof(char) * (strlen(valor) + 1));
-        strcpy(novo->info, valor);
-        novo->dir = NULL;
-        novo->esq = NULL;
 
-        *raiz = novo;
-    }
-    else{
-        if(strlen((*raiz)->info) == strlen(valor)){
-            if(!strcasecmp((*raiz)->info, valor))
-                //TODO:inserir na lista de ocorrencias
-                return 0;
-        }
-        else if( strcasecmp((*raiz)->info, valor) > 0)
-            return insere_ArvBin(&(*raiz)->esq, valor);
+    ArvBin aux = *raiz, anterior = NULL;
+    while(aux != NULL && !strings_Iguais(aux->info, valor)){
+        anterior = aux;
+        if(strcasecmp((*raiz)->info, valor) > 0)
+            aux = aux->esq;
         else
-            return insere_ArvBin(&(*raiz)->dir, valor);
-
+            aux = aux->dir;
+    }
+    //encontrei ou lugar vazio ou no pra adicionar
+    if(aux != NULL){        //lugar preenchido, adicionar indice
+        aux->ocorrencias++;
+        insere_Indice(&aux->indices, byte);
+    } 
+    else{        //lugar vazio
+        aux = (ArvBin) malloc(sizeof(tNo));
+        if(aux == NULL) return 0;
+        aux->info = malloc(sizeof(char) * (strlen(valor) + 1));
+        strcpy(aux->info, valor);
+        aux->dir = aux->esq = NULL;
+        aux->indices = NULL;
+        insere_Indice(&aux->indices, byte);
+        aux->ocorrencias = 1;
+        if(anterior != NULL){
+            if(strcasecmp((*raiz)->info, valor) > 0)
+                anterior->esq = aux;
+            else
+                anterior->dir = aux;
+        }
+        if(*raiz == NULL)
+            *raiz = aux;
     }
     return 1;
 }
@@ -74,6 +90,7 @@ void emOrdem(ArvBin *raiz){
     if(raiz == NULL) return;
     if(*raiz == NULL) return;
     emOrdem(&(*raiz)->esq);
-    printf("%s ", (*raiz)->info);
+    printf("%s (%d): ", (*raiz)->info, (*raiz)->ocorrencias);
+    imprime_Indices((*raiz)->indices);
     emOrdem(&(*raiz)->dir);
 }

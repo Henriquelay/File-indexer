@@ -63,6 +63,7 @@ void imprime_Indices(tIndiceLista *l){
         if(aux->prox != NULL)
             printf(", ");
     }
+    printf("\n");
     return;
 }
 
