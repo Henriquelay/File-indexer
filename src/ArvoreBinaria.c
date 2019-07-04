@@ -21,7 +21,7 @@ void libera_NO(ArvBin no){
 void destroi_ArvBin(ArvBin* raiz){
     if(raiz == NULL)
         return;
-    libera_NO(*raiz);//libera cada n�
+    libera_NO(*raiz);//libera cada no
     free(raiz);//libera a raiz
 }
 
