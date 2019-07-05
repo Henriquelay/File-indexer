@@ -5,3 +5,4 @@ Lista
 ArvAVL
 ArvBin
 *.o
+.vscode*
