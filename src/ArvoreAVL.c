@@ -137,8 +137,14 @@ void RotacaoRL(ArvAVL *A){
     RotacaoRR(A);
 }
 
+int SelecionaMenorString(char* palavra1, char* palavra2){
+    if(palavra1 == NULL || palavra2 == NULL)    return 0;
+    int tam_pal1 = strlen(palavra1), tam_pal2 = strlen(palavra2);
+    if(tam_pal1 < tam_pal2) return tam_pal1;
+    return tam_pal2;
+}
+
 int insere_ArvAVL(ArvAVL *raiz, char* palavra){
-    int res;
     /* Verifica se Arvore Vazia ou se eh NO folha */
     if(*raiz == NULL){
         struct NO *novo;
@@ -154,21 +160,26 @@ int insere_ArvAVL(ArvAVL *raiz, char* palavra){
         *raiz = novo;
         return 1;
     }
-
+    
+    /**/
+    int tam_menor = SelecionaMenorString(palavra, (*raiz)->info);
+    if(!tam_menor)  return 0;
+    int compara = strncpm(palavra, (*raiz)->info), tam_menor) > 0;
     ArvAVL atual = *raiz;
-    if(palavra < atual->info){
-        if((res = insere_ArvAVL(&(atual->esq), palavra)) == 1){
-            if(fatorBalanceamento_NO(atual) >= 2){
-                if(palavra < (*raiz)->esq->info ){
-                    RotacaoLL(raiz);
-                }else{
-                    RotacaoLR(raiz);
+
+    if(){
+        if((insere_ArvAVL(&(atual->esq), palavra))){
+            if(fatorBalanceamento_NO(atual) >= 2){    
+                    if(strncmp(palavra, (*raiz)->esq->info, tam_menor)){
+                        RotacaoLL(raiz);
+                    }else{
+                        RotacaoLR(raiz);
                 }
             }
         }
     }else{
         if(palavra > atual->info){
-            if((res = insere_ArvAVL(&(atual->dir), palavra)) == 1){
+            if((insere_ArvAVL(&(atual->dir), palavra))){
                 if(fatorBalanceamento_NO(atual) >= 2){
                     if((*raiz)->dir->info < palavra){
                         RotacaoRR(raiz);
@@ -184,15 +195,25 @@ int insere_ArvAVL(ArvAVL *raiz, char* palavra){
 
     atual->altura = maior(altura_NO(atual->esq),altura_NO(atual->dir)) + 1;
 
-    return res;
+    return 1;
+}
+
+char strings_Iguais(char *str1, char *str2){
+    if(str1 == NULL || str2 == NULL) return 0;
+    if(strlen(str1) == strlen(str2))
+        if(strcasecmp(str1, str2) == 0)
+            return 1;
+    return 0;
 }
 
 /* Funcoes para liberar a estrutura da memoria */
-void libera_NO(struct NO* no){
+void libera_NO(ArvAVL no){
     if(no == NULL)
         return;
     libera_NO(no->esq);
     libera_NO(no->dir);
+    free(no->info);
+    destroi_Indices(no->indices);
     free(no);
     no = NULL;
 }
