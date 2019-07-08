@@ -70,15 +70,16 @@ char insere_ArvBin(ArvBin* raiz, char* valor, int byte){
     return 1;
 }
 
-char consulta_ArvBin(ArvBin *raiz, char* valor){
+char consulta_ArvBin(ArvBin *raiz, char* palavra){
     if(raiz == NULL)
         return 0;
     struct NO* atual = *raiz;
+    int compara = strncpm(palavra, atual->info), tam_menor) > 0;
     while(atual != NULL){
-        if(valor == atual->info){
+        if(string_Iguais(palavra, atual->info))){
             return 1;
         }
-        if(valor > atual->info)
+        if(compara > 0)
             atual = atual->dir;
         else
             atual = atual->esq;

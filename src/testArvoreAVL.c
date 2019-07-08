@@ -1,4 +1,4 @@
-#include "../headers/ArvoreBinaria.h"
+#include "../headers/ArvoreAVL.h"
 #include "../headers/arquivos.h"
 #include <time.h>
 
@@ -8,13 +8,13 @@ int main(int argc, char *argv[]){
         return 0;
     }
     int nBuscas = atoi(argv[1]);
-    ArvBin *arvore[argc - 2];                //os 2 primeiros são o nome do executável e o n de palavras
+    ArvAVL *arvore[argc - 2];                //os 2 primeiros são o nome do executável e o n de palavras
     char pal[NPAL];                     //tamanho arbitrariamente grande
     int byte = 0;
     FILE *arquivo;
 
     for(int i = 0; i < argc - 2; i++)
-        arvore[i] = cria_ArvBin();
+        arvore[i] = cria_ArvAVL();
     tListaNaoTratadaSent *holder = inicia_ListaNaoTratadaSent();
     clock_t t; 
     t = clock();
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
             return 0;
         }
         while(pega_Palavra(arquivo, pal, &byte)){
-            insere_ArvBin(arvore[i-2], pal, byte);
+            insere_ArvAVL(arvore[i-2], pal, byte);
             if(!insere_ListaNaoTratadaSent(holder, pal)){
                 puts("##DEU RUIM");
                 return 0;
@@ -60,7 +60,7 @@ int main(int argc, char *argv[]){
     t = clock();
     for(int i = 0; i < nBuscas; i++)
         for(int y = 0; y < argc - 2; y++)
-            consulta_ArvBin(arvore[y], seletor[i]);
+            consulta_ArvAVL(arvore[y], seletor[i]);
 
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC;
@@ -75,7 +75,7 @@ int main(int argc, char *argv[]){
  */
 
     for(int i = 0; i < argc - 2; i++){
-        destroi_ArvBin(arvore[i]);
+        destroi_ArvAVL(arvore[i]);
     }
     destroi_ListaNaoTratadaSent(holder);
 

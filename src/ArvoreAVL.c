@@ -2,14 +2,6 @@
 #include <stdlib.h>
 #include "ArvoreAVL.h"
 
-typedef struct NO{
-    char* info;
-    int altura;
-    struct NO *esq;
-    struct NO *dir;
-} tNO;
-typedef tNO* ArvAVL
-
 ArvAVL* cria_ArvAVL(){
     ArvAVL* raiz = (ArvAVL*) malloc(sizeof(ArvAVL));
     if(raiz != NULL)
@@ -18,9 +10,7 @@ ArvAVL* cria_ArvAVL(){
 }
 
 int altura_NO(struct NO* no){
-    if(no == NULL)
-        return -1;
-    else
+    if(no == NULL)  return -1;
     return no->altura;
 }
 
@@ -58,15 +48,15 @@ int altura_ArvAVL(ArvAVL *raiz){
 //        }
 //    }
 
-//    void emOrdem_ArvAVL(ArvAVL *raiz){
-//        if(raiz == NULL)
-//            return;
-//        if(*raiz != NULL){
-//            emOrdem_ArvAVL(&((*raiz)->esq));
-//            printf("%d\n",(*raiz)->info);
-//            emOrdem_ArvAVL(&((*raiz)->dir));
-//        }
-//    }
+void emOrdem_ArvAVL(ArvAVL *raiz){
+    if(raiz == NULL)
+        return;
+    if(*raiz != NULL){
+        emOrdem_ArvAVL(&((*raiz)->esq));
+        printf("%d\n",(*raiz)->info);
+        emOrdem_ArvAVL(&((*raiz)->dir));
+    }
+}
 
 //    void posOrdem_ArvAVL(ArvAVL *raiz){
 //        if(raiz == NULL)
@@ -78,15 +68,23 @@ int altura_ArvAVL(ArvAVL *raiz){
 //        }
 //    }
 
-int consulta_ArvAVL(ArvAVL *raiz, int valor){
+int SelecionaMenorString(char* palavra1, char* palavra2){
+    if(palavra1 == NULL || palavra2 == NULL)    return 0;
+    int tam_pal1 = strlen(palavra1), tam_pal2 = strlen(palavra2);
+    if(tam_pal1 < tam_pal2) return tam_pal1;
+    return tam_pal2;
+}
+
+char consulta_ArvBin(ArvBin *raiz, char* valor){
     if(raiz == NULL)
         return 0;
     struct NO* atual = *raiz;
+    int compara = strncpm(palavra, atual->info), tam_menor) > 0;
     while(atual != NULL){
-        if(valor == atual->info){
+        if(string_Iguais(palavra, atual->info))){
             return 1;
         }
-        if(valor > atual->info)
+        if(compara > 0)
             atual = atual->dir;
         else
             atual = atual->esq;
@@ -137,13 +135,6 @@ void RotacaoRL(ArvAVL *A){
     RotacaoRR(A);
 }
 
-int SelecionaMenorString(char* palavra1, char* palavra2){
-    if(palavra1 == NULL || palavra2 == NULL)    return 0;
-    int tam_pal1 = strlen(palavra1), tam_pal2 = strlen(palavra2);
-    if(tam_pal1 < tam_pal2) return tam_pal1;
-    return tam_pal2;
-}
-
 int insere_ArvAVL(ArvAVL *raiz, char* palavra){
     /* Verifica se Arvore Vazia ou se eh NO folha */
     if(*raiz == NULL){
@@ -167,7 +158,7 @@ int insere_ArvAVL(ArvAVL *raiz, char* palavra){
     int compara = strncpm(palavra, (*raiz)->info), tam_menor) > 0;
     ArvAVL atual = *raiz;
 
-    if(){
+    if(compara > 0){
         if((insere_ArvAVL(&(atual->esq), palavra))){
             if(fatorBalanceamento_NO(atual) >= 2){    
                     if(strncmp(palavra, (*raiz)->esq->info, tam_menor)){
@@ -178,7 +169,7 @@ int insere_ArvAVL(ArvAVL *raiz, char* palavra){
             }
         }
     }else{
-        if(palavra > atual->info){
+        if(compara < 0){
             if((insere_ArvAVL(&(atual->dir), palavra))){
                 if(fatorBalanceamento_NO(atual) >= 2){
                     if((*raiz)->dir->info < palavra){
