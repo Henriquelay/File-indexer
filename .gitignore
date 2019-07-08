@@ -6,3 +6,5 @@ ArvAVL
 ArvBin
 *.o
 .vscode*
+data/enwik9.zip
+data/enwik9

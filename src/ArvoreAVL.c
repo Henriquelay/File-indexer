@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "ArvoreAVL.h"
+#include "../headers/ArvoreAVL.h"
 
 ArvAVL* cria_ArvAVL(){
     ArvAVL* raiz = (ArvAVL*) malloc(sizeof(ArvAVL));

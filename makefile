@@ -16,7 +16,7 @@ OBJDIR		=src
 
 ARQUIVO		=data/APRENDE.txt
 BUSCAS		=10
-EXEC		=ArvBin
+EXEC		=Lista
 
 OBJLISTA	=lista.o arquivos.o testLista.o
 _OBJLISTA	=$(patsubst %,${OBJDIR}/%,${OBJLISTA})
@@ -36,7 +36,7 @@ _OBJHASH	=$(patsubst %,${OBJDIR}/%,${OBJHASH})
 ${OBJDIR}/%.o: %.c ${_DEPS}
 	${CC} -c -o $@ $< ${CFLAGS}
 
-all: lista arvbin #arvavl hash
+all: lista # arvavl #arvbin hash
 	rm src/*.o
 
 lista: ${_OBJLISTA} 

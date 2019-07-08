@@ -8,9 +8,19 @@ char abre_Arquivo(char *path, FILE **arquivo){
     return 1;
 }
 
+size_t tamanhoArquivo(FILE *arquivo){
+    if(arquivo == NULL) return 0;
+    size_t lugar = ftell(arquivo);
+    fseek(arquivo, 0, SEEK_END);
+    size_t tam = ftell(arquivo);
+    fseek(arquivo, 0, lugar);
+    return tam;
+}
+
 char fecha_Arquivo(FILE *arquivo){
     if(arquivo == NULL) return 1;
-    return !fclose(arquivo);
+    char resp = fclose(arquivo);
+    return resp;
 }
 
 char eValido(char c){
@@ -59,7 +69,7 @@ char insere_Indice(tIndiceLista **l, int byte){
 
 void imprime_Indices(tIndiceLista *l){
     for(tIndiceLista *aux = l; aux != NULL; aux = aux->prox){
-        printf("%d", aux->ind);
+        printf("%lu", aux->ind);
         if(aux->prox != NULL)
             printf(", ");
     }
@@ -69,6 +79,47 @@ void imprime_Indices(tIndiceLista *l){
 
 void destroi_Indices(tIndiceLista *l){
     for(tIndiceLista *aux = l; l != NULL; aux = l){
+        if(l != NULL)
+        l = l->prox;
+        free(aux);
+    }
+}
+
+tArquivo *novo_Arq(char arq){
+    tArquivo *novo_Arq = (tArquivo*) malloc(sizeof(tArquivo));
+    if(novo_Arq == NULL) return NULL;
+    novo_Arq->arquivo = arq;
+    novo_Arq->ocorrencias = NULL;
+    novo_Arq->prox = NULL;
+    novo_Arq->qtd = 0;
+    return novo_Arq;
+}
+
+char insere_Arquivo(tArquivo **l, char arq){
+    if(l == NULL) return 0;
+    if(*l == NULL){  //criar lista
+        *l = novo_Arq(arq);
+        return 1;
+    }
+    tArquivo *novo = novo_Arq(arq);
+    if(novo == NULL) return 0;
+    novo->prox = *l;
+    *l = novo;
+    return 1;
+}
+
+void imprime_Arquivos(tArquivo *l){
+    for(tArquivo *aux = l; aux != NULL; aux = aux->prox){
+        printf("%c ", aux->arquivo);
+        if(aux->prox != NULL)
+            printf(", ");
+    }
+    printf("\n");
+    return;
+}
+
+void destroi_Arquivos(tArquivo *l){
+    for(tArquivo *aux = l; l != NULL; aux = l){
         if(l != NULL)
         l = l->prox;
         free(aux);

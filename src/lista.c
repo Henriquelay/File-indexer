@@ -43,7 +43,7 @@ char insere_Lista(tListaSent *l, char *str, int byte){
     if(l->fim == NULL)
         l->fim = no;
     l->qtd++;
-    return 1;     
+    return 2;
 }
 
 char consulta_Lista(tListaSent *l, char* pal){
