@@ -38,7 +38,7 @@ typedef struct arquivo{
 
 // ------ Funçoes -------
 char abre_Arquivo(char *path, FILE **arquivo);
-size_t tamanhoArquivo(FILE *arquivo);
+int tamanhoArquivo(FILE *arquivo);
 char fecha_Arquivo(FILE *arquivo);
 char pega_Palavra(FILE *arquivo, char *str, int *byte);
 char eValido(char c);

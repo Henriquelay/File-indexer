@@ -8,8 +8,9 @@
 #include "arquivos.h"
 
 //----STRUCTS--------
+typedef struct NO tNO;
 typedef struct NO{ 
-    char* info; 
+    char* info;
     int altura;
     struct NO *esq;
     struct NO *dir;
@@ -20,9 +21,10 @@ typedef tNo* ArvAVL;
 
 //----FUNCOES-------
 ArvAVL* cria_ArvAVL();
-char insere_ArvAVL(ArvAVL* raiz, char* valor, int byte);
+char insere_ArvAVL(ArvAVL* raiz, char* palavra /*, int byte*/);
 void destroi_ArvAVL(ArvAVL *raiz);
-char consulta_ArvAVL(ArvAVL *raiz, char* valor);
+char consulta_ArvAVL(ArvAVL *raiz, char* palavra);
 void emOrdem(ArvAVL *raiz);
+char strings_Iguais(char *str1, char *str2);
 
 #endif

@@ -53,7 +53,7 @@ void emOrdem_ArvAVL(ArvAVL *raiz){
         return;
     if(*raiz != NULL){
         emOrdem_ArvAVL(&((*raiz)->esq));
-        printf("%d\n",(*raiz)->info);
+        printf("%s\n",(*raiz)->info);
         emOrdem_ArvAVL(&((*raiz)->dir));
     }
 }
@@ -75,13 +75,14 @@ int SelecionaMenorString(char* palavra1, char* palavra2){
     return tam_pal2;
 }
 
-char consulta_ArvBin(ArvBin *raiz, char* valor){
+char consulta_ArvAVL(ArvAVL *raiz, char* palavra){
     if(raiz == NULL)
         return 0;
     struct NO* atual = *raiz;
-    int compara = strncpm(palavra, atual->info), tam_menor) > 0;
+    int tam_menor = SelecionaMenorString(palavra, (*raiz)->info);
+    int compara = strncmp(palavra, atual->info, tam_menor) > 0;
     while(atual != NULL){
-        if(string_Iguais(palavra, atual->info))){
+        if(strings_Iguais(palavra, atual->info)){
             return 1;
         }
         if(compara > 0)
@@ -135,7 +136,7 @@ void RotacaoRL(ArvAVL *A){
     RotacaoRR(A);
 }
 
-int insere_ArvAVL(ArvAVL *raiz, char* palavra){
+char insere_ArvAVL(ArvAVL *raiz, char* palavra/* , int byte*/){
     /* Verifica se Arvore Vazia ou se eh NO folha */
     if(*raiz == NULL){
         struct NO *novo;
@@ -148,6 +149,7 @@ int insere_ArvAVL(ArvAVL *raiz, char* palavra){
         novo->altura = 0;
         novo->esq = NULL;
         novo->dir = NULL;
+        // novo->l = byte;
         *raiz = novo;
         return 1;
     }
@@ -155,7 +157,7 @@ int insere_ArvAVL(ArvAVL *raiz, char* palavra){
     /**/
     int tam_menor = SelecionaMenorString(palavra, (*raiz)->info);
     if(!tam_menor)  return 0;
-    int compara = strncpm(palavra, (*raiz)->info), tam_menor) > 0;
+    int compara = strncmp(palavra, (*raiz)->info, tam_menor) > 0;
     ArvAVL atual = *raiz;
 
     if(compara > 0){
@@ -209,11 +211,12 @@ void libera_NO(ArvAVL no){
     no = NULL;
 }
 
-void libera_ArvAVL(ArvAVL* raiz){
+void destroi_ArvAVL(ArvAVL* raiz){
     if(raiz == NULL)
         return;
-    libera_NO(*raiz);//libera cada n�
+    libera_NO(*raiz);//libera cada no
     free(raiz);//libera a raiz
+    raiz = NULL;
 }
 
 int estaVazia_ArvAVL(ArvAVL *raiz){

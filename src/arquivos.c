@@ -8,12 +8,12 @@ char abre_Arquivo(char *path, FILE **arquivo){
     return 1;
 }
 
-size_t tamanhoArquivo(FILE *arquivo){
+int tamanhoArquivo(FILE *arquivo){
     if(arquivo == NULL) return 0;
-    size_t lugar = ftell(arquivo);
+    // size_t lugar = ftell(arquivo);
     fseek(arquivo, 0, SEEK_END);
-    size_t tam = ftell(arquivo);
-    fseek(arquivo, 0, lugar);
+    int tam = ftell(arquivo);
+    fseek(arquivo, 0, SEEK_SET);
     return tam;
 }
 

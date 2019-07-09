@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
             return 0;
         }
         while(pega_Palavra(arquivo, pal, &byte)){
-            insere_ArvAVL(arvore[i-2], pal, byte);
+            insere_ArvAVL(arvore[i-2], pal);
             if(!insere_ListaNaoTratadaSent(holder, pal)){
                 puts("##DEU RUIM");
                 return 0;
