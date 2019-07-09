@@ -9,13 +9,12 @@ int main(int argc, char *argv[]){
         return 0;
     }
     int nBuscas = atoi(argv[1]);
-    tListaSent *l[argc - 2];            //os 2 primeiros são o nome do executável e o n de palavras
+    tListaSent *l;            //os 2 primeiros são o nome do executável e o n de palavras
     char pal[NPAL];                     //tamanho arbitrariamente grande
     int byte = 0;
     FILE *arquivo = NULL;
 
-    for(int i = 0; i < argc - 2; i++)
-        l[i] = inicia_ListaSent();
+        l = inicia_ListaSent();
     int sizes[argc - 2];
     clock_t t, tAll;
     tAll = 0;
@@ -28,7 +27,7 @@ int main(int argc, char *argv[]){
         sizes[i] = tamanhoArquivo(arquivo);
         t = clock();
         while(pega_Palavra(arquivo, pal, &byte) == 1){
-            insere_Lista(l[i], pal, byte, i);
+            insere_Lista(l, pal, byte, i);
         }
         tAll += clock() - t;  
         fecha_Arquivo(arquivo);
@@ -69,18 +68,15 @@ int main(int argc, char *argv[]){
 
     t = clock();
     for(int i = 0; i < nBuscas; i++)
-        for(int y = 0; y < argc - 2; y++)
-            consulta_Lista(l[y], palavras[i]);
+        consulta_Lista(l, palavras[i]);
     t = clock() - t;
 
     time_taken = ((double)t)/CLOCKS_PER_SEC;
     printf("%lf\n", time_taken);
     
 
-    for(int i = 0; i < argc - 2; i++){
         // print_Lista(l[i]);
-        destroi_Lista(l[i]);
-    }
+        destroi_Lista(l);
 
     return 0;
 }
