@@ -36,7 +36,7 @@ _OBJHASH	=$(patsubst %,${OBJDIR}/%,${OBJHASH})
 ${OBJDIR}/%.o: %.c ${_DEPS}
 	${CC} -c -o $@ $< ${CFLAGS}
 
-all: lista# arvbin # arvavl hash
+all: lista arvbin arvavl #hash
 	rm src/*.o
 
 lista: ${_OBJLISTA} 

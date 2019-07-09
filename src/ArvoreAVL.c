@@ -72,7 +72,7 @@ void emOrdem_ArvAVL(ArvAVL *raiz){
         return;
     if(*raiz != NULL){
         emOrdem_ArvAVL(&((*raiz)->esq));
-        printf("%s\n",(*raiz)->info);
+        printf("%s\n",(*raiz)->palavra->pal);
         emOrdem_ArvAVL(&((*raiz)->dir));
     }
 }
@@ -83,7 +83,7 @@ IMPUTS: Um ponteiro do tipo char para 'str1' e um ponteiro do tipo char para 'st
 OUTPUTS: Uma variavel int para o tamanho da menor palavra ou se as palavras forem iguais retorna 0.
 */
 int SelecionaMenorString(char* palavra1, char* palavra2){
-    if(palavra1 == NULL || palavra2 == NULL)    return 0;
+    if(palavra1 == NULL || palavra2 == NULL) return 0;
     int tam_pal1 = strlen(palavra1), tam_pal2 = strlen(palavra2);
     if(tam_pal1 < tam_pal2) return tam_pal1;
     return tam_pal2;
@@ -98,10 +98,10 @@ char consulta_ArvAVL(ArvAVL *raiz, char* palavra){
     if(raiz == NULL)
         return 0;
     struct NO* atual = *raiz;
-    int tam_menor = SelecionaMenorString(palavra, (*raiz)->info);
-    int compara = strncmp(palavra, atual->info, tam_menor) > 0;
+    int tam_menor = SelecionaMenorString(palavra, (*raiz)->palavra->pal);
+    int compara = strncmp(palavra, atual->palavra->pal, tam_menor) > 0;
     while(atual != NULL){
-        if(strings_Iguais(palavra, atual->info)){
+        if(strings_Iguais(palavra, atual->palavra->pal)){
             return 1;
         }
         if(compara > 0)
@@ -168,34 +168,31 @@ OBJETIVO: Funcao que insere uma palavra na arvore AVL e faz o balanceamento da a
 IMPUTS: Um ponteiro do tipo ArvAVL para 'raiz', um ponteiro do tipo char para 'palavra'.
 OUTPUTS: 1 se a palavra foi inserida corretamente e 0 caso contrário.
 */
-char insere_ArvAVL(ArvAVL *raiz, char* palavra/* , int byte*/){
+char insere_ArvAVL(ArvAVL *raiz, char* palavra, int byte, char arq){
+    if(raiz == NULL) return 0;
     /* Verifica se Arvore Vazia ou se eh NO folha */
-    if(*raiz == NULL){
-        struct NO *novo;
-        novo = (ArvAVL)malloc(sizeof(tNO));
+    if(*raiz == NULL){  //criando novo nó
+        ArvAVL novo = (ArvAVL) malloc(sizeof(tNo));
         if(novo == NULL)
             return 0;
 
-        novo->info = malloc(sizeof(char) * (strlen(palavra) + 1));
-        strcpy(novo->info, palavra);
+        novo->palavra = cria_Palavra(palavra, arq, byte);
         novo->altura = 0;
-        novo->esq = NULL;
-        novo->dir = NULL;
-        // novo->l = byte;
+        novo->esq = novo->dir = NULL;
         *raiz = novo;
         return 1;
     }
     
     /**/
-    int tam_menor = SelecionaMenorString(palavra, (*raiz)->info);
+    int tam_menor = SelecionaMenorString(palavra, (*raiz)->palavra->pal);
     if(!tam_menor)  return 0;
-    int compara = strncmp(palavra, (*raiz)->info, tam_menor) > 0;
+    int compara = strncmp(palavra, (*raiz)->palavra->pal, tam_menor) > 0;
     ArvAVL atual = *raiz;
 
     if(compara > 0){
-        if((insere_ArvAVL(&(atual->esq), palavra))){
-            if(fatorBalanceamento_NO(atual) >= 2){    
-                    if(strncmp(palavra, (*raiz)->esq->info, tam_menor)){
+        if(insere_ArvAVL(&(atual->esq), palavra, byte, arq)){
+            if(fatorBalanceamento_NO(atual) >= 2){
+                    if(strncmp(palavra, (*raiz)->esq->palavra->pal, tam_menor) > 0){
                         RotacaoLL(raiz);
                     }else{
                         RotacaoLR(raiz);
@@ -204,9 +201,9 @@ char insere_ArvAVL(ArvAVL *raiz, char* palavra/* , int byte*/){
         }
     }else{
         if(compara < 0){
-            if((insere_ArvAVL(&(atual->dir), palavra))){
+            if(insere_ArvAVL(&(atual->esq), palavra, byte, arq)){
                 if(fatorBalanceamento_NO(atual) >= 2){
-                    if((*raiz)->dir->info < palavra){
+                    if(strncmp(palavra, (*raiz)->esq->palavra->pal, tam_menor) < 0){
                         RotacaoRR(raiz);
                     }else{
                         RotacaoRL(raiz);
@@ -246,8 +243,7 @@ void libera_NO(ArvAVL no){
         return;
     libera_NO(no->esq);
     libera_NO(no->dir);
-    free(no->info);
-    destroi_Indices(no->indices);
+    destroi_Palavra(no->palavra);
     free(no);
     no = NULL;
 }

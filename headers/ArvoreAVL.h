@@ -9,20 +9,17 @@
 #include "base.h"
 
 //----STRUCTS--------
-typedef struct NO tNO;
-typedef struct NO{ 
-    char* info;
-    int altura;
-    struct NO *esq;
-    struct NO *dir;
-    int ocorrencias;
-    tIndiceLista *indices;
-} tNo;
+typedef struct NO tNo;
 typedef tNo* ArvAVL;
+typedef struct NO{ 
+    int altura;
+    tPalavra *palavra;
+    ArvAVL esq, dir;
+} tNo;
 
 //----FUNCOES-------
 ArvAVL* cria_ArvAVL();
-char insere_ArvAVL(ArvAVL* raiz, char* palavra /*, int byte*/);
+char insere_ArvAVL(ArvAVL* raiz, char* palavra, int byte, char arq);
 void destroi_ArvAVL(ArvAVL *raiz);
 char consulta_ArvAVL(ArvAVL *raiz, char* palavra);
 void emOrdem(ArvAVL *raiz);
