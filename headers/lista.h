@@ -1,14 +1,13 @@
 #ifndef _LISTA_H_
 #define _LISTA_H_
 
-#include "../headers/arquivos.h"
+#include "arquivos.h"
+#include "base.h"
 
 //---- Structs -----
 typedef struct Lista tLista;
 typedef struct Lista {
-    char *palavra;
-    int ocorrencias;
-    tIndiceLista *indices;
+    tPalavra *palavra;
     tLista *prox;
 } tLista;
 

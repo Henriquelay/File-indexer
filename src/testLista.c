@@ -1,5 +1,6 @@
 #include "../headers/lista.h"
 #include "../headers/arquivos.h"
+#include "../headers/base.h"
 #include <time.h>
 
 int main(int argc, char *argv[]){
@@ -21,7 +22,7 @@ int main(int argc, char *argv[]){
 
     for(int i = 0; i < argc - 2; i++){
         if(abre_Arquivo(argv[i + 2], &arquivo) != 1){
-            printf("Erro ao abrir o arquivo %s!\n", argv[i]);
+            printf("Erro ao abrir o arquivo %s!\n", argv[i + 2]);
             return 0;
         }
         sizes[i] = tamanhoArquivo(arquivo);
@@ -37,10 +38,6 @@ int main(int argc, char *argv[]){
     double time_taken = ((double)tAll)/CLOCKS_PER_SEC; // in seconds 
     printf("%lf ", time_taken);
 
-
-    for(int i = 0; i < argc - 2; i++){
-        printf("Tamanho do arquivo %s = %d\n", argv[i + 2], sizes[i]);
-    }
     //copia nBuscas palavras aleatórias da estrutura de lista não tratada para um vetor estático (para ter acesso O(1)) e não impactar tanto na medida busca.
     srand(time(NULL));
     char palavras[nBuscas][NPAL];
@@ -48,34 +45,36 @@ int main(int argc, char *argv[]){
     int pos = 0 ;
     for(int i = 0; i < nBuscas; i++){
         arq = (rand() % (argc - 2)) + 2;
-        pos = rand() % sizes[(int) arq];
-        printf("Abrindo arquivo %s.\n", argv[(int) arq]);
-        printf("Local onde navegar pro arquivo = %d\n", pos);
+        pos = rand() % sizes[(int) arq - 2];
+        // printf("Abrindo arquivo %s, indice %d.\n", argv[(int) arq], (int) arq);
+        // printf("Local onde navegar pro arquivo = %d\n", pos);
         if(abre_Arquivo(argv[(int) arq], &arquivo) != 1) printf("Deu bosta ao abrir o arquivo %s!\n", argv[(int) arq]);
-        fseek(arquivo, pos, SEEK_SET);
+        fseek(arquivo, pos, 0);
         while(eValido(fgetc(arquivo)));
         pega_Palavra(arquivo, palavras[i], &byte);
-        printf("Palavra pegada: %s\n", palavras[i]);
+        // printf("Palavra pegada: %s\n", palavras[i]);
         fecha_Arquivo(arquivo);
         arquivo = NULL;
     }
 
-    puts("Vetor estatico de busca:");
-    for(int i = 0; i < nBuscas; i++)
-        printf("%s ",palavras[i]);
+   /*  puts("Vetor pra busca");
+    for(int i = 0; i < nBuscas; i++){
+        printf("%s ", palavras[i]);
+
+    } */
+
     //sorteia as palavras a serem pesquisadas.
     //Coloca tudo em um vetor estático, sorteia um valor dentro dele e lê a palavra. Então, tenta buscar ela na estrutura.
-/*     srand(rand());
+    srand(rand());
+
     t = clock();
     for(int i = 0; i < nBuscas; i++)
         for(int y = 0; y < argc - 2; y++)
-            consulta_Lista(l[y], seletor[i]);
-
+            consulta_Lista(l[y], palavras[i]);
     t = clock() - t;
-    time_taken = ((double)t)/CLOCKS_PER_SEC;
 
+    time_taken = ((double)t)/CLOCKS_PER_SEC;
     printf("%lf\n", time_taken);
- */
 
     for(int i = 0; i < argc - 2; i++){
         destroi_Lista(l[i]);

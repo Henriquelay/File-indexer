@@ -6,6 +6,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "arquivos.h"
+#include "base.h"
 
 //----STRUCTS--------
 typedef struct NO tNO;

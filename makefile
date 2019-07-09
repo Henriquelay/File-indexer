@@ -9,7 +9,7 @@
 
 CC			=gcc
 CFLAGS		=-Wall -g
-DEPS		=lista.h arquivos.h ArvoreBinaria.h ArvoreAVL.h hash.h
+DEPS		=lista.h arquivos.h ArvoreBinaria.h ArvoreAVL.h hash.h base.h
 DEPSDIR		=headers
 _DEPS		=$(patsubst %,${DEPSDIR}/%,${DEPS})
 OBJDIR		=src
@@ -18,16 +18,16 @@ ARQUIVO		=data/APRENDE.txt
 BUSCAS		=10
 EXEC		=Lista
 
-OBJLISTA	=lista.o arquivos.o testLista.o
+OBJLISTA	=lista.o arquivos.o testLista.o base.o
 _OBJLISTA	=$(patsubst %,${OBJDIR}/%,${OBJLISTA})
 
-OBJARVBIN	=ArvoreBinaria.o arquivos.o testArvoreBinaria.o
+OBJARVBIN	=ArvoreBinaria.o arquivos.o testArvoreBinaria.o base.o
 _OBJARVBIN	=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
 
-OBJARVAVL	=ArvoreAVL.o arquivos.o testArvoreAVL.o
+OBJARVAVL	=ArvoreAVL.o arquivos.o testArvoreAVL.o base.o
 _OBJARVAVL	=$(patsubst %,${OBJDIR}/%,${OBJARVAVL})
 
-OBJHASH	=hash.o arquivos.o testHash.o
+OBJHASH	=hash.o arquivos.o testHash.o base.o
 _OBJHASH	=$(patsubst %,${OBJDIR}/%,${OBJHASH})
 
 
@@ -36,7 +36,7 @@ _OBJHASH	=$(patsubst %,${OBJDIR}/%,${OBJHASH})
 ${OBJDIR}/%.o: %.c ${_DEPS}
 	${CC} -c -o $@ $< ${CFLAGS}
 
-all: lista arvavl #arvbin hash
+all: lista #arvavl arvbin hash
 	rm src/*.o
 
 lista: ${_OBJLISTA} 
@@ -68,6 +68,7 @@ clear:
 	rm -f ${OBJDIR}/*.o
 	rm -f ${EXEC}
 	clear
+	make
 
 push:
 	gitPusher ${msg}

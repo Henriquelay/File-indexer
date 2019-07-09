@@ -9,17 +9,13 @@ tListaSent *inicia_ListaSent(void){
     return novo;
 }
 
-tLista *novo_no_Lista(char *str, int byte){
+tLista *novo_no_Lista(char *str, int byte, char arq){
     if(str == NULL) return NULL;
 
     tLista *novo = (tLista*) malloc(sizeof(tLista));
     if(novo == NULL) return NULL;
+    novo->palavra = nova_Palavra(str, arq, byte);
     novo->prox = NULL;
-    novo->palavra = (char*) malloc(sizeof(char) * (strlen(str) + 1));
-    strcpy(novo->palavra, str);
-    novo->ocorrencias = 1;
-    novo->indices = NULL;
-    insere_Indice(&novo->indices, byte);
     return novo;
 } 
 
