@@ -9,13 +9,13 @@ int main(int argc, char *argv[]){
         return 0;
     }
     int nBuscas = atoi(argv[1]);
-    tListaSent *l[argc - 2];            //os 2 primeiros são o nome do executável e o n de palavras
+    tLista *l[argc - 2];            //os 2 primeiros são o nome do executável e o n de palavras
     char pal[NPAL];                     //tamanho arbitrariamente grande
     int byte = 0;
     FILE *arquivo = NULL;
 
     for(int i = 0; i < argc - 2; i++)
-        l[i] = inicia_ListaSent();
+        l[i] = inicia_Lista();
     int sizes[argc - 2];
     clock_t t, tAll;
     tAll = 0;

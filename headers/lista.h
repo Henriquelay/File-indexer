@@ -5,25 +5,25 @@
 #include "base.h"
 
 //---- Structs -----
-typedef struct Lista tLista;
+typedef struct Lista tCelula;
 typedef struct Lista {
     tPalavra *palavra;
-    tLista *prox;
-} tLista;
+    tCelula *prox;
+} tCelula;
 
 typedef struct ListaSent{
     int qtd;
-    tLista *ini, *fim;
-} tListaSent;
+    tCelula *ini, *fim;
+} tLista;
 
 
 //------- Funções --------
-tListaSent *inicia_ListaSent(void);
-tLista *novo_no_Lista(char *str, int byte, char arq);
-char insere_Lista(tListaSent *l, char *str, int byte, char arq);
-char consulta_Lista(tListaSent *l, char* pal);
-char print_Lista(tListaSent *l);
-char destroi_No(tLista *no);
-char destroi_Lista(tListaSent *l);
+tLista *inicia_Lista(void);
+tCelula *novo_no_Lista(char *str, int byte, char arq);
+char insere_Lista(tLista *l, char *str, int byte, char arq);
+char consulta_Lista(tLista *l, char* pal);
+char print_Lista(tLista *l);
+char destroi_No(tCelula *no);
+char destroi_Lista(tLista *l);
 
 #endif
