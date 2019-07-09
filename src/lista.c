@@ -1,7 +1,12 @@
 #include "../headers/lista.h"
 
-tListaSent *inicia_ListaSent(void){
-    tListaSent *novo = (tListaSent*) malloc(sizeof(tListaSent));
+/*
+OBJETIVO: Funcao que cria e aloca na memória uma lista com inicio e fim nulos.
+INPUTS: Nenhum.
+OUTPUTS: Um ponteiro do tipo tLista.
+*/
+tLista *inicia_Lista(void){
+    tLista *novo = (tLista*) malloc(sizeof(tLista));
     if(novo == NULL) return NULL;
 
     novo->qtd = 0;
@@ -9,22 +14,32 @@ tListaSent *inicia_ListaSent(void){
     return novo;
 }
 
-tLista *novo_no_Lista(char *str, int byte, char arq){
+/*
+OBJETIVO: Funcao que cria e aloca na memória uma celula com o prox NULL.
+INPUTS: Um ponteiro char para 'str', uma variavel int para 'byte' e uma variavel char para 'arq'.
+OUTPUTS: Um ponteiro do tipo tCelula.
+*/
+tCelula *novo_no_Lista(char *str, int byte, char arq){
     if(str == NULL) return NULL;
 
-    tLista *novo = (tLista*) malloc(sizeof(tLista));
+    tCelula *novo = (tCelula*) malloc(sizeof(tCelula));
     if(novo == NULL) return NULL;
     novo->palavra = cria_Palavra(str, arq, byte);
     novo->prox = NULL;
     return novo;
 } 
 
-char insere_Lista(tListaSent *l, char *str, int byte, char arq){
+/*
+OBJETIVO: Funcao que insere uma palavra na lista encadeada.
+INPUTS: Um ponteiro tLista para 'l', um ponteiro char para 'str', uma variavel int para 'byte' e uma variavel char para 'arq'.
+OUTPUTS: 1 se a palavra foi inserida corretamente e 0 caso contrario.
+*/
+char insere_Lista(tLista *l, char *str, int byte, char arq){
     if(str == NULL) return 0;
     if(l == NULL) return 0;
 
     //Procura a palavra na lista
-    for(tLista *aux = l->ini; aux != NULL; aux = aux->prox){
+    for(tCelula *aux = l->ini; aux != NULL; aux = aux->prox){
         if(strlen(aux->palavra->pal) == strlen(str))
             if(strcasecmp(aux->palavra->pal, str) == 0){ //encontra a palavra na lista
                 if(!adiciona_IndicePal(aux->palavra, byte, arq)) puts("Deu ruim ao inserir indice");
@@ -32,7 +47,7 @@ char insere_Lista(tListaSent *l, char *str, int byte, char arq){
             }
     }
     //Não foi encontrado a palavra na lista
-    tLista *no = novo_no_Lista(str, byte, arq);
+    tCelula *no = novo_no_Lista(str, byte, arq);
     no->prox = l->ini;
     l->ini = no;
     if(l->fim == NULL)
@@ -41,11 +56,16 @@ char insere_Lista(tListaSent *l, char *str, int byte, char arq){
     return 2;
 }
 
-char consulta_Lista(tListaSent *l, char* pal){
+/*
+OBJETIVO: Funcao que verifica se uma palabvra de entrada esta inserida na lista.
+INPUTS: Um ponteiro tLista para 'l', um ponteiro char para 'pal'.
+OUTPUTS: 1 se a palavra foi inserida corretamente e 0 caso contrario.
+*/
+char consulta_Lista(tLista *l, char* pal){
     if(pal == NULL || l == NULL) return 0;
     
     //Procura a palavra na lista
-    for(tLista *aux = l->ini; aux != NULL; aux = aux->prox){
+    for(tCelula *aux = l->ini; aux != NULL; aux = aux->prox){
         if(aux->palavra == NULL) break;
         if(aux->palavra->pal == NULL) break;
         if(strlen(aux->palavra->pal) == strlen(pal))
@@ -56,10 +76,15 @@ char consulta_Lista(tListaSent *l, char* pal){
 
 }
 
-char print_Lista(tListaSent *l){
+/*
+OBJETIVO: Funcao que printa uma lista encadeada.
+INPUTS: Um ponteiro tLista para 'l'.
+OUTPUTS: 1 se a palavra foi printada corretamente e 0 caso a lista nao existe.
+*/
+char print_Lista(tLista *l){
     if(l == NULL) return 0;
     int somaocor = 0;
-    for(tLista *aux = l->ini; aux != NULL; aux = aux->prox){
+    for(tCelula *aux = l->ini; aux != NULL; aux = aux->prox){
         somaocor = 0;
         for(tArquivo *arqaux = aux->palavra->arquivos; arqaux != NULL; arqaux = arqaux->prox){
             somaocor += arqaux->qtd;
@@ -70,10 +95,15 @@ char print_Lista(tListaSent *l){
     return 1;
 }
 
-char destroi_Lista(tListaSent *l){
+/*
+OBJETIVO: Funcao que libera da memória uma lista encadeada.
+INPUTS: Um ponteiro do tipo tLista 'l'.
+OUTPUTS: Nenhum.
+*/
+char destroi_Lista(tLista *l){
     if(l == NULL) return 1;
 
-    for(tLista *no = l->ini; no != NULL; no = l->ini){
+    for(tCelula *no = l->ini; no != NULL; no = l->ini){
         l->ini = l->ini->prox;
         destroi_Palavra(no->palavra);
         free(no);
