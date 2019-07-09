@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include "../headers/ArvoreAVL.h"
 
+/*
+OBJETIVO: Funcao que Cria e aloca na memória um nó principal chamado raiz e retorna a mesma com seu conteúdo nulo.
+IMPUTS: Nenhum.
+OUTPUTS: Um ponteiro do tipo ArvAVL.
+*/
 ArvAVL* cria_ArvAVL(){
     ArvAVL* raiz = (ArvAVL*) malloc(sizeof(ArvAVL));
     if(raiz != NULL)
@@ -9,20 +14,41 @@ ArvAVL* cria_ArvAVL(){
     return raiz;
 }
 
+/*
+OBJETIVO: Funcao que retorna a altura de um NO qualquer na arvore.
+IMPUTS: Um ponteiro do tipo NO para 'no'.
+OUTPUTS: Uma variavel inteira para altura do NO.
+*/
 int altura_NO(struct NO* no){
     if(no == NULL)  return -1;
     return no->altura;
 }
 
+/*
+OBJETIVO: Funcao que calcula e retorna o fator de balanceamento que eh o modulo da
+altura da subArvore a esquerda menos a altura da subArvore a direita.
+IMPUTS: Um ponteiro do tipo NO para 'no'.
+OUTPUTS: Uma variavel inteira para o fator de balanceamento.
+*/
 int fatorBalanceamento_NO(struct NO* no){
     return labs(altura_NO(no->esq) - altura_NO(no->dir));
 }
 
+/*
+OBJETIVO: Funcao que retorna o maior de dois numeros.
+IMPUTS: Duas variaveis inteiras para os valores a serem comparados.
+OUTPUTS: Uma variavel inteira para o maior.
+*/
 int maior(int a, int b){
     if(a > b)   return a;
     else        return b;
 }
 
+/*
+OBJETIVO: Funcao que retorna a altura da arvore.
+IMPUTS: Um ponteiro do tipo ArvAVL para 'raiz'.
+OUTPUTS: Uma variavel inteira para altura da arvore.
+*/
 int altura_ArvAVL(ArvAVL *raiz){
     if (raiz == NULL)
         return 0;
@@ -36,18 +62,11 @@ int altura_ArvAVL(ArvAVL *raiz){
         return(alt_dir + 1);
 }
 
-/* Para caso precise printar a Arvore */
-
-//    void preOrdem_ArvAVL(ArvAVL *raiz){
-//        if(raiz == NULL)
-//            return;
-//        if(*raiz != NULL){
-//            printf("No %d: %d\n",(*raiz)->info,altura_NO(*raiz));
-//            preOrdem_ArvAVL(&((*raiz)->esq));
-//            preOrdem_ArvAVL(&((*raiz)->dir));
-//        }
-//    }
-
+/*
+OBJETIVO: Funcao que imprime a arvore binária em ordem crescente.
+IMPUTS: Um ponteiro do tipo ArvBin para 'raiz'.
+OUTPUTS: Nenhum.
+*/
 void emOrdem_ArvAVL(ArvAVL *raiz){
     if(raiz == NULL)
         return;
@@ -58,16 +77,11 @@ void emOrdem_ArvAVL(ArvAVL *raiz){
     }
 }
 
-//    void posOrdem_ArvAVL(ArvAVL *raiz){
-//        if(raiz == NULL)
-//            return;
-//        if(*raiz != NULL){
-//            posOrdem_ArvAVL(&((*raiz)->esq));
-//            posOrdem_ArvAVL(&((*raiz)->dir));
-//            printf("%d\n",(*raiz)->info);
-//        }
-//    }
-
+/*
+OBJETIVO: Funcao calcula e retorna o tamanho da menor string.
+IMPUTS: Um ponteiro do tipo char para 'str1' e um ponteiro do tipo char para 'str2'.
+OUTPUTS: Uma variavel int para o tamanho da menor palavra ou se as palavras forem iguais retorna 0.
+*/
 int SelecionaMenorString(char* palavra1, char* palavra2){
     if(palavra1 == NULL || palavra2 == NULL)    return 0;
     int tam_pal1 = strlen(palavra1), tam_pal2 = strlen(palavra2);
@@ -75,6 +89,11 @@ int SelecionaMenorString(char* palavra1, char* palavra2){
     return tam_pal2;
 }
 
+/*
+OBJETIVO: Funcao que verifica se uma palavra de entrada está inserida na arvore binária.
+IMPUTS: Um ponteiro do tipo ArvBin para 'raiz' e um ponteiro do tipo char para 'palavra'.
+OUTPUTS: 1 se a palavra foi encontrada e 0 caso contrário.
+*/
 char consulta_ArvAVL(ArvAVL *raiz, char* palavra){
     if(raiz == NULL)
         return 0;
@@ -95,7 +114,9 @@ char consulta_ArvAVL(ArvAVL *raiz, char* palavra){
 
 /*====================ROTACOES DE BALANCEAMENTO====================*/
 /*
-    Rotacao simples a esquerda
+OBJETIVO: Funcao que faz a rotacao simples a esquerda.
+IMPUTS: Um ponteiro do tipo ArvBin para 'raiz'.
+OUTPUTS: Nenhum.
 */
 void RotacaoLL(ArvAVL *A){
     struct NO *B;
@@ -108,7 +129,9 @@ void RotacaoLL(ArvAVL *A){
 }
 
 /*
-    Rotacao simples a direita
+OBJETIVO: Funcao que faz a rotacao simples a direita.
+IMPUTS: Um ponteiro do tipo ArvBin para 'raiz'.
+OUTPUTS: Nenhum.
 */
 void RotacaoRR(ArvAVL *A){
     struct NO *B;
@@ -121,7 +144,9 @@ void RotacaoRR(ArvAVL *A){
 }
 
 /*
-    Rotacao Dupla a direita
+OBJETIVO: Funcao que faz a rotacao dupla a direita.
+IMPUTS: Um ponteiro do tipo ArvBin para 'raiz'.
+OUTPUTS: Nenhum.
 */
 void RotacaoLR(ArvAVL *A){
     RotacaoRR(&(*A)->esq);
@@ -129,13 +154,20 @@ void RotacaoLR(ArvAVL *A){
 }
 
 /*
-    Rotacao Dupla a esquerda
+OBJETIVO: Funcao que faz a rotacao dupla a esquerda.
+IMPUTS: Um ponteiro do tipo ArvBin para 'raiz'.
+OUTPUTS: Nenhum.
 */
 void RotacaoRL(ArvAVL *A){
     RotacaoLL(&(*A)->dir);
     RotacaoRR(A);
 }
 
+/*
+OBJETIVO: Funcao que insere uma palavra na arvore AVL e faz o balanceamento da arvore.
+IMPUTS: Um ponteiro do tipo ArvAVL para 'raiz', um ponteiro do tipo char para 'palavra'.
+OUTPUTS: 1 se a palavra foi inserida corretamente e 0 caso contrário.
+*/
 char insere_ArvAVL(ArvAVL *raiz, char* palavra/* , int byte*/){
     /* Verifica se Arvore Vazia ou se eh NO folha */
     if(*raiz == NULL){
@@ -191,6 +223,11 @@ char insere_ArvAVL(ArvAVL *raiz, char* palavra/* , int byte*/){
     return 1;
 }
 
+/*
+OBJETIVO: Funcao que avalia e retorna se duas strings são iguais.
+IMPUTS: Um ponteiro do tipo char para 'str1' e um ponteiro do tipo char para 'str2'.
+OUTPUTS: 1 se as strings de entrada são iguais e 0 caso contrário.
+*/
 char strings_Iguais(char *str1, char *str2){
     if(str1 == NULL || str2 == NULL) return 0;
     if(strlen(str1) == strlen(str2))
@@ -199,7 +236,11 @@ char strings_Iguais(char *str1, char *str2){
     return 0;
 }
 
-/* Funcoes para liberar a estrutura da memoria */
+/*
+OBJETIVO: Funcao que libera da memória um ponteiro do tipo tNO, junto com seus NOs a esquerda e direita.
+IMPUTS: Um ponteiro do tipo ArvBin 'raiz'.
+OUTPUTS: Nenhum.
+*/
 void libera_NO(ArvAVL no){
     if(no == NULL)
         return;
@@ -211,6 +252,11 @@ void libera_NO(ArvAVL no){
     no = NULL;
 }
 
+/*
+OBJETIVO: Funcao que libera da memória um ponteiro do tipo tArvBin, junto com todos os seus NOs da arvore.
+IMPUTS: Um ponteiro do tipo ArvBin 'raiz'.
+OUTPUTS: Nenhum.
+*/
 void destroi_ArvAVL(ArvAVL* raiz){
     if(raiz == NULL)
         return;
@@ -219,6 +265,11 @@ void destroi_ArvAVL(ArvAVL* raiz){
     raiz = NULL;
 }
 
+/*
+OBJETIVO: Funcao que verifica se a arvore esta vazia.
+IMPUTS: Um ponteiro do tipo ArvAVL para 'raiz', um ponteiro do tipo char para 'palavra'.
+OUTPUTS: 1 se esta vazia e 0 caso contrário.
+*/
 int estaVazia_ArvAVL(ArvAVL *raiz){
     if(raiz == NULL)
         return 1;
