@@ -66,6 +66,8 @@ char consulta_Lista(tLista *l, char* pal){
     
     //Procura a palavra na lista
     for(tCelula *aux = l->ini; aux != NULL; aux = aux->prox){
+        if(aux->palavra == NULL) break;
+        if(aux->palavra->pal == NULL) break;
         if(strlen(aux->palavra->pal) == strlen(pal))
             if(strcasecmp(aux->palavra->pal, pal) == 0) //encontra a palavra na lista
                 return 1;

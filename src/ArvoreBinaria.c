@@ -22,10 +22,21 @@ void libera_NO(ArvBin no){
         return;
     libera_NO(no->esq);
     libera_NO(no->dir);
-    free(no->info);
-    destroi_Indices(no->indices);
+    destroi_Palavra(no->palavra);
     free(no);
     no = NULL;
+}
+
+/*
+OBJETIVO: Funcao calcula e retorna o tamanho da menor string.
+IMPUTS: Um ponteiro do tipo char para 'str1' e um ponteiro do tipo char para 'str2'.
+OUTPUTS: Uma variavel int para o tamanho da menor palavra ou se as palavras forem iguais retorna 0.
+*/
+int SelecionaMenorString(char* palavra1, char* palavra2){
+    if(palavra1 == NULL || palavra2 == NULL)    return 0;
+    int tam_pal1 = strlen(palavra1), tam_pal2 = strlen(palavra2);
+    if(tam_pal1 < tam_pal2) return tam_pal1;
+    return tam_pal2;
 }
 
 /*
@@ -58,33 +69,29 @@ OBJETIVO: Funcao que insere uma palavra na arvore binária e guarda aonde a pala
 IMPUTS: Um ponteiro do tipo ArvBin para 'raiz', um ponteiro do tipo char para 'palavra' e uma variavel do tipo int para 'byte'.
 OUTPUTS: 1 se a palavra foi inserida corretamente e 0 caso contrário.
 */
-char insere_ArvBin(ArvBin* raiz, char* palavra, int byte){
+char insere_ArvBin(ArvBin* raiz, char* palavra, int byte, char arq){
     if(raiz == NULL || palavra == NULL) return 0;
 
     ArvBin aux = *raiz, anterior = NULL;
-    while(aux != NULL && !strings_Iguais(aux->info, palavra)){
+    while(aux != NULL && !strings_Iguais(aux->palavra->pal, palavra)){
         anterior = aux;
-        if(strcasecmp((*raiz)->info, palavra) > 0)
+        if(strcasecmp((*raiz)->palavra->pal, palavra) > 0)
             aux = aux->esq;
         else
             aux = aux->dir;
     }
     //encontrei ou lugar vazio ou no pra adicionar
     if(aux != NULL){        //lugar preenchido, adicionar indice
-        aux->ocorrencias++;
-        insere_Indice(&aux->indices, byte);
-    } 
+        if(!adiciona_IndicePal(aux->palavra, byte, arq))
+        puts("Deu ruim ao adicionar ocorrencia na palavra");
+    }
     else{        //lugar vazio
         aux = (ArvBin) malloc(sizeof(tNo));
         if(aux == NULL) return 0;
-        aux->info = malloc(sizeof(char) * (strlen(palavra) + 1));
-        strcpy(aux->info, palavra);
+        aux->palavra = cria_Palavra(palavra, arq, byte);
         aux->dir = aux->esq = NULL;
-        aux->indices = NULL;
-        insere_Indice(&aux->indices, byte);
-        aux->ocorrencias = 1;
         if(anterior != NULL){
-            if(strcasecmp((*raiz)->info, palavra) > 0)
+            if(strcasecmp((*raiz)->palavra->pal, palavra) > 0)
                 anterior->esq = aux;
             else
                 anterior->dir = aux;
@@ -104,9 +111,10 @@ char consulta_ArvBin(ArvBin *raiz, char* palavra){
     if(raiz == NULL)
         return 0;
     struct NO* atual = *raiz;
-    int compara = strncpm(palavra, atual->info), tam_menor) > 0;
+    int tam_menor = SelecionaMenorString(palavra, (*raiz)->palavra->pal);
+    int compara = strncmp(palavra, atual->palavra->pal, tam_menor) > 0;
     while(atual != NULL){
-        if(string_Iguais(palavra, atual->info))){
+        if(strings_Iguais(palavra, atual->palavra->pal)){
             return 1;
         }
         if(compara > 0)
@@ -126,7 +134,11 @@ void emOrdem(ArvBin *raiz){
     if(raiz == NULL) return;
     if(*raiz == NULL) return;
     emOrdem(&(*raiz)->esq);
-    printf("%s (%d): ", (*raiz)->info, (*raiz)->ocorrencias);
-    imprime_Indices((*raiz)->indices);
+    int somaocor = 0;
+    for(tArquivo *arqaux = (*raiz)->palavra->arquivos; arqaux != NULL; arqaux = arqaux->prox){
+        somaocor += arqaux->qtd;
+    }
+    printf("%s (%d): ", (*raiz)->palavra->pal, somaocor);
+    imprime_Arquivos((*raiz)->palavra->arquivos);
     emOrdem(&(*raiz)->dir);
 }
