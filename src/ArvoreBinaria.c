@@ -1,5 +1,10 @@
 #include "../headers/ArvoreBinaria.h"
 
+/*
+OBJETIVO: Funcao que Cria e aloca na memória um nó principal chamado raiz e retorna a mesma com seu conteúdo nulo.
+IMPUTS: Nenhum.
+OUTPUTS: Um ponteiro do tipo ArvBin.
+*/
 ArvBin* cria_ArvBin(){
     ArvBin* raiz = (ArvBin*) malloc(sizeof(ArvBin));
     if(raiz != NULL)
@@ -7,6 +12,11 @@ ArvBin* cria_ArvBin(){
     return raiz;
 }
 
+/*
+OBJETIVO: Funcao que libera da memória um ponteiro do tipo tNO, junto com seus NOs a esquerda e direita.
+IMPUTS: Um ponteiro do tipo ArvBin 'raiz'.
+OUTPUTS: Nenhum.
+*/
 void libera_NO(ArvBin no){
     if(no == NULL)
         return;
@@ -18,6 +28,11 @@ void libera_NO(ArvBin no){
     no = NULL;
 }
 
+/*
+OBJETIVO: Funcao que libera da memória um ponteiro do tipo tArvBin, junto com todos os seus NOs da arvore.
+IMPUTS: Um ponteiro do tipo ArvBin 'raiz'.
+OUTPUTS: Nenhum.
+*/
 void destroi_ArvBin(ArvBin* raiz){
     if(raiz == NULL)
         return;
@@ -25,6 +40,11 @@ void destroi_ArvBin(ArvBin* raiz){
     free(raiz);//libera a raiz
 }
 
+/*
+OBJETIVO: Funcao que avalia e retorna se duas strings são iguais.
+IMPUTS: Um ponteiro do tipo char para 'str1' e um ponteiro do tipo char para 'str2'.
+OUTPUTS: 1 se as strings de entrada são iguais e 0 caso contrário.
+*/
 char strings_Iguais(char *str1, char *str2){
     if(str1 == NULL || str2 == NULL) return 0;
     if(strlen(str1) == strlen(str2))
@@ -33,13 +53,18 @@ char strings_Iguais(char *str1, char *str2){
     return 0;
 }
 
-char insere_ArvBin(ArvBin* raiz, char* valor, int byte){
-    if(raiz == NULL || valor == NULL) return 0;
+/*
+OBJETIVO: Funcao que insere uma palavra na arvore binária e guarda aonde a palavra se localiza no arquivo fonte.
+IMPUTS: Um ponteiro do tipo ArvBin para 'raiz', um ponteiro do tipo char para 'palavra' e uma variavel do tipo int para 'byte'.
+OUTPUTS: 1 se a palavra foi inserida corretamente e 0 caso contrário.
+*/
+char insere_ArvBin(ArvBin* raiz, char* palavra, int byte){
+    if(raiz == NULL || palavra == NULL) return 0;
 
     ArvBin aux = *raiz, anterior = NULL;
-    while(aux != NULL && !strings_Iguais(aux->info, valor)){
+    while(aux != NULL && !strings_Iguais(aux->info, palavra)){
         anterior = aux;
-        if(strcasecmp((*raiz)->info, valor) > 0)
+        if(strcasecmp((*raiz)->info, palavra) > 0)
             aux = aux->esq;
         else
             aux = aux->dir;
@@ -52,14 +77,14 @@ char insere_ArvBin(ArvBin* raiz, char* valor, int byte){
     else{        //lugar vazio
         aux = (ArvBin) malloc(sizeof(tNo));
         if(aux == NULL) return 0;
-        aux->info = malloc(sizeof(char) * (strlen(valor) + 1));
-        strcpy(aux->info, valor);
+        aux->info = malloc(sizeof(char) * (strlen(palavra) + 1));
+        strcpy(aux->info, palavra);
         aux->dir = aux->esq = NULL;
         aux->indices = NULL;
         insere_Indice(&aux->indices, byte);
         aux->ocorrencias = 1;
         if(anterior != NULL){
-            if(strcasecmp((*raiz)->info, valor) > 0)
+            if(strcasecmp((*raiz)->info, palavra) > 0)
                 anterior->esq = aux;
             else
                 anterior->dir = aux;
@@ -70,6 +95,11 @@ char insere_ArvBin(ArvBin* raiz, char* valor, int byte){
     return 1;
 }
 
+/*
+OBJETIVO: Funcao que verifica se uma palavra de entrada está inserida na arvore binária.
+IMPUTS: Um ponteiro do tipo ArvBin para 'raiz' e um ponteiro do tipo char para 'palavra'.
+OUTPUTS: 1 se a palavra foi encontrada e 0 caso contrário.
+*/
 char consulta_ArvBin(ArvBin *raiz, char* palavra){
     if(raiz == NULL)
         return 0;
@@ -87,6 +117,11 @@ char consulta_ArvBin(ArvBin *raiz, char* palavra){
     return 0;
 }
 
+/*
+OBJETIVO: Funcao que imprime a arvore binária em ordem crescente.
+IMPUTS: Um ponteiro do tipo ArvBin para 'raiz'.
+OUTPUTS: Nenhum.
+*/
 void emOrdem(ArvBin *raiz){
     if(raiz == NULL) return;
     if(*raiz == NULL) return;

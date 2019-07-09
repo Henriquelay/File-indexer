@@ -20,9 +20,9 @@ typedef struct NO{
 
 //----FUNCOES-------
 ArvBin* cria_ArvBin();
-char insere_ArvBin(ArvBin* raiz, char* valor, int byte);
+char insere_ArvBin(ArvBin* raiz, char* palavra, int byte);
 void destroi_ArvBin(ArvBin *raiz);
-char consulta_ArvBin(ArvBin *raiz, char* valor);
+char consulta_ArvBin(ArvBin *raiz, char* palavra);
 void emOrdem(ArvBin *raiz);
 
 #endif
