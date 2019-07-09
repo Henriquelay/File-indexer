@@ -75,9 +75,8 @@ int main(int argc, char *argv[]){
     time_taken = ((double)t)/CLOCKS_PER_SEC;
     printf("%lf\n", time_taken);
     
-
-        // print_Lista(l[i]);
-        destroi_Lista(l);
+    printf("Palavras unicas: %d\n", l->qtd);
+    destroi_Lista(l);
 
     return 0;
 }
