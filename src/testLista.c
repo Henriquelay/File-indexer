@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
         sizes[i] = tamanhoArquivo(arquivo);
         t = clock();
         while(pega_Palavra(arquivo, pal, &byte) == 1){
-            insere_Lista(l[i], pal, byte);
+            insere_Lista(l[i], pal, byte, i);
         }
         tAll += clock() - t;  
         fecha_Arquivo(arquivo);
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
         arquivo = NULL;
     }
 
-   /*  puts("Vetor pra busca");
+    /*  puts("Vetor pra busca");
     for(int i = 0; i < nBuscas; i++){
         printf("%s ", palavras[i]);
 
@@ -75,8 +75,10 @@ int main(int argc, char *argv[]){
 
     time_taken = ((double)t)/CLOCKS_PER_SEC;
     printf("%lf\n", time_taken);
+    
 
     for(int i = 0; i < argc - 2; i++){
+        // print_Lista(l[i]);
         destroi_Lista(l[i]);
     }
 

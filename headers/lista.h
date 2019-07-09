@@ -19,8 +19,8 @@ typedef struct ListaSent{
 
 //------- Funções --------
 tListaSent *inicia_ListaSent(void);
-tLista *novo_no_Lista(char *str, int byte);
-char insere_Lista(tListaSent *l, char *str, int byte);
+tLista *novo_no_Lista(char *str, int byte, char arq);
+char insere_Lista(tListaSent *l, char *str, int byte, char arq);
 char consulta_Lista(tListaSent *l, char* pal);
 char print_Lista(tListaSent *l);
 char destroi_No(tLista *no);

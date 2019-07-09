@@ -10,12 +10,26 @@ tPalavra *cria_Palavra(char *str, char arquivo, int ocorrencia){
     nova->arquivos = NULL;
     insere_Arquivo(&nova->arquivos, arquivo);
     insere_Indice(&nova->arquivos->ocorrencias, ocorrencia);
+    nova->arquivos->qtd++;
     return nova;
+}
+
+char adiciona_IndicePal(tPalavra *pal, int byte, char arq){
+    if(pal == NULL) return 0;
+
+    tArquivo *aux = NULL;
+    for(aux = pal->arquivos; aux != NULL; aux = aux->prox){
+        if(aux->arquivo == arq) break;
+    }   //arquivo correto selecionado
+    aux->qtd++;
+    insere_Indice(&aux->ocorrencias, byte);
+    return 1;
 }
 
 void destroi_Palavra(tPalavra *pal){
     if(pal == NULL) return;
     destroi_Arquivos(pal->arquivos);
+    free(pal->pal);
     free(pal);
     pal = NULL;
 }
@@ -48,7 +62,7 @@ void imprime_Indices(tIndiceLista *l){
         if(aux->prox != NULL)
             printf(", ");
     }
-    printf("\n");
+    // printf("\n");
     return;
 }
 
@@ -86,6 +100,7 @@ char insere_Arquivo(tArquivo **l, char arq){
 void imprime_Arquivos(tArquivo *l){
     for(tArquivo *aux = l; aux != NULL; aux = aux->prox){
         printf("%c ", aux->arquivo);
+        imprime_Indices(l->ocorrencias);
         if(aux->prox != NULL)
             printf(", ");
     }

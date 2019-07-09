@@ -14,26 +14,25 @@ tLista *novo_no_Lista(char *str, int byte, char arq){
 
     tLista *novo = (tLista*) malloc(sizeof(tLista));
     if(novo == NULL) return NULL;
-    novo->palavra = nova_Palavra(str, arq, byte);
+    novo->palavra = cria_Palavra(str, arq, byte);
     novo->prox = NULL;
     return novo;
 } 
 
-char insere_Lista(tListaSent *l, char *str, int byte){
+char insere_Lista(tListaSent *l, char *str, int byte, char arq){
     if(str == NULL) return 0;
     if(l == NULL) return 0;
 
     //Procura a palavra na lista
     for(tLista *aux = l->ini; aux != NULL; aux = aux->prox){
-        if(strlen(aux->palavra) == strlen(str))
-            if(strcasecmp(aux->palavra, str) == 0){ //encontra a palavra na lista
-                aux->ocorrencias++;
-                insere_Indice(&aux->indices, byte);
+        if(strlen(aux->palavra->pal) == strlen(str))
+            if(strcasecmp(aux->palavra->pal, str) == 0){ //encontra a palavra na lista
+                if(!adiciona_IndicePal(aux->palavra, byte, arq)) puts("Deu ruim ao inserir indice");
                 return 1;
             }
     }
     //Não foi encontrado a palavra na lista
-    tLista *no = novo_no_Lista(str, byte);
+    tLista *no = novo_no_Lista(str, byte, arq);
     no->prox = l->ini;
     l->ini = no;
     if(l->fim == NULL)
@@ -47,8 +46,8 @@ char consulta_Lista(tListaSent *l, char* pal){
     
     //Procura a palavra na lista
     for(tLista *aux = l->ini; aux != NULL; aux = aux->prox){
-        if(strlen(aux->palavra) == strlen(pal))
-            if(strcasecmp(aux->palavra, pal) == 0) //encontra a palavra na lista
+        if(strlen(aux->palavra->pal) == strlen(pal))
+            if(strcasecmp(aux->palavra->pal, pal) == 0) //encontra a palavra na lista
                 return 1;
     }
     return 0;
@@ -57,20 +56,15 @@ char consulta_Lista(tListaSent *l, char* pal){
 
 char print_Lista(tListaSent *l){
     if(l == NULL) return 0;
+    int somaocor = 0;
     for(tLista *aux = l->ini; aux != NULL; aux = aux->prox){
-        printf("%s (%d): ", aux->palavra, aux->ocorrencias);
-        imprime_Indices(aux->indices);
-        printf("\n");
+        somaocor = 0;
+        for(tArquivo *arqaux = aux->palavra->arquivos; arqaux != NULL; arqaux = arqaux->prox){
+            somaocor += arqaux->qtd;
+        }
+        printf("%s (%d): ", aux->palavra->pal, somaocor);
+        imprime_Arquivos(aux->palavra->arquivos);
     }
-    return 1;
-}
-
-char destroi_No(tLista *no){
-    if(no == NULL) return 1;
-
-    free(no->palavra);
-    destroi_Indices(no->indices);
-    free(no);
     return 1;
 }
 
@@ -79,7 +73,8 @@ char destroi_Lista(tListaSent *l){
 
     for(tLista *no = l->ini; no != NULL; no = l->ini){
         l->ini = l->ini->prox;
-        destroi_No(no);
+        destroi_Palavra(no->palavra);
+        free(no);
         l->qtd--;
     }
 

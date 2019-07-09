@@ -32,6 +32,7 @@ typedef struct Palavra {
 // ------ Struct de Palavra --------
 tPalavra *cria_Palavra(char *str, char arquivo, int ocorrencia);
 void destroi_Palavra(tPalavra *pal);
+char adiciona_IndicePal(tPalavra *pal, int byte, char arq);
 
 // ------ Lista de Ocorrências da palavra no arquivo -------
 char insere_Indice(tIndiceLista **l, int byte);
