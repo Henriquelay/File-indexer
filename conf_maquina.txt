@@ -1,0 +1,512 @@
+labgrad
+    descrição: Computador desktop
+    produto: D6200 (1504885)
+    fabricante: Positivo Tecnologia SA
+    versão: To Be Filled By Positivo
+    serial: 4A705MZ60
+    largura: 64 bits
+    capacidades: smbios-2.8 dmi-2.8 vsyscall32
+    configuração: boot=normal chassis=desktop family=MASTER sku=1504885 uuid=FD3B404B-50B1-602A-62A8-7085C2AF045D
+  *-core
+       descrição: Placa-mãe
+       produto: POS-RIB360EE
+       fabricante: Positivo Tecnologia SA
+       ID físico: 0
+       versão: 11136251
+       serial: 11133996A1119A0A40
+     *-firmware
+          descrição: BIOS
+          fabricante: Desenvolvido por Positivo Tecnologia SA
+          ID físico: 0
+          versão: 0201.X.A2
+          date: 12/27/2018
+          tamanho: 64KiB
+          capacidade: 15MiB
+          capacidades: pci upgrade shadowing cdboot bootselect socketedrom edd int13floppy1200 int13floppy720 int13floppy2880 int5printscreen int9keyboard int14serial int17printer acpi usb biosbootspecification uefi
+     *-memory
+          descrição: Memória do sistema
+          ID físico: 2b
+          slot: Placa do sistema ou placa-mãe
+          tamanho: 8GiB
+        *-bank:0
+             descrição: DIMM Síncrono 2400 MHz (0,4 ns)
+             produto: GKE400UD51208-2400AH
+             fabricante: 0000
+             ID físico: 0
+             serial: 00000087
+             slot: ChannelA-DIMM0
+             tamanho: 4GiB
+             largura: 64 bits
+             clock: 2400MHz (0.4ns)
+        *-bank:1
+             descrição: DIMMProject-Id-Version: lshwReport-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>POT-Creation-Date: 2009-10-08 14:02+0200PO-Revision-Date: 2013-04-07 17:30+0000Last-Translator: Neliton Pereira Jr. <nelitonpjr@gmail.com>Language-Team: Brazilian Portuguese <pt_BR@li.org>MIME-Version: 1.0Content-Type: text/plain; charset=UTF-8Content-Transfer-Encoding: 8bitX-Launchpad-Export-Date: 2016-06-27 17:08+0000X-Generator: Launchpad (build 18115) [vazio]
+             ID físico: 1
+             slot: ChannelA-DIMM1
+        *-bank:2
+             descrição: DIMM Síncrono 2400 MHz (0,4 ns)
+             produto: GKE400UD51208-2400AH
+             fabricante: 0000
+             ID físico: 2
+             serial: 00000078
+             slot: ChannelB-DIMM0
+             tamanho: 4GiB
+             largura: 64 bits
+             clock: 2400MHz (0.4ns)
+        *-bank:3
+             descrição: DIMMProject-Id-Version: lshwReport-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>POT-Creation-Date: 2009-10-08 14:02+0200PO-Revision-Date: 2013-04-07 17:30+0000Last-Translator: Neliton Pereira Jr. <nelitonpjr@gmail.com>Language-Team: Brazilian Portuguese <pt_BR@li.org>MIME-Version: 1.0Content-Type: text/plain; charset=UTF-8Content-Transfer-Encoding: 8bitX-Launchpad-Export-Date: 2016-06-27 17:08+0000X-Generator: Launchpad (build 18115) [vazio]
+             ID físico: 3
+             slot: ChannelB-DIMM1
+     *-cache:0
+          descrição: L1 cache
+          ID físico: 37
+          slot: L1 Cache
+          tamanho: 256KiB
+          capacidade: 256KiB
+          capacidades: synchronous internal write-back unified
+          configuração: level=1
+     *-cache:1
+          descrição: L2 cache
+          ID físico: 38
+          slot: L2 Cache
+          tamanho: 1MiB
+          capacidade: 1MiB
+          capacidades: synchronous internal write-back unified
+          configuração: level=2
+     *-cache:2
+          descrição: L3 cache
+          ID físico: 39
+          slot: L3 Cache
+          tamanho: 8MiB
+          capacidade: 8MiB
+          capacidades: synchronous internal write-back unified
+          configuração: level=3
+     *-cpu
+          descrição: CPU
+          produto: Intel(R) Core(TM) i3-8300 CPU @ 3.70GHz
+          fabricante: Intel Corp.
+          ID físico: 3a
+          informações do barramento: cpu@0
+          versão: Intel(R) Core(TM) i3-8300 CPU @ 3.70GHz
+          serial: To Be Filled By Positivo
+          slot: CPUSocket
+          tamanho: 1004MHz
+          capacidade: 4005MHz
+          largura: 64 bits
+          clock: 100MHz
+          capacidades: x86-64 fpu fpu_exception wp vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm arat pln pts hwp hwp_notify hwp_act_window hwp_epp flush_l1d cpufreq
+          configuração: cores=4 enabledcores=4 threads=4
+     *-pci
+          descrição: Host bridge
+          produto: 8th Gen Core Processor Host Bridge/DRAM Registers
+          fabricante: Intel Corporation
+          ID físico: 100
+          informações do barramento: pci@0000:00:00.0
+          versão: 08
+          largura: 32 bits
+          clock: 33MHz
+        *-pci:0
+             descrição: PCI bridge
+             produto: Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor PCIe Controller (x16)
+             fabricante: Intel Corporation
+             ID físico: 1
+             informações do barramento: pci@0000:00:01.0
+             versão: 08
+             largura: 32 bits
+             clock: 33MHz
+             capacidades: pci pm msi pciexpress normal_decode bus_master cap_list
+             configuração: driver=pcieport
+             recursos: irq:16 porta de E/S:4000(tamanho=4096) memória:a3000000-a40fffff porta de E/S:90000000(tamanho=301989888)
+           *-display
+                descrição: VGA compatible controller
+                produto: GP107 [GeForce GTX 1050]
+                fabricante: NVIDIA Corporation
+                ID físico: 0
+                informações do barramento: pci@0000:01:00.0
+                versão: a1
+                largura: 64 bits
+                clock: 33MHz
+                capacidades: pm msi pciexpress vga_controller bus_master cap_list rom
+                configuração: driver=nvidia latency=0
+                recursos: irq:130 memória:a3000000-a3ffffff memória:90000000-9fffffff memória:a0000000-a1ffffff porta de E/S:4000(tamanho=128) memória:c0000-dffff
+           *-multimedia
+                descrição: Audio device
+                produto: GP107GL High Definition Audio Controller
+                fabricante: NVIDIA Corporation
+                ID físico: 0.1
+                informações do barramento: pci@0000:01:00.1
+                versão: a1
+                largura: 32 bits
+                clock: 33MHz
+                capacidades: pm msi pciexpress bus_master cap_list
+                configuração: driver=snd_hda_intel latency=0
+                recursos: irq:17 memória:a4080000-a4083fff
+        *-display
+             descrição: Display controller
+             produto: 8th Gen Core Processor Gaussian Mixture Model
+             fabricante: Intel Corporation
+             ID físico: 2
+             informações do barramento: pci@0000:00:02.0
+             versão: 00
+             largura: 64 bits
+             clock: 33MHz
+             capacidades: pciexpress msi pm bus_master cap_list
+             configuração: driver=i915 latency=0
+             recursos: irq:127 memória:a2000000-a2ffffff memória:80000000-8fffffff porta de E/S:5000(tamanho=64)
+        *-generic
+             descrição: Signal processing controller
+             produto: Cannon Lake PCH Thermal Controller
+             fabricante: Intel Corporation
+             ID físico: 12
+             informações do barramento: pci@0000:00:12.0
+             versão: 10
+             largura: 64 bits
+             clock: 33MHz
+             capacidades: pm msi bus_master cap_list
+             configuração: driver=intel_pch_thermal latency=0
+             recursos: irq:16 memória:a431d000-a431dfff
+        *-usb
+             descrição: USB controller
+             produto: Cannon Lake PCH USB 3.1 xHCI Host Controller
+             fabricante: Intel Corporation
+             ID físico: 14
+             informações do barramento: pci@0000:00:14.0
+             versão: 10
+             largura: 64 bits
+             clock: 33MHz
+             capacidades: pm msi xhci bus_master cap_list
+             configuração: driver=xhci_hcd latency=0
+             recursos: irq:124 memória:a4300000-a430ffff
+           *-usbhost:0
+                produto: xHCI Host Controller
+                fabricante: Linux 4.15.0-46-generic xhci-hcd
+                ID físico: 0
+                informações do barramento: usb@2
+                nome lógico: usb2
+                versão: 4.15
+                capacidades: usb-2.00
+                configuração: driver=hub slots=16 speed=480Mbit/s
+              *-usb:0
+                   descrição: Teclado
+                   produto: Positivo USB Keyboard
+                   fabricante: Lite-On Technology Corp.
+                   ID físico: 3
+                   informações do barramento: usb@2:3
+                   versão: 1.02
+                   capacidades: usb-2.00
+                   configuração: driver=usbhid maxpower=100mA speed=1Mbit/s
+              *-usb:1
+                   descrição: Mouse
+                   produto: USB Optical Mouse
+                   fabricante: PixArt
+                   ID físico: 4
+                   informações do barramento: usb@2:4
+                   versão: 1.00
+                   capacidades: usb-2.00
+                   configuração: driver=usbhid maxpower=100mA speed=1Mbit/s
+              *-usb:2
+                   descrição: Dispositivo de armazenamento em massa
+                   produto: Mass Storage Device
+                   fabricante: Generic
+                   ID físico: 7
+                   informações do barramento: usb@2:7
+                   nome lógico: scsi6
+                   versão: 1.00
+                   serial: 058F63646476
+                   capacidades: usb-2.00 scsi emulated scsi-host
+                   configuração: driver=usb-storage maxpower=250mA speed=480Mbit/s
+                 *-disk:0
+                      descrição: SCSI Disk
+                      ID físico: 0.0.0
+                      informações do barramento: scsi@6:0.0.0
+                      nome lógico: /dev/sdb
+                      configuração: logicalsectorsize=512 sectorsize=512
+                 *-disk:1
+                      descrição: SCSI Disk
+                      ID físico: 0.0.1
+                      informações do barramento: scsi@6:0.0.1
+                      nome lógico: /dev/sdc
+                      configuração: logicalsectorsize=512 sectorsize=512
+                 *-disk:2
+                      descrição: SCSI Disk
+                      ID físico: 0.0.2
+                      informações do barramento: scsi@6:0.0.2
+                      nome lógico: /dev/sdd
+                      configuração: logicalsectorsize=512 sectorsize=512
+                 *-disk:3
+                      descrição: SCSI Disk
+                      produto: MS/MS-Pro
+                      fabricante: Generic-
+                      ID físico: 0.0.3
+                      informações do barramento: scsi@6:0.0.3
+                      nome lógico: /dev/sde
+                      versão: 1.03
+                      serial: 3
+                      capacidades: removable
+                      configuração: logicalsectorsize=512 sectorsize=512
+                    *-medium
+                         ID físico: 0
+                         nome lógico: /dev/sde
+              *-usb:3
+                   descrição: hub USB
+                   produto: USB2.0 Hub
+                   fabricante: Genesys Logic, Inc.
+                   ID físico: 9
+                   informações do barramento: usb@2:9
+                   versão: 88.32
+                   capacidades: usb-2.00
+                   configuração: driver=hub maxpower=100mA slots=4 speed=480Mbit/s
+           *-usbhost:1
+                produto: xHCI Host Controller
+                fabricante: Linux 4.15.0-46-generic xhci-hcd
+                ID físico: 1
+                informações do barramento: usb@3
+                nome lógico: usb3
+                versão: 4.15
+                capacidades: usb-3.10
+                configuração: driver=hub slots=6 speed=10000Mbit/s
+        *-memory DISPONÍVEL
+             descrição: RAM memory
+             produto: Cannon Lake PCH Shared SRAM
+             fabricante: Intel Corporation
+             ID físico: 14.2
+             informações do barramento: pci@0000:00:14.2
+             versão: 10
+             largura: 64 bits
+             clock: 33MHz (30.3ns)
+             capacidades: pm bus_master cap_list
+             configuração: latency=0
+             recursos: memória:a4316000-a4317fff memória:a431c000-a431cfff
+        *-communication
+             descrição: Communication controller
+             produto: Cannon Lake PCH HECI Controller
+             fabricante: Intel Corporation
+             ID físico: 16
+             informações do barramento: pci@0000:00:16.0
+             versão: 10
+             largura: 64 bits
+             clock: 33MHz
+             capacidades: pm msi bus_master cap_list
+             configuração: driver=mei_me latency=0
+             recursos: irq:128 memória:a431b000-a431bfff
+        *-storage
+             descrição: SATA controller
+             produto: Cannon Lake PCH SATA AHCI Controller
+             fabricante: Intel Corporation
+             ID físico: 17
+             informações do barramento: pci@0000:00:17.0
+             versão: 10
+             largura: 32 bits
+             clock: 66MHz
+             capacidades: storage msi pm ahci_1.0 bus_master cap_list
+             configuração: driver=ahci latency=0
+             recursos: irq:125 memória:a4314000-a4315fff memória:a431a000-a431a0ff porta de E/S:5090(tamanho=8) porta de E/S:5080(tamanho=4) porta de E/S:5060(tamanho=32) memória:a4319000-a43197ff
+        *-pci:1
+             descrição: PCI bridge
+             produto: Cannon Lake PCH PCI Express Root Port 9
+             fabricante: Intel Corporation
+             ID físico: 1d
+             informações do barramento: pci@0000:00:1d.0
+             versão: f0
+             largura: 32 bits
+             clock: 33MHz
+             capacidades: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuração: driver=pcieport
+             recursos: irq:122 porta de E/S:3000(tamanho=4096) memória:a4200000-a42fffff
+           *-generic DISPONÍVEL
+                descrição: Unassigned class
+                produto: Realtek Semiconductor Co., Ltd.
+                fabricante: Realtek Semiconductor Co., Ltd.
+                ID físico: 0
+                informações do barramento: pci@0000:02:00.0
+                versão: 1a
+                largura: 64 bits
+                clock: 33MHz
+                capacidades: pm msi pciexpress msix vpd bus_master cap_list
+                configuração: latency=0
+                recursos: porta de E/S:3c00(tamanho=256) memória:a4215000-a4215fff memória:a420c000-a420ffff
+           *-network
+                descrição: Ethernet interface
+                produto: RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
+                fabricante: Realtek Semiconductor Co., Ltd.
+                ID físico: 0.1
+                informações do barramento: pci@0000:02:00.1
+                nome lógico: eth0
+                versão: 1a
+                serial: 70:85:c2:af:04:5d
+                tamanho: 1Gbit/s
+                capacidade: 1Gbit/s
+                largura: 64 bits
+                clock: 33MHz
+                capacidades: pm msi pciexpress msix bus_master cap_list ethernet physical tp mii 10bt 10bt-fd 100bt 100bt-fd 1000bt 1000bt-fd autonegotiation
+                configuração: autonegotiation=on broadcast=yes driver=r8169 driverversion=2.3LK-NAPI duplex=full ip=192.168.1.137 latency=0 link=yes multicast=yes port=MII speed=1Gbit/s
+                recursos: irq:16 porta de E/S:3800(tamanho=256) memória:a4214000-a4214fff memória:a4208000-a420bfff
+           *-communication DISPONÍVEL
+                descrição: Serial controller
+                produto: Realtek Semiconductor Co., Ltd.
+                fabricante: Realtek Semiconductor Co., Ltd.
+                ID físico: 0.2
+                informações do barramento: pci@0000:02:00.2
+                versão: 1a
+                largura: 64 bits
+                clock: 33MHz
+                capacidades: pm msi pciexpress msix 16550 cap_list
+                configuração: latency=0
+                recursos: porta de E/S:3400(tamanho=256) memória:a4213000-a4213fff memória:a4204000-a4207fff
+           *-usb
+                descrição: USB controller
+                produto: Realtek Semiconductor Co., Ltd.
+                fabricante: Realtek Semiconductor Co., Ltd.
+                ID físico: 0.4
+                informações do barramento: pci@0000:02:00.4
+                versão: 1a
+                largura: 64 bits
+                clock: 33MHz
+                capacidades: pm msi pciexpress msix ehci bus_master cap_list
+                configuração: driver=ehci-pci latency=0
+                recursos: irq:19 memória:a4212000-a4212fff memória:a4200000-a4203fff
+              *-usbhost
+                   produto: EHCI Host Controller
+                   fabricante: Linux 4.15.0-46-generic ehci_hcd
+                   ID físico: 1
+                   informações do barramento: usb@1
+                   nome lógico: usb1
+                   versão: 4.15
+                   capacidades: usb-2.00
+                   configuração: driver=hub slots=3 speed=480Mbit/s
+           *-serial DISPONÍVEL
+                descrição: IPMI Interface
+                produto: Realtek Semiconductor Co., Ltd.
+                fabricante: Realtek Semiconductor Co., Ltd.
+                ID físico: 0.7
+                informações do barramento: pci@0000:02:00.7
+                versão: 1a
+                largura: 64 bits
+                clock: 33MHz
+                capacidades: pm msi pciexpress msix kcs bus_master cap_list
+                configuração: latency=0
+                recursos: porta de E/S:3000(tamanho=256) memória:a4211000-a4211fff memória:a4210000-a4210fff
+        *-pci:2
+             descrição: PCI bridge
+             produto: Intel Corporation
+             fabricante: Intel Corporation
+             ID físico: 1d.2
+             informações do barramento: pci@0000:00:1d.2
+             versão: f0
+             largura: 32 bits
+             clock: 33MHz
+             capacidades: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuração: driver=pcieport
+             recursos: irq:123
+           *-pci
+                descrição: PCI bridge
+                produto: ASM1083/1085 PCIe to PCI Bridge
+                fabricante: ASMedia Technology Inc.
+                ID físico: 0
+                informações do barramento: pci@0000:03:00.0
+                versão: 03
+                largura: 32 bits
+                clock: 33MHz
+                capacidades: pci msi pm pciexpress normal_decode bus_master cap_list
+        *-isa
+             descrição: ISA bridge
+             produto: Intel Corporation
+             fabricante: Intel Corporation
+             ID físico: 1f
+             informações do barramento: pci@0000:00:1f.0
+             versão: 10
+             largura: 32 bits
+             clock: 33MHz
+             capacidades: isa bus_master
+             configuração: latency=0
+        *-multimedia
+             descrição: Audio device
+             produto: Cannon Lake PCH cAVS
+             fabricante: Intel Corporation
+             ID físico: 1f.3
+             informações do barramento: pci@0000:00:1f.3
+             versão: 10
+             largura: 64 bits
+             clock: 33MHz
+             capacidades: pm msi bus_master cap_list
+             configuração: driver=snd_hda_intel latency=32
+             recursos: irq:129 memória:a4310000-a4313fff memória:a4100000-a41fffff
+        *-serial:0
+             descrição: SMBus
+             produto: Cannon Lake PCH SMBus Controller
+             fabricante: Intel Corporation
+             ID físico: 1f.4
+             informações do barramento: pci@0000:00:1f.4
+             versão: 10
+             largura: 64 bits
+             clock: 33MHz
+             configuração: driver=i801_smbus latency=0
+             recursos: irq:16 memória:a4318000-a43180ff porta de E/S:efa0(tamanho=32)
+        *-serial:1 DISPONÍVEL
+             descrição: Serial bus controller
+             produto: Cannon Lake PCH SPI Controller
+             fabricante: Intel Corporation
+             ID físico: 1f.5
+             informações do barramento: pci@0000:00:1f.5
+             versão: 10
+             largura: 32 bits
+             clock: 33MHz
+             configuração: latency=0
+             recursos: memória:fe010000-fe010fff
+     *-scsi:0
+          ID físico: 1
+          nome lógico: scsi1
+          capacidades: emulated
+        *-disk
+             descrição: ATA Disk
+             produto: WDC WD10EZEX-08W
+             fabricante: Western Digital
+             ID físico: 0.0.0
+             informações do barramento: scsi@1:0.0.0
+             nome lógico: /dev/sda
+             versão: 1A02
+             serial: WD-WCC6Y5FKJ13C
+             tamanho: 931GiB (1TB)
+             capacidades: partitioned partitioned:dos
+             configuração: ansiversion=5 logicalsectorsize=512 sectorsize=4096 signature=ab0707b3
+           *-volume:0
+                descrição: Linux swap volume
+                ID físico: 1
+                informações do barramento: scsi@1:0.0.0,1
+                nome lógico: /dev/sda1
+                versão: 1
+                serial: 7660e365-26d0-409b-bdce-47465603fbe0
+                tamanho: 3907MiB
+                capacidade: 3907MiB
+                capacidades: primary nofs swap initialized
+                configuração: filesystem=swap pagesize=4096
+           *-volume:1
+                descrição: volume EXT4
+                fabricante: Linux
+                ID físico: 2
+                informações do barramento: scsi@1:0.0.0,2
+                nome lógico: /dev/sda2
+                nome lógico: /
+                versão: 1.0
+                serial: af00836b-029c-4ebb-8892-4d3bcfd54022
+                tamanho: 927GiB
+                capacidade: 927GiB
+                capacidades: primary journaled extended_attributes large_files huge_files dir_nlink recover extents ext4 ext2 initialized
+                configuração: created=2018-11-21 18:05:14 filesystem=ext4 lastmountpoint=/ modified=2019-07-10 19:37:03 mount.fstype=ext4 mount.options=rw,relatime,errors=remount-ro,data=ordered mounted=2019-07-10 19:37:05 state=mounted
+     *-scsi:1
+          ID físico: 2
+          nome lógico: scsi2
+          capacidades: emulated
+        *-cdrom
+             descrição: DVD-RAM writer
+             produto: DVDRAM GH24NSC0
+             fabricante: HL-DT-ST
+             ID físico: 0.0.0
+             informações do barramento: scsi@2:0.0.0
+             nome lógico: /dev/cdrom
+             nome lógico: /dev/cdrw
+             nome lógico: /dev/dvd
+             nome lógico: /dev/dvdrw
+             nome lógico: /dev/sr0
+             versão: LY00
+             capacidades: removable audio cd-r cd-rw dvd dvd-r dvd-ram
+             configuração: ansiversion=5 status=nodisc

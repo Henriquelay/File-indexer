@@ -12,7 +12,7 @@ int main(int argc, char *argv[]){
     int nBuscas = atoi(argv[1]);
     if(nBuscas < 1) {puts("Deu ruim ae"); return 1;}
     // puts("Lista:");
-    desempenho_Lista(argc, argv);
+    //desempenho_Lista(argc, argv);
     // puts("ArvBin");
     desempenho_ArvBin(argc, argv);
     // puts("ArvAVL:");
