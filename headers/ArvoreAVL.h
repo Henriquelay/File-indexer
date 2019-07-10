@@ -22,7 +22,7 @@ ArvAVL* cria_ArvAVL();
 char insere_ArvAVL(ArvAVL* raiz, char* palavra, int byte, char arq);
 void destroi_ArvAVL(ArvAVL *raiz);
 char consulta_ArvAVL(ArvAVL *raiz, char* palavra);
-void emOrdem(ArvAVL *raiz);
+void emOrdem_ArvAVL(ArvAVL *raiz);
 char strings_Iguais(char *str1, char *str2);
 
 #endif 

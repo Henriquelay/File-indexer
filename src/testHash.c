@@ -14,7 +14,7 @@ int main(int argc, char *argv[]){
     int byte = 0;
     FILE *arquivo = NULL;
 
-    a = cria_ArvAVL();
+    h = cria_Hash();
     int sizes[argc - 2];
     clock_t t, tAll;
     tAll = 0;
@@ -37,6 +37,11 @@ int main(int argc, char *argv[]){
     double time_taken = ((double)tAll)/CLOCKS_PER_SEC; // in seconds 
     printf("%lf ", time_taken);
 
+    puts("Tamanho dos arquivos:");
+    for(int i = 2; i < argc; i++){
+        printf("%s: %d\n", argv[i], sizes[i-2]);
+    }
+
     //copia nBuscas palavras aleatórias da estrutura de lista não tratada para um vetor estático (para ter acesso O(1)) e não impactar tanto na medida busca.
     srand(time(NULL));
     char palavras[nBuscas][NPAL];
@@ -45,8 +50,8 @@ int main(int argc, char *argv[]){
     for(int i = 0; i < nBuscas; i++){
         arq = (rand() % (argc - 2)) + 2;
         pos = rand() % sizes[(int) arq - 2];
-        // printf("Abrindo arquivo %s, indice %d.\n", argv[(int) arq], (int) arq);
-        // printf("Local onde navegar pro arquivo = %d\n", pos);
+        printf("Abrindo arquivo %s, indice %d.\n", argv[(int) arq], (int) arq);
+        printf("Local onde navegar pro arquivo = %d\n", pos);
         if(abre_Arquivo(argv[(int) arq], &arquivo) != 1) printf("Deu bosta ao abrir o arquivo %s!\n", argv[(int) arq]);
         fseek(arquivo, pos, 0);
         while(eValido(fgetc(arquivo)));
@@ -56,11 +61,10 @@ int main(int argc, char *argv[]){
         arquivo = NULL;
     }
 
-    /*  puts("Vetor pra busca");
+    puts("Vetor pra busca");
     for(int i = 0; i < nBuscas; i++){
         printf("%s ", palavras[i]);
-
-    } */
+    } 
 
     //sorteia as palavras a serem pesquisadas.
     //Coloca tudo em um vetor estático, sorteia um valor dentro dele e lê a palavra. Então, tenta buscar ela na estrutura.
@@ -68,13 +72,14 @@ int main(int argc, char *argv[]){
 
     t = clock();
     for(int i = 0; i < nBuscas; i++)
-            consulta_ArvAVL(a, palavras[i]);
+            consulta_Hash(h, palavras[i]);
     t = clock() - t;
 
     time_taken = ((double)t)/CLOCKS_PER_SEC;
     printf("%lf\n", time_taken);
 
-    destroi_ArvAVL(a);
+    // imprime_Hash(h);
+    destroi_Hash(h);
 
     return 0;
 }

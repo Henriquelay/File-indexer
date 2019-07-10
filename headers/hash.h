@@ -21,9 +21,13 @@ typedef struct Hash{
 
 
 //------- Funções --------
-tHash *cria_TabelaHash(void);
+tHash *cria_Hash(void);
 int* pesos_Lista(void);
 int hash(int *pesos, char *str);
 char insere_Hash(tHash *hashtable, char *palavra, int byte, char arq);
+char consulta_Hash(tHash *hashtable, char *str);
+void imprime_Hash(tHash *hashtable);
+void destroi_Hash(tHash *hash);
+
 
 #endif

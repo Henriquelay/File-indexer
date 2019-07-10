@@ -27,7 +27,7 @@ _OBJARVBIN	=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
 OBJARVAVL	=ArvoreAVL.o arquivos.o testArvoreAVL.o base.o
 _OBJARVAVL	=$(patsubst %,${OBJDIR}/%,${OBJARVAVL})
 
-OBJHASH	=hash.o arquivos.o testHash.o base.o
+OBJHASH		=hash.o arquivos.o testHash.o base.o ArvoreAVL.o
 _OBJHASH	=$(patsubst %,${OBJDIR}/%,${OBJHASH})
 
 
