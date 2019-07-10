@@ -1,6 +1,6 @@
 #include "../headers/ArvoreAVL.h"
-#include "../headers/arquivos.h"
-#include "../headers/base.h"
+#include "../headers/Arquivos.h"
+#include "../headers/Base.h"
 #include <time.h>
 
 int main(int argc, char *argv[]){

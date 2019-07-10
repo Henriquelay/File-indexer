@@ -1,6 +1,6 @@
-#	A Flag -c diz para gerar o arquivo de objeto, o -o $@ diz para colocar a saída da compilação no arquivo nomeado no lado esquerdo do :, o $< é o primeiro item na lista de dependências, e o A macro CFLAGS é definida como acima.
+#	A Flag -c diz para gerar o arquivo de objeto, o -o $@ diz para colocar a saída da compilação no arquivo nomeado no lado esquerdo do :, o $< é o primeiro item na Lista de dependências, e o A macro CFLAGS é definida como acima.
 #	Como simplificação final, vamos usar as macros especiais $@ e $^, que são os lados esquerdo e direito de :, respectivamente, para tornar a regra geral de compilação mais geral. 
-#	No exemplo abaixo, todos os arquivos de inclusão devem ser listados como parte da macro DEPS e todos os arquivos de objetos devem ser listados como parte da macro OBJ.
+#	No exemplo abaixo, todos os Arquivos de inclusão devem ser listados como parte da macro DEPS e todos os Arquivos de objetos devem ser listados como parte da macro OBJ.
 
 #Flags interessantes
 #-Wall dispara todos os warnings em seu código
@@ -8,30 +8,33 @@
 #-lm obrigatorio caso utilize a biblioteca math.h
 
 CC			=gcc
-CFLAGS		=-Wall -g -lm
-DEPS		=lista.h arquivos.h ArvoreBinaria.h ArvoreAVL.h hash.h base.h trie.h
+CFLAGS		=-Wall -g -lm -O3
+DEPS		=Lista.h Arquivos.h ArvoreBinaria.h ArvoreAVL.h Hash.h Base.h Trie.h
 DEPSDIR		=headers
 _DEPS		=$(patsubst %,${DEPSDIR}/%,${DEPS})
 OBJDIR		=src
 
 ARQUIVO		=data/APRENDE.txt
 BUSCAS		=10
-EXEC		=Lista
+EXEC		=menu
 
-OBJLISTA	=arquivos.o testLista.o base.o lista.o
+OBJLISTA	=Arquivos.o Base.o Lista.o
 _OBJLISTA	=$(patsubst %,${OBJDIR}/%,${OBJLISTA})
 
-OBJARVBIN	=arquivos.o testArvoreBinaria.o base.o ArvoreBinaria.o
+OBJARVBIN	=Arquivos.o Base.o ArvoreBinaria.o
 _OBJARVBIN	=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
 
-OBJARVAVL	=arquivos.o testArvoreAVL.o base.o ArvoreAVL.o
+OBJARVAVL	=Arquivos.o testArvoreAVL.o Base.o ArvoreAVL.o
 _OBJARVAVL	=$(patsubst %,${OBJDIR}/%,${OBJARVAVL})
 
-OBJHASH		=arquivos.o testHash.o base.o ArvoreAVL.o hash.o
+OBJHASH		=Arquivos.o testHash.o Base.o ArvoreAVL.o Hash.o
 _OBJHASH	=$(patsubst %,${OBJDIR}/%,${OBJHASH})
 
-OBJTRIE		=arquivos.o testTrie.o base.o trie.o
+OBJTRIE		=Arquivos.o testTrie.o Base.o Trie.o
 _OBJTRIE	=$(patsubst %,${OBJDIR}/%,${OBJTRIE})
+
+OBJMENU		=menu.o Base.o Arquivos.o Lista.o ArvoreBinaria.o ArvoreAVL.o Hash.o Trie.o
+_OBJMENU	=$(patsubst %,${OBJDIR}/%,${OBJMENU})
 
 
 
@@ -39,23 +42,26 @@ _OBJTRIE	=$(patsubst %,${OBJDIR}/%,${OBJTRIE})
 ${OBJDIR}/%.o: %.c ${_DEPS}
 	${CC} -c -o $@ $< ${CFLAGS}
 
-all: lista arvbin arvavl hash trie
+all: menu #ArvBin ArvAVL Hash Trie Lista
 	rm src/*.o
 
-lista: ${_OBJLISTA} 
+Lista: ${_OBJLISTA} 
 	${CC} -o Lista $^ ${CFLAGS}
 
-arvbin: ${_OBJARVBIN} 
+ArvBin: ${_OBJARVBIN} 
 	${CC} -o ArvBin $^ ${CFLAGS}
 
-arvavl: ${_OBJARVAVL} 
+ArvAVL: ${_OBJARVAVL} 
 	${CC} -o ArvAVL $^ ${CFLAGS}
 
-hash: ${_OBJHASH} 
+Hash: ${_OBJHASH} 
 	${CC} -o Hash $^ ${CFLAGS}
 
-trie: ${_OBJTRIE} 
+Trie: ${_OBJTRIE} 
 	${CC} -o Trie $^ ${CFLAGS}
+
+menu: ${_OBJMENU}
+	${CC} -o LEIA_O_README $^ ${CFLAGS}
 
 valzin: 
 	make all
@@ -72,7 +78,12 @@ valzao:
 clear:
 	rm -f *.o
 	rm -f ${OBJDIR}/*.o
-	rm -f ${EXEC}
+	rm -f menu
+	rm -f Trie
+	rm -f Hash
+	rm -f ArvBin
+	rm -f ArvAVL
+	rm -f Lista
 	clear
 	make
 	rm -f *.o

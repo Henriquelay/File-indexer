@@ -1,6 +1,6 @@
-#include "../headers/lista.h"
-#include "../headers/arquivos.h"
-#include "../headers/base.h"
+#include "../headers/Lista.h"
+#include "../headers/Arquivos.h"
+#include "../headers/Base.h"
 #include <sys/time.h>
 #include <time.h>
 #include <math.h>

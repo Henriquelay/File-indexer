@@ -86,7 +86,7 @@ char insere_ArvBin(ArvBin* raiz, char* palavra, int byte, char arq){
         puts("Deu ruim ao adicionar ocorrencia na palavra");
     }
     else{        //lugar vazio
-        aux = (ArvBin) malloc(sizeof(tNo));
+        aux = (ArvBin) malloc(sizeof(tNoBin));
         if(aux == NULL) return 0;
         aux->palavra = cria_Palavra(palavra, arq, byte);
         aux->dir = aux->esq = NULL;
@@ -110,7 +110,7 @@ OUTPUTS: 1 se a palavra foi encontrada e 0 caso contrário.
 char consulta_ArvBin(ArvBin *raiz, char* palavra){
     if(raiz == NULL)
         return 0;
-    struct NO* atual = *raiz;
+    struct NOBin* atual = *raiz;
     int tam_menor = SelecionaMenorString(palavra, (*raiz)->palavra->pal);
     int compara = strncmp(palavra, atual->palavra->pal, tam_menor) > 0;
     while(atual != NULL){
@@ -141,4 +141,71 @@ void emOrdem(ArvBin *raiz){
     printf("%s (%d): ", (*raiz)->palavra->pal, somaocor);
     imprime_Arquivos((*raiz)->palavra->arquivos);
     emOrdem(&(*raiz)->dir);
+}
+
+int desempenho_ArvBin(int argc, char *argv[]){
+    int nBuscas = atoi(argv[1]);
+    if(argc < 2 || nBuscas < 1 ){
+        printf("#Usagem do programa:\n#./LEIA_O_MAKEFILE [nPalavras] [arquivos..]\n#\tOnde:\n#nPalavras = numeros de palavras a aleatorias a ser pesquisada em cada estrutura\n#arquivos = Os arquivo que serao passados para o programa indexar, separados por espaço.\n");
+        return 0;
+    }
+    ArvBin *a;
+    char pal[NPAL];
+    // tamanho arbitrariamente grande
+    int byte = 0, nArquivos = argc - 2;
+    FILE *arquivo = NULL;
+    a = cria_ArvBin();
+    int sizes[nBuscas - 2];
+    clock_t t, tAll = 0;
+
+    for(int i = 0; i < nArquivos; i++){
+        if(abre_Arquivo(argv[i + 2], &arquivo) != 1){
+            printf("Erro ao abrir o arquivo %s!\n", argv[i + 2]);
+            return 1;
+        }
+        sizes[i] = tamanhoArquivo(arquivo);
+        t = clock();
+        while(pega_Palavra(arquivo, pal, &byte) == 1){
+            if(!insere_ArvBin(a, pal, byte, i)) printf("Erro ao tentar inserir %s! ", pal);
+        }
+        tAll += clock() - t;  
+        fecha_Arquivo(arquivo);
+        arquivo = NULL;
+    }
+
+    double time_taken = ((double)tAll)/CLOCKS_PER_SEC; // in seconds 
+    printf("%lf ", time_taken);
+
+    
+    // Lê palavras aletórias dentro de arquivos aleatórios dentro dos de entrada.
+    srand(time(NULL));
+    char palavras[nBuscas][NPAL];
+    char arq = 0;
+    int pos = 0 ;
+    for(int i = 0; i < nBuscas; i++){
+        arq = (rand() % (argc - 2)) + 2;
+        pos = rand() % sizes[(int) arq - 2];
+        if(abre_Arquivo(argv[(int) arq], &arquivo) != 1) printf("Deu ruim ao abrir o arquivo %s!\n", argv[(int) arq]);
+        fseek(arquivo, pos, 0); // Aponta o ponteiro de stream (arquivo) para a posição "pos" (aleatóriamente gerada)
+        while(eValido(fgetc(arquivo)));
+        if(!pega_Palavra(arquivo, palavras[i], &byte)){
+            rewind(arquivo);
+            pega_Palavra(arquivo, palavras[i], &byte);
+        }
+        fecha_Arquivo(arquivo);
+        arquivo = NULL;
+    }
+
+    // Carrega palavras aleatórias do vetor gerado previamente e busca elas na estrutura
+    srand(rand());
+    t = clock();
+    for(int i = 0; i < nBuscas; i++)
+            consulta_ArvBin(a, palavras[i]);
+    t = clock() - t;
+    time_taken = ((double)t)/CLOCKS_PER_SEC;
+    printf("%lf\n", time_taken);
+
+    destroi_ArvBin(a);
+
+    return 0;
 }
