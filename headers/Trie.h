@@ -8,7 +8,7 @@
 #include <string.h>
 #include <time.h>
 
-#define ALFABETO 36
+#define ALFABETO 26
 
 
 //---- Structs -----

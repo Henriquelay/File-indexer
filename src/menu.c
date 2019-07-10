@@ -11,15 +11,15 @@ int main(int argc, char *argv[]){
     }
     int nBuscas = atoi(argv[1]);
     if(nBuscas < 1) {puts("Deu ruim ae"); return 1;}
-    puts("Lista:");
+    // puts("Lista:");
     desempenho_Lista(argc, argv);
-    puts("ArvBin");
+    // puts("ArvBin");
     desempenho_ArvBin(argc, argv);
-    puts("ArvAVL:");
+    // puts("ArvAVL:");
     desempenho_ArvAVL(argc, argv);
-    puts("Hash:");
-    desempenho_Hash(argc, argv);
-    puts("ArvTrie:");
+    // puts("ArvTrie:");
     desempenho_Trie(argc, argv);
+    // puts("Hash:");
+    desempenho_Hash(argc, argv);
     return 0;
 }

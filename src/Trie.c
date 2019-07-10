@@ -22,10 +22,8 @@ char insere_Trie(ArvTrie **raiz, char *palavra, char arq, int indice){
 
     while(*palavra){
 		// configura os indices ASCII para o resultado de "*palavra - 'a'" também funcionar para números
-		if(!isalnum(*palavra)) return 0;
-		if(isdigit(*palavra))
-			*palavra += 49;
-        proximo = *palavra - ('a'-10);
+		if(!isalpha(*palavra)) return 0;
+        proximo = *palavra - 'a';
 		// printf("Inserindo: %c. Antes possivemente %c. proximo = %i\n", *palavra, *palavra-74, proximo);
         if(arvore->caractere[proximo] == NULL)
             arvore->caractere[proximo] = cria_No_Trie();
@@ -45,9 +43,9 @@ char consulta_Trie(ArvTrie **raiz, char *palavra){
 	if(*raiz == NULL) return 0;
 
     ArvTrie *arvore = *raiz;
-    if(arvore->caractere == NULL) return 0;
 
     while(*palavra){
+        if(*palavra - 'a' < 0) return 0;
         arvore = arvore->caractere[*palavra - 'a'];
         if(arvore == NULL) return 0;
         palavra++;
@@ -102,7 +100,7 @@ int desempenho_Trie(int argc, char *argv[]){
         sizes[i] = tamanhoArquivo(arquivo);
         t = clock();
         while(pega_Palavra(arquivo, pal, &byte) == 1){
-            if(!insere_Trie(&T, pal, byte, i)) printf("Erro ao tentar inserir %s! ", pal);
+            if(!insere_Trie(&T, pal, byte, i)); //printf("Erro ao tentar inserir %s! ", pal);
         }
         tAll += clock() - t;  
         fecha_Arquivo(arquivo);
