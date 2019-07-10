@@ -5,6 +5,10 @@
 #include "../headers/Trie.h"
 
 int main(int argc, char *argv[]){
+    if(argc < 3){
+        puts("Faltam argumentos!");
+        return 1;
+    }
     int nBuscas = atoi(argv[1]);
     if(nBuscas < 1) {puts("Deu ruim ae"); return 1;}
     puts("Lista:");

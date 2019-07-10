@@ -134,6 +134,7 @@ IMPUTS: Um ponteiro do tipo ArvAVL para 'raiz'.
 OUTPUTS: Nenhum.
 */
 void RotacaoRR(ArvAVL *A){
+    if(A == NULL) return;
     tNoAVL *B;
     B = (*A)->dir;
     (*A)->dir = B->esq;
@@ -182,42 +183,41 @@ char insere_ArvAVL(ArvAVL *raiz, char* palavra, int byte, char arq){
         *raiz = novo;
         return 1;
     }
-    
-    /**/
-    int tam_menor = SelecionaMenorStringAVL(palavra, (*raiz)->palavra->pal);
-    if(!tam_menor)  return 0;
-    int compara = strncmp(palavra, (*raiz)->palavra->pal, tam_menor) > 0;
+
     ArvAVL atual = *raiz;
 
-    if(compara > 0){
-        if(insere_ArvAVL(&(atual->esq), palavra, byte, arq)){
-            if(fatorBalanceamento_NO(atual) >= 2){
-                    if(strncmp(palavra, (*raiz)->esq->palavra->pal, tam_menor) > 0){
-                        RotacaoLL(raiz);
-                    }else{
-                        RotacaoLR(raiz);
-                }
-            }
-        }
-    }else{
-        if(compara < 0){
-            if(insere_ArvAVL(&(atual->esq), palavra, byte, arq)){
-                if(fatorBalanceamento_NO(atual) >= 2){
-                    if(strncmp(palavra, (*raiz)->esq->palavra->pal, tam_menor) < 0){
+    int compara = strcmp((*raiz)->palavra->pal, palavra);
+    char inserido = 0;
+
+        if( compara < 0 ){
+            if((inserido = insere_ArvAVL(&((*raiz)->esq), palavra, byte, arq)) == 1){
+                if(fatorBalanceamento_NO(*raiz) >= 2){
+                    if(strcmp(((*raiz)->esq)->palavra->pal, palavra) > 0){
                         RotacaoRR(raiz);
-                    }else{
+                    } else {
                         RotacaoRL(raiz);
                     }
                 }
             }
-        }else{
-            return 0;
+        } else if( !compara ){ 
+            adiciona_IndicePal((*raiz)->palavra, byte, arq);
+            return   0;
         }
-    }
+        else{
+            if((inserido = insere_ArvAVL(&((*raiz)->dir), palavra, byte, arq)) == 1){
+                if(fatorBalanceamento_NO(*raiz) >= 2){
+                    if(strcmp(((*raiz)->dir)->palavra->pal, palavra) < 0){ 
+                        RotacaoLL(raiz);
+                    } else {
+                        RotacaoLR(raiz);
+                    }
+                } 
+            }
+        }
 
-    atual->altura = maior(altura_NO(atual->esq),altura_NO(atual->dir)) + 1;
+        atual->altura = maior(altura_NO(atual->esq),altura_NO(atual->dir)) + 1;
 
-    return 1;
+    return inserido; 
 }
 
 /*
@@ -300,7 +300,7 @@ int desempenho_ArvAVL(int argc, char *argv[]){
         sizes[i] = tamanhoArquivo(arquivo);
         t = clock();
         while(pega_Palavra(arquivo, pal, &byte) == 1){
-            if((ret = insere_ArvAVL(a, pal, byte, i)) != 1) ;//printf("Erro ao tentar inserir %s! Retorno = %d    ", pal, ret);
+            if((ret = insere_ArvAVL(a, pal, byte, i)) != 1) printf("Erro ao tentar inserir %s! Retorno = %d    ", pal, ret);
         }
         tAll += clock() - t;  
         fecha_Arquivo(arquivo);
