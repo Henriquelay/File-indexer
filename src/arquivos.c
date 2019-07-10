@@ -24,25 +24,22 @@ char fecha_Arquivo(FILE *arquivo){
 }
 
 char eValido(char c){
-    switch(c){
-        case '\'':
-        case '\n':
-        case '(':
-        case ')':
-        case '.':
-        case ',':
-        case '"':
-        case '/':
-        case ' ':
-        case '?':
-        case '!':
-        case ';':
-        case ':':
-        case '-':
-            return 0;
-        default:
-            return 1;
+    if(isalnum(c))
+        return 1;
+    return 0;
+}
+
+char pega_PalavraPraBusca(FILE *fp, char *s, int *byte){
+    if(fp == NULL) return 0;
+    int c;
+    while((c = fgetc(fp)) != EOF){
+        // printf("c eh %c\n", c);
+        if(!eValido(c)) break;
     }
+
+    if(c == EOF) rewind(fp);
+    // else fseek(fp, -1, SEEK_CUR);
+    return pega_Palavra(fp, s, byte);
 }
 
 //Retirado de: Prova1 ED1 2019 - Vinícius Mota
@@ -55,8 +52,10 @@ char pega_Palavra(FILE *fp, char *s, int *byte){
             if (eValido(c))
             break;
     }
-    if(c == EOF)
+    if(c == EOF){
+        s[0] = '\0';
         return 0;
+    }
 
     s[i++] = tolower(c);
     *byte = ftell(fp);

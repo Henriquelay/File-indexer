@@ -1,4 +1,4 @@
-#include "../headers/lista.h"
+#include "../headers/trie.h"
 #include "../headers/arquivos.h"
 #include "../headers/base.h"
 #include <sys/time.h>
@@ -10,17 +10,11 @@ int main(int argc, char *argv[]){
         printf("#Usagem do programa:\n#./LEIA_O_MAKEFILE [nPalavras] [arquivos..]\n#\tOnde:\n#nPalavras = numeros de palavras a aleatorias a ser pesquisada em cada estrutura\n#arquivos = Os arquivo que serao passados para o programa indexar, separados por espaço.\n");
         return 0;
     }
-    int nBuscas = atoi(argv[1]);
-
-    tLista *l;            //os 2 primeiros são o nome do executável e o n de palavras
+    int nBuscas = atoi(argv[1]), sizes[argc - 2], byte = 0;
+    ArvTrie *T = cria_No_Trie();
     char pal[NPAL];                     //tamanho arbitrariamente grande
-    int byte = 0;
     FILE *arquivo = NULL;
-
-        l = inicia_Lista();
-    int sizes[argc - 2];
-    clock_t t, tAll;
-    tAll = 0;
+    clock_t t, tAll = 0;
 
     for(int i = 0; i < argc - 2; i++){
         if(abre_Arquivo(argv[i + 2], &arquivo) != 1){
@@ -30,14 +24,15 @@ int main(int argc, char *argv[]){
         sizes[i] = tamanhoArquivo(arquivo);
         t = clock();
         while(pega_Palavra(arquivo, pal, &byte) == 1){
-            insere_Lista(l, pal, byte, i);
+            // printf("Inserindo %s, ", pal);
+            insere_Trie(&T, pal, i, byte);
         }
         tAll += clock() - t;  
         fecha_Arquivo(arquivo);
         arquivo = NULL;
     }
 
-    // print_Lista(l);
+    // print_Lista(t);
 
     double time_taken = ((double)tAll)/CLOCKS_PER_SEC; // in seconds 
     printf("%lf ", time_taken);
@@ -78,15 +73,15 @@ int main(int argc, char *argv[]){
     t = clock();
     for(int i = 0; i < nBuscas; i++){
         // printf("Buscando por %s\n", palavras[i]);
-        consulta_Lista(l, palavras[i]);
+        consulta_Trie(&T, palavras[i]);
     }
     t = clock() - t;
 
     time_taken = ((double)t)/CLOCKS_PER_SEC;
     printf("%lf\n", time_taken);
     
-    // printf("Palavras unicas: %d\n", l->qtd);
-    destroi_Lista(l);
+    // printf("Palavras unicas: %d\n", t->qtd);
+    destroi_Trie(&T);
 
     return 0;
 }

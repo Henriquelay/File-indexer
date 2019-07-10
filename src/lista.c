@@ -35,18 +35,17 @@ INPUTS: Um ponteiro tLista para 'l', um ponteiro char para 'str', uma variavel i
 OUTPUTS: 1 se a palavra foi inserida corretamente e 0 caso contrario.
 */
 char insere_Lista(tLista *l, char *str, int byte, char arq){
-    if(str == NULL) return 0;
-    if(l == NULL) return 0;
-
+    if(str == NULL || l == NULL) return 0;
     //Procura a palavra na lista
-    for(tCelula *aux = l->ini; aux != NULL; aux = aux->prox){
+    for(tCelula *aux = l->ini; aux != NULL; aux = aux->prox)
         if(strlen(aux->palavra->pal) == strlen(str))
-            if(strcasecmp(aux->palavra->pal, str) == 0){ //encontra a palavra na lista
-                if(!adiciona_IndicePal(aux->palavra, byte, arq)) puts("Deu ruim ao inserir indice");
+            if(strcasecmp(aux->palavra->pal, str) == 0){
+                //palavra encontrada na lista
+                adiciona_IndicePal(aux->palavra, byte, arq);
                 return 1;
             }
-    }
     //Não foi encontrado a palavra na lista
+    //Será criada um novo nó com a palavra
     tCelula *no = novo_no_Lista(str, byte, arq);
     no->prox = l->ini;
     l->ini = no;

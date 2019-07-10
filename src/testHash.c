@@ -1,7 +1,9 @@
 #include "../headers/hash.h"
 #include "../headers/arquivos.h"
 #include "../headers/base.h"
+#include <sys/time.h>
 #include <time.h>
+#include <math.h>
 
 int main(int argc, char *argv[]){
     if(argc <= 2 || atoi(argv[1]) < 1 ){
@@ -9,7 +11,7 @@ int main(int argc, char *argv[]){
         return 0;
     }
     int nBuscas = atoi(argv[1]);
-    tHash *h;            //os 2 primeiros são o nome do executável e o n de palavras
+    tHash *h;
     char pal[NPAL];                     //tamanho arbitrariamente grande
     int byte = 0;
     FILE *arquivo = NULL;
@@ -34,51 +36,55 @@ int main(int argc, char *argv[]){
         arquivo = NULL;
     }
 
+    // print_Lista(h);
+
     double time_taken = ((double)tAll)/CLOCKS_PER_SEC; // in seconds 
     printf("%lf ", time_taken);
 
-    puts("Tamanho dos arquivos:");
-    for(int i = 2; i < argc; i++){
-        printf("%s: %d\n", argv[i], sizes[i-2]);
-    }
-
     //copia nBuscas palavras aleatórias da estrutura de lista não tratada para um vetor estático (para ter acesso O(1)) e não impactar tanto na medida busca.
-    srand(time(NULL));
+    struct timeval rel;
+    gettimeofday(&rel, NULL);
+    srand((unsigned int) rel.tv_usec);
+
     char palavras[nBuscas][NPAL];
     char arq = 0;
     int pos = 0 ;
+    int ultimapos = 0;
     for(int i = 0; i < nBuscas; i++){
         arq = (rand() % (argc - 2)) + 2;
-        pos = rand() % sizes[(int) arq - 2];
-        printf("Abrindo arquivo %s, indice %d.\n", argv[(int) arq], (int) arq);
-        printf("Local onde navegar pro arquivo = %d\n", pos);
+        ultimapos = floor((sizes[(int) arq - 2] * 0.8 ));
+        pos = rand() % ultimapos;
+        // printf("Abrindo arquivo %s, indice %d.\n", argv[(int) arq], (int) arq);
+        // printf("Local onde navegar pro arquivo = %d\n", pos);
         if(abre_Arquivo(argv[(int) arq], &arquivo) != 1) printf("Deu bosta ao abrir o arquivo %s!\n", argv[(int) arq]);
         fseek(arquivo, pos, 0);
-        while(eValido(fgetc(arquivo)));
-        pega_Palavra(arquivo, palavras[i], &byte);
+        pega_PalavraPraBusca(arquivo, palavras[i], &byte);
         // printf("Palavra pegada: %s\n", palavras[i]);
         fecha_Arquivo(arquivo);
         arquivo = NULL;
     }
 
-    puts("Vetor pra busca");
+    /*  puts("Vetor pra busca");
     for(int i = 0; i < nBuscas; i++){
         printf("%s ", palavras[i]);
-    } 
+
+    } */
 
     //sorteia as palavras a serem pesquisadas.
     //Coloca tudo em um vetor estático, sorteia um valor dentro dele e lê a palavra. Então, tenta buscar ela na estrutura.
     srand(rand());
 
     t = clock();
-    for(int i = 0; i < nBuscas; i++)
-            consulta_Hash(h, palavras[i]);
+    for(int i = 0; i < nBuscas; i++){
+        // printf("Buscando por %s\n", palavras[i]);
+        consulta_Hash(h, palavras[i]);
+    }
     t = clock() - t;
 
     time_taken = ((double)t)/CLOCKS_PER_SEC;
     printf("%lf\n", time_taken);
-
-    // imprime_Hash(h);
+    
+    // printf("Palavras unicas: %d\n", h->qtd);
     destroi_Hash(h);
 
     return 0;

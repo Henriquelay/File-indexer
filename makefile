@@ -8,8 +8,8 @@
 #-lm obrigatorio caso utilize a biblioteca math.h
 
 CC			=gcc
-CFLAGS		=-Wall -g
-DEPS		=lista.h arquivos.h ArvoreBinaria.h ArvoreAVL.h hash.h base.h
+CFLAGS		=-Wall -g -lm
+DEPS		=lista.h arquivos.h ArvoreBinaria.h ArvoreAVL.h hash.h base.h trie.h
 DEPSDIR		=headers
 _DEPS		=$(patsubst %,${DEPSDIR}/%,${DEPS})
 OBJDIR		=src
@@ -18,17 +18,20 @@ ARQUIVO		=data/APRENDE.txt
 BUSCAS		=10
 EXEC		=Lista
 
-OBJLISTA	=lista.o arquivos.o testLista.o base.o
+OBJLISTA	=arquivos.o testLista.o base.o lista.o
 _OBJLISTA	=$(patsubst %,${OBJDIR}/%,${OBJLISTA})
 
-OBJARVBIN	=ArvoreBinaria.o arquivos.o testArvoreBinaria.o base.o
+OBJARVBIN	=arquivos.o testArvoreBinaria.o base.o ArvoreBinaria.o
 _OBJARVBIN	=$(patsubst %,${OBJDIR}/%,${OBJARVBIN})
 
-OBJARVAVL	=ArvoreAVL.o arquivos.o testArvoreAVL.o base.o
+OBJARVAVL	=arquivos.o testArvoreAVL.o base.o ArvoreAVL.o
 _OBJARVAVL	=$(patsubst %,${OBJDIR}/%,${OBJARVAVL})
 
-OBJHASH		=hash.o arquivos.o testHash.o base.o ArvoreAVL.o
+OBJHASH		=arquivos.o testHash.o base.o ArvoreAVL.o hash.o
 _OBJHASH	=$(patsubst %,${OBJDIR}/%,${OBJHASH})
+
+OBJTRIE		=arquivos.o testTrie.o base.o trie.o
+_OBJTRIE	=$(patsubst %,${OBJDIR}/%,${OBJTRIE})
 
 
 
@@ -36,7 +39,7 @@ _OBJHASH	=$(patsubst %,${OBJDIR}/%,${OBJHASH})
 ${OBJDIR}/%.o: %.c ${_DEPS}
 	${CC} -c -o $@ $< ${CFLAGS}
 
-all: lista arvbin arvavl hash
+all: lista arvbin arvavl hash trie
 	rm src/*.o
 
 lista: ${_OBJLISTA} 
@@ -50,6 +53,9 @@ arvavl: ${_OBJARVAVL}
 
 hash: ${_OBJHASH} 
 	${CC} -o Hash $^ ${CFLAGS}
+
+trie: ${_OBJTRIE} 
+	${CC} -o Trie $^ ${CFLAGS}
 
 valzin: 
 	make all

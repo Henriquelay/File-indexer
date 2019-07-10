@@ -11,6 +11,7 @@
 #include <ctype.h>
 
 #define TAMDAHASH 93911
+//um número primo grande arbitrário, se provou bem equilibrado independente do tamanho de arquivo trabalhado
 
 //---- Structs -----
 typedef struct Hash{
