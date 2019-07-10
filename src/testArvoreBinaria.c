@@ -3,12 +3,11 @@
 #include "../headers/base.h"
 #include <time.h>
 
-int main(int argc, char *argv[]){
+int desempenhoArvBin(int nBuscas, char *argv[]){
     if(argc <= 2 || atoi(argv[1]) < 1 ){
         printf("#Usagem do programa:\n#./LEIA_O_MAKEFILE [nPalavras] [arquivos..]\n#\tOnde:\n#nPalavras = numeros de palavras a aleatorias a ser pesquisada em cada estrutura\n#arquivos = Os arquivo que serao passados para o programa indexar, separados por espaço.\n");
         return 0;
     }
-    int nBuscas = atoi(argv[1]);
     ArvBin *a;            //os 2 primeiros são o nome do executável e o n de palavras
     char pal[NPAL];                     //tamanho arbitrariamente grande
     int byte = 0;
