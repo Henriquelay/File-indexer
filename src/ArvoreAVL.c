@@ -119,6 +119,9 @@ IMPUTS: Um ponteiro do tipo ArvAVL para 'raiz'.
 OUTPUTS: Nenhum.
 */
 void RotacaoLL(ArvAVL *A){
+    if(A == NULL) return;
+    if(*A == NULL) return;
+    if((*A)->esq == NULL) return;
     tNoAVL *B;
     B = (*A)->esq;
     (*A)->esq = B->dir;
@@ -135,6 +138,8 @@ OUTPUTS: Nenhum.
 */
 void RotacaoRR(ArvAVL *A){
     if(A == NULL) return;
+    if(*A == NULL) return;
+    if((*A)->dir == NULL) return;
     tNoAVL *B;
     B = (*A)->dir;
     (*A)->dir = B->esq;
@@ -185,38 +190,39 @@ char insere_ArvAVL(ArvAVL *raiz, char* palavra, int byte, char arq){
     }
 
     ArvAVL atual = *raiz;
+    int tammenor = SelecionaMenorStringAVL(atual->palavra->pal, palavra);
+    int compara = strncmp(atual->palavra->pal, palavra, tammenor);
+    char inserido = -1;
 
-    int compara = strcmp((*raiz)->palavra->pal, palavra);
-    char inserido = 0;
-
-        if( compara < 0 ){
-            if((inserido = insere_ArvAVL(&((*raiz)->esq), palavra, byte, arq)) == 1){
-                if(fatorBalanceamento_NO(*raiz) >= 2){
-                    if(strcmp(((*raiz)->esq)->palavra->pal, palavra) > 0){
-                        RotacaoRR(raiz);
-                    } else {
-                        RotacaoRL(raiz);
-                    }
-                }
-            }
-        } else if( !compara ){ 
-            adiciona_IndicePal((*raiz)->palavra, byte, arq);
-            return   0;
-        }
-        else{
-            if((inserido = insere_ArvAVL(&((*raiz)->dir), palavra, byte, arq)) == 1){
-                if(fatorBalanceamento_NO(*raiz) >= 2){
-                    if(strcmp(((*raiz)->dir)->palavra->pal, palavra) < 0){ 
+        if(compara < 0){
+            if((inserido = insere_ArvAVL(&(atual->esq), palavra, byte, arq)) == 1){
+                if(fatorBalanceamento_NO(atual) >= 2){
+                    if(strcmp(atual->esq->palavra->pal, palavra) > 0){
                         RotacaoLL(raiz);
                     } else {
                         RotacaoLR(raiz);
                     }
-                } 
+                }
             }
         }
-
-        atual->altura = maior(altura_NO(atual->esq),altura_NO(atual->dir)) + 1;
-
+        else{
+            if(compara > 0){
+                if((inserido = insere_ArvAVL(&(atual->dir), palavra, byte, arq)) == 1){
+                    if(fatorBalanceamento_NO(atual) >= 2){
+                        if(strcmp(atual->dir->palavra->pal, palavra) < 0){
+                            RotacaoRR(raiz);
+                        } else {
+                            RotacaoRL(raiz);
+                        }
+                    }
+                }
+            }
+            else{   //valor duplicado
+                adiciona_IndicePal(atual->palavra, byte, arq);
+                return 1;
+            }
+        }
+    atual->altura = maior(altura_NO(atual->esq),altura_NO(atual->dir)) + 1;
     return inserido; 
 }
 

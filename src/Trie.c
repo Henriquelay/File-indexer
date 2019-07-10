@@ -41,10 +41,11 @@ char insere_Trie(ArvTrie **raiz, char *palavra, char arq, int indice){
 }
 
 char consulta_Trie(ArvTrie **raiz, char *palavra){
-    if(raiz == NULL) return 0;
+    if(raiz == NULL || palavra == NULL) return 0;
 	if(*raiz == NULL) return 0;
 
     ArvTrie *arvore = *raiz;
+    if(arvore->caractere == NULL) return 0;
 
     while(*palavra){
         arvore = arvore->caractere[*palavra - 'a'];

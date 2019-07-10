@@ -8,7 +8,7 @@
 #-lm obrigatorio caso utilize a biblioteca math.h
 
 CC			=gcc
-CFLAGS		=-Wall -g -lm -O3
+CFLAGS		=-Wall -g -lm
 DEPS		=Lista.h Arquivos.h ArvoreBinaria.h ArvoreAVL.h Hash.h Base.h Trie.h
 DEPSDIR		=headers
 _DEPS		=$(patsubst %,${DEPSDIR}/%,${DEPS})
