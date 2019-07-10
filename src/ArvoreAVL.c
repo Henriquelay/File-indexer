@@ -19,7 +19,7 @@ OBJETIVO: Funcao que retorna a altura de um NO qualquer na arvore.
 IMPUTS: Um ponteiro do tipo NO para 'no'.
 OUTPUTS: Uma variavel inteira para altura do NO.
 */
-int altura_NO(struct NO* no){
+int altura_NO(ArvAVL no){
     if(no == NULL)  return -1;
     return no->altura;
 }
@@ -30,7 +30,7 @@ altura da subArvore a esquerda menos a altura da subArvore a direita.
 IMPUTS: Um ponteiro do tipo NO para 'no'.
 OUTPUTS: Uma variavel inteira para o fator de balanceamento.
 */
-int fatorBalanceamento_NO(struct NO* no){
+int fatorBalanceamento_NO(ArvAVL no){
     return labs(altura_NO(no->esq) - altura_NO(no->dir));
 }
 
@@ -64,7 +64,7 @@ int altura_ArvAVL(ArvAVL *raiz){
 
 /*
 OBJETIVO: Funcao que imprime a arvore binária em ordem crescente.
-IMPUTS: Um ponteiro do tipo ArvBin para 'raiz'.
+IMPUTS: Um ponteiro do tipo ArvAVL para 'raiz'.
 OUTPUTS: Nenhum.
 */
 void emOrdem_ArvAVL(ArvAVL *raiz){
@@ -82,7 +82,7 @@ OBJETIVO: Funcao calcula e retorna o tamanho da menor string.
 IMPUTS: Um ponteiro do tipo char para 'str1' e um ponteiro do tipo char para 'str2'.
 OUTPUTS: Uma variavel int para o tamanho da menor palavra ou se as palavras forem iguais retorna 0.
 */
-int SelecionaMenorString(char* palavra1, char* palavra2){
+int SelecionaMenorStringAVL(char* palavra1, char* palavra2){
     if(palavra1 == NULL || palavra2 == NULL) return 0;
     int tam_pal1 = strlen(palavra1), tam_pal2 = strlen(palavra2);
     if(tam_pal1 < tam_pal2) return tam_pal1;
@@ -91,17 +91,17 @@ int SelecionaMenorString(char* palavra1, char* palavra2){
 
 /*
 OBJETIVO: Funcao que verifica se uma palavra de entrada está inserida na arvore binária.
-IMPUTS: Um ponteiro do tipo ArvBin para 'raiz' e um ponteiro do tipo char para 'palavra'.
+IMPUTS: Um ponteiro do tipo ArvAVL para 'raiz' e um ponteiro do tipo char para 'palavra'.
 OUTPUTS: 1 se a palavra foi encontrada e 0 caso contrário.
 */
 char consulta_ArvAVL(ArvAVL *raiz, char* palavra){
     if(raiz == NULL)
         return 0;
-    struct NO* atual = *raiz;
-    int tam_menor = SelecionaMenorString(palavra, (*raiz)->palavra->pal);
+    ArvAVL atual = *raiz;
+    int tam_menor = SelecionaMenorStringAVL(palavra, (*raiz)->palavra->pal);
     int compara = strncmp(palavra, atual->palavra->pal, tam_menor) > 0;
     while(atual != NULL){
-        if(strings_Iguais(palavra, atual->palavra->pal)){
+        if(strings_IguaisAVL(palavra, atual->palavra->pal)){
             return 1;
         }
         if(compara > 0)
@@ -115,11 +115,11 @@ char consulta_ArvAVL(ArvAVL *raiz, char* palavra){
 /*====================ROTACOES DE BALANCEAMENTO====================*/
 /*
 OBJETIVO: Funcao que faz a rotacao simples a esquerda.
-IMPUTS: Um ponteiro do tipo ArvBin para 'raiz'.
+IMPUTS: Um ponteiro do tipo ArvAVL para 'raiz'.
 OUTPUTS: Nenhum.
 */
 void RotacaoLL(ArvAVL *A){
-    struct NO *B;
+    tNoAVL *B;
     B = (*A)->esq;
     (*A)->esq = B->dir;
     B->dir = *A;
@@ -130,11 +130,11 @@ void RotacaoLL(ArvAVL *A){
 
 /*
 OBJETIVO: Funcao que faz a rotacao simples a direita.
-IMPUTS: Um ponteiro do tipo ArvBin para 'raiz'.
+IMPUTS: Um ponteiro do tipo ArvAVL para 'raiz'.
 OUTPUTS: Nenhum.
 */
 void RotacaoRR(ArvAVL *A){
-    struct NO *B;
+    tNoAVL *B;
     B = (*A)->dir;
     (*A)->dir = B->esq;
     B->esq = (*A);
@@ -145,7 +145,7 @@ void RotacaoRR(ArvAVL *A){
 
 /*
 OBJETIVO: Funcao que faz a rotacao dupla a direita.
-IMPUTS: Um ponteiro do tipo ArvBin para 'raiz'.
+IMPUTS: Um ponteiro do tipo ArvAVL para 'raiz'.
 OUTPUTS: Nenhum.
 */
 void RotacaoLR(ArvAVL *A){
@@ -155,7 +155,7 @@ void RotacaoLR(ArvAVL *A){
 
 /*
 OBJETIVO: Funcao que faz a rotacao dupla a esquerda.
-IMPUTS: Um ponteiro do tipo ArvBin para 'raiz'.
+IMPUTS: Um ponteiro do tipo ArvAVL para 'raiz'.
 OUTPUTS: Nenhum.
 */
 void RotacaoRL(ArvAVL *A){
@@ -172,7 +172,7 @@ char insere_ArvAVL(ArvAVL *raiz, char* palavra, int byte, char arq){
     if(raiz == NULL) return 0;
     /* Verifica se Arvore Vazia ou se eh NO folha */
     if(*raiz == NULL){  //criando novo nó
-        ArvAVL novo = (ArvAVL) malloc(sizeof(tNo));
+        ArvAVL novo = (ArvAVL) malloc(sizeof(tNoAVL));
         if(novo == NULL)
             return 0;
 
@@ -184,7 +184,7 @@ char insere_ArvAVL(ArvAVL *raiz, char* palavra, int byte, char arq){
     }
     
     /**/
-    int tam_menor = SelecionaMenorString(palavra, (*raiz)->palavra->pal);
+    int tam_menor = SelecionaMenorStringAVL(palavra, (*raiz)->palavra->pal);
     if(!tam_menor)  return 0;
     int compara = strncmp(palavra, (*raiz)->palavra->pal, tam_menor) > 0;
     ArvAVL atual = *raiz;
@@ -225,7 +225,7 @@ OBJETIVO: Funcao que avalia e retorna se duas strings são iguais.
 IMPUTS: Um ponteiro do tipo char para 'str1' e um ponteiro do tipo char para 'str2'.
 OUTPUTS: 1 se as strings de entrada são iguais e 0 caso contrário.
 */
-char strings_Iguais(char *str1, char *str2){
+char strings_IguaisAVL(char *str1, char *str2){
     if(str1 == NULL || str2 == NULL) return 0;
     if(strlen(str1) == strlen(str2))
         if(strcasecmp(str1, str2) == 0)
@@ -235,14 +235,14 @@ char strings_Iguais(char *str1, char *str2){
 
 /*
 OBJETIVO: Funcao que libera da memória um ponteiro do tipo tNO, junto com seus NOs a esquerda e direita.
-IMPUTS: Um ponteiro do tipo ArvBin 'raiz'.
+IMPUTS: Um ponteiro do tipo ArvAVL 'raiz'.
 OUTPUTS: Nenhum.
 */
-void libera_NO(ArvAVL no){
+void libera_NOAVL(ArvAVL no){
     if(no == NULL)
         return;
-    libera_NO(no->esq);
-    libera_NO(no->dir);
+    libera_NOAVL(no->esq);
+    libera_NOAVL(no->dir);
     destroi_Palavra(no->palavra);
     free(no);
     no = NULL;
@@ -250,13 +250,13 @@ void libera_NO(ArvAVL no){
 
 /*
 OBJETIVO: Funcao que libera da memória um ponteiro do tipo tArvBin, junto com todos os seus NOs da arvore.
-IMPUTS: Um ponteiro do tipo ArvBin 'raiz'.
+IMPUTS: Um ponteiro do tipo ArvAVL 'raiz'.
 OUTPUTS: Nenhum.
 */
 void destroi_ArvAVL(ArvAVL* raiz){
     if(raiz == NULL)
         return;
-    libera_NO(*raiz);//libera cada no
+    libera_NOAVL(*raiz);//libera cada no
     free(raiz);//libera a raiz
     raiz = NULL;
 }
@@ -271,5 +271,75 @@ int estaVazia_ArvAVL(ArvAVL *raiz){
         return 1;
     if(*raiz == NULL)
         return 1;
+    return 0;
+}
+
+
+int desempenho_ArvAVL(int argc, char *argv[]){
+    int nBuscas = atoi(argv[1]);
+    if(argc < 2 || nBuscas < 1 ){
+        printf("#Usagem do programa:\n#./LEIA_O_MAKEFILE [nPalavras] [arquivos..]\n#\tOnde:\n#nPalavras = numeros de palavras a aleatorias a ser pesquisada em cada estrutura\n#arquivos = Os arquivo que serao passados para o programa indexar, separados por espaço.\n");
+        return 0;
+    }
+    ArvAVL *a;
+    char pal[NPAL];
+    // tamanho arbitrariamente grande
+    int byte = 0, nArquivos = argc - 2;
+    FILE *arquivo = NULL;
+    a = cria_ArvAVL();
+    int sizes[nBuscas - 2];
+    clock_t t, tAll = 0;
+
+    int ret = 0;
+
+    for(int i = 0; i < nArquivos; i++){
+        if(abre_Arquivo(argv[i + 2], &arquivo) != 1){
+            printf("Erro ao abrir o arquivo %s!\n", argv[i + 2]);
+            return 1;
+        }
+        sizes[i] = tamanhoArquivo(arquivo);
+        t = clock();
+        while(pega_Palavra(arquivo, pal, &byte) == 1){
+            if((ret = insere_ArvAVL(a, pal, byte, i)) != 1) ;//printf("Erro ao tentar inserir %s! Retorno = %d    ", pal, ret);
+        }
+        tAll += clock() - t;  
+        fecha_Arquivo(arquivo);
+        arquivo = NULL;
+    }
+
+    double time_taken = ((double)tAll)/CLOCKS_PER_SEC; // in seconds 
+    printf("%lf ", time_taken);
+
+    
+    // Lê palavras aletórias dentro de arquivos aleatórios dentro dos de entrada.
+    srand(time(NULL));
+    char palavras[nBuscas][NPAL];
+    char arq = 0;
+    int pos = 0 ;
+    for(int i = 0; i < nBuscas; i++){
+        arq = (rand() % (argc - 2)) + 2;
+        pos = rand() % sizes[(int) arq - 2];
+        if(abre_Arquivo(argv[(int) arq], &arquivo) != 1) printf("Deu ruim ao abrir o arquivo %s!\n", argv[(int) arq]);
+        fseek(arquivo, pos, 0); // Aponta o ponteiro de stream (arquivo) para a posição "pos" (aleatóriamente gerada)
+        while(eValido(fgetc(arquivo)));
+        if(!pega_Palavra(arquivo, palavras[i], &byte)){
+            rewind(arquivo);
+            pega_Palavra(arquivo, palavras[i], &byte);
+        }
+        fecha_Arquivo(arquivo);
+        arquivo = NULL;
+    }
+
+    // Carrega palavras aleatórias do vetor gerado previamente e busca elas na estrutura
+    srand(rand());
+    t = clock();
+    for(int i = 0; i < nBuscas; i++)
+            consulta_ArvAVL(a, palavras[i]);
+    t = clock() - t;
+    time_taken = ((double)t)/CLOCKS_PER_SEC;
+    printf("%lf\n", time_taken);
+
+    destroi_ArvAVL(a);
+
     return 0;
 }

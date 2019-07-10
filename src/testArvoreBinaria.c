@@ -1,10 +1,10 @@
 #include "../headers/ArvoreBinaria.h"
-#include "../headers/arquivos.h"
-#include "../headers/base.h"
+#include "../headers/Arquivos.h"
+#include "../headers/Base.h"
 #include <time.h>
 
 int desempenhoArvBin(int nBuscas, char *argv[]){
-    if(argc <= 2 || atoi(argv[1]) < 1 ){
+    if(nBuscas <= 0 || atoi(argv[1]) < 1 ){
         printf("#Usagem do programa:\n#./LEIA_O_MAKEFILE [nPalavras] [arquivos..]\n#\tOnde:\n#nPalavras = numeros de palavras a aleatorias a ser pesquisada em cada estrutura\n#arquivos = Os arquivo que serao passados para o programa indexar, separados por espaço.\n");
         return 0;
     }
@@ -13,12 +13,12 @@ int desempenhoArvBin(int nBuscas, char *argv[]){
     int byte = 0;
     FILE *arquivo = NULL;
 
-        a = cria_ArvBin();
-    int sizes[argc - 2];
+    a = cria_ArvBin();
+    int sizes[nBuscas - 2];
     clock_t t, tAll;
     tAll = 0;
 
-    for(int i = 0; i < argc - 2; i++){
+    for(int i = 0; i < nBuscas - 3; i++){
         if(abre_Arquivo(argv[i + 2], &arquivo) != 1){
             printf("Erro ao abrir o arquivo %s!\n", argv[i + 2]);
             return 0;
@@ -42,7 +42,7 @@ int desempenhoArvBin(int nBuscas, char *argv[]){
     char arq = 0;
     int pos = 0 ;
     for(int i = 0; i < nBuscas; i++){
-        arq = (rand() % (argc - 2)) + 2;
+        arq = (rand() % (nBuscas - 2)) + 2;
         pos = rand() % sizes[(int) arq - 2];
         // printf("Abrindo arquivo %s, indice %d.\n", argv[(int) arq], (int) arq);
         // printf("Local onde navegar pro arquivo = %d\n", pos);

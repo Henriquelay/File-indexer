@@ -1,0 +1,11 @@
+*.swp
+vimsession.vim
+Hash
+Lista
+ArvAVL
+ArvBin
+*.o
+.vscode*
+data/enwik9.zip
+data/enwik9
+data.zip
